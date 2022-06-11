@@ -1,4 +1,4 @@
-# UM EECS441§3&4 Template
+# KeyWorld
 
 | Gradesheet | Team Info | Demo  |  Wiki |  Trello  |
 |:----------:|:---------:|:-----:|:-----:|:--------:|
@@ -11,4 +11,5 @@
 [team_contract]: https://docs.google.com/document/d/1YL6lX2RmaLtHDfeRCVXXIFOjAGVMu9O5j3gxOPFHA2Y/edit?usp=sharing
 [demo_page]: https://www.youtube.com/watch?v=VIcOGEhsXGM&feature=youtu.be
 [wiki_page]: https://github.com/eecs441staff/441template/wiki
-[process_page]: https://trello.com/b/MyPhHMGd/441template
+[process_page]: https://trello.com/b/MA7frBMt/project-management
+
