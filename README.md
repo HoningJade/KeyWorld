@@ -39,4 +39,11 @@ describe how your front-end would communicate with your engine: list and describ
 ## View UI/UX
 leave this section blank for now.  You will populate it with your UI/UX design in a latter assignment. 
 ## Team Roster
-a list of team members and each member's contribution. You may simply list each member's full name for now, leaving the contribution description to the end of term. Should you want to make your GitHub public at the end of term, what do you want visitors (potential employer) to know about your contribution to this project?
+| Team member | Contribution |
+|:-----------:|:------------:|
+|Yuanqi Guo||
+|Xinrui Zhao||
+|Ruiyu Li||
+|Yixin Shi||
+|Churong Ji||
+|Ruge Xu||
