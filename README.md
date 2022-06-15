@@ -18,7 +18,7 @@ documentation on how to build and run your project. For now, simply list and pro
 ## Model and Engine (15% of Project Documentation grade)
 The following figure shows our Storymap.
 ![Storymap](/assets/storymap.png)
-Our storymap has four main stages, which are: hotel set up, guests open the door, connect to wifi and room service.
+Our storymap has four main stages, which are: hotel setup, guest door opening, wifi connection and room service. Hotel setup is mainly for hotels to upload room key information and configure devices, guest door opening is mainly from applying for a hotel to successfully using the virtual card received to open the door, connecting to wifi is for residents to automatically connect to Wi-Fi through NFC tags, and room service is for residents to request room service from the hotel through application.
 
 The following figure shows our engine architecture.
 ![Engine](/assets/engine.png)
