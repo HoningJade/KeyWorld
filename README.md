@@ -15,6 +15,13 @@
 ## Getting Started
 KeyWorld is an app that applies NFC technology to solve the hotel check-in related issues. We help hotels and their guests to easily make the room a home. 
 
+This app is developed for Android. The languages used for development are mainly Kotlin and Python. The front-end relies on the following APIs:
+1. NFC reader API: https://developer.mozilla.org/en-US/docs/Web/API/Web_NFC_API
+2. WiFi information API: https://developer.mozilla.org/en-US/docs/Web/API/Network_Information_API
+3. Live Chat API: https://documenter.getpostman.com/view/758169/livechat-rest-api/RVnPL46o
+
+The back-end server includes both a card module and a service module to deal with the customer information verification and service requests respectively. It communicates with a database for customer & room information.
+
 ## Model and Engine
 ### User Story Map
 The following figure shows our user storymap.
@@ -45,7 +52,7 @@ When a guest wants to read the room instruction with the NFC tag, the NFC card r
 **Room service**
 Guests can request room service through the room service request block on the resident front-end, and the request will be sent to the customer service block on the hotel front-end via the service module on the back-end. Once the hotel receives the request, it can perform the appropriate service. After the service, guests can write review for the service and send feedback to the hotel. Besides, guests can also chat with the hotel.
 
-## APIs and Controller 
+## APIs and Controller
 ### RoomUpload
 **Request Parameters**
 | Key        | Location | Type   | Description      |
