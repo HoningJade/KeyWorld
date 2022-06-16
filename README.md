@@ -19,7 +19,7 @@ This app is developed for Android. The languages used for development are mainly
 1. NFC reader API: https://developer.mozilla.org/en-US/docs/Web/API/Web_NFC_API
 2. WiFi information API: https://developer.mozilla.org/en-US/docs/Web/API/Network_Information_API
 
-The back-end server includes both a card module and a service module to deal with the customer information verification and service requests respectively. It communicates with a database for customer & room information, and to retrieve live chats sent by residents.
+The back-end server includes both a card module and a service module to deal with the customer information verification and service requests respectively. It communicates with a database for customer & room information.
 
 ## Model and Engine (15% of Project Documentation grade)
 ### User Story Map
