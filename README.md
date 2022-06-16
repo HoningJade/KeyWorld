@@ -21,7 +21,7 @@ This app is developed for Android. The languages used for development are mainly
 
 The back-end server includes both a card module and a service module to deal with the customer information verification and service requests respectively. It communicates with a database for customer & room information.
 
-## Model and Engine (15% of Project Documentation grade)
+## Model and Engine
 ### User Story Map
 The following figure shows our user storymap.
 ![Storymap](/assets/storymap.png)
@@ -51,7 +51,7 @@ When a guest wants to read the room instruction with the NFC tag, the NFC card r
 **Room service**
 Guests can request room service through the room service request block on the resident front-end, and the request will be sent to the customer service block on the hotel front-end via the service module on the back-end. Once the hotel receives the request, it can perform the appropriate service. 
 
-## APIs and Controller (15% of Project Documentation grade)
+## APIs and Controller
 ### RoomUpload
 **Request Parameters**
 | Key        | Location | Type   | Description      |
