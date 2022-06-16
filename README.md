@@ -15,7 +15,7 @@
 ## Getting Started
 KeyWorld is an app that applies NFC technology to solve the hotel check-in related issues. We help hotels and their guests to easily make the room a home. 
 
-## Model and Engine (15% of Project Documentation grade)
+## Model and Engine
 ### User Story Map
 The following figure shows our user storymap.
 ![Storymap](/assets/storymap.png)
@@ -43,15 +43,15 @@ When a guest wants to connect to the hotel wifi with the NFC tag, the NFC card r
 When a guest wants to read the room instruction with the NFC tag, the NFC card reader will be activated. Once the phone catched the NFC signal with the instruction information, the app will send a request to the service module in the back-end, which will then fetch the detailed inistruction and send it back to the guest's application.
 
 **Room service**
-Guests can request room service through the room service request block on the resident front-end, and the request will be sent to the customer service block on the hotel front-end via the service module on the back-end. Once the hotel receives the request, it can perform the appropriate service. 
+Guests can request room service through the room service request block on the resident front-end, and the request will be sent to the customer service block on the hotel front-end via the service module on the back-end. Once the hotel receives the request, it can perform the appropriate service. After the service, guests can write review for the service and send feedback to the hotel. Besides, guests can also chat with the hotel.
 
-## APIs and Controller (15% of Project Documentation grade)
+## APIs and Controller 
 ### RoomUpload
 **Request Parameters**
 | Key        | Location | Type   | Description      |
 | ---------- | -------- | ------ | ---------------- |
 | `RoomID` | JSON | Int | Room ID |
-| `Key` | JSON | Int | The key information of the room |
+| `Key` | JSON | String | The key information of the room |
 
 **Response Codes**
 | Code              | Description            |
@@ -60,10 +60,9 @@ Guests can request room service through the room service request block on the re
 | `400 Bad Request` | Invalid parameters |
 
 **Returns** 
-TODO
 | Key        | Location       | Type   | Description  |
 | ---------- | -------------- | ------ | ------------ |
-| `isFound` | JSON | Boolean | Weather the guest is found in the database|
+| `isSuccess` | JSON | Boolean | Whether the guest is found in the database|
 
 ### GuestUpload
 **Request Parameters**
@@ -72,8 +71,8 @@ TODO
 | `RoomID` | JSON | Int | Room ID |
 | `GuestFirstName` | JSON | String | Guest's first name |
 | `GuestLastName` | JSON | String | Guest's last name |
-| `AvailabilityStartTime` | JSON | Date(TODO) | When the key starts the availability |
-| `AvailabilityEndTime` | JSON | Date(TODO) | When the key ends the availability |
+| `AvailabilityStartTime` | JSON | Timestamp | When the key starts the availability |
+| `AvailabilityEndTime` | JSON | Timestamp | When the key ends the availability |
 
 **Response Codes**
 | Code              | Description            |
@@ -82,10 +81,9 @@ TODO
 | `400 Bad Request` | Invalid parameters |
 
 **Returns** 
-TODO
 | Key        | Location       | Type   | Description  |
 | ---------- | -------------- | ------ | ------------ |
-| `isFound` | JSON | Boolean | Weather the guest is found in the database|
+| `isFound` | JSON | Boolean | Whether the guest is found in the database|
 
 **Example**
 
@@ -105,10 +103,10 @@ TODO
 **Returns**
 | Key        | Location       | Type   | Description  |
 | ---------- | -------------- | ------ | ------------ |
-| `isFound` | JSON | Boolean | Weather the guest is found in the database|
-| `VirtualKey` | JSON | TODO | The virtual key information for the card emulator |
-| `AvailabilityStartTime` | JSON | Date(TODO) | When the key starts the availability |
-| `AvailabilityEndTime` | JSON | Date(TODO) | When the key ends the availability |
+| `isFound` | JSON | Boolean | Whether the guest is found in the database|
+| `VirtualKey` | JSON | String | The virtual key information for the card emulator |
+| `AvailabilityStartTime` | JSON | Timestamp | When the key starts the availability |
+| `AvailabilityEndTime` | JSON | Timestamp | When the key ends the availability |
 
 ### InstructionFetch
 **Request Parameters**
@@ -122,10 +120,10 @@ TODO
 | `200 OK`          | Succeed |
 | `400 Bad Request` | Invalid parameters |
 
-**Returns** TODO
+**Returns** 
 | Key        | Location       | Type   | Description  |
 | ---------- | -------------- | ------ | ------------ |
-| `InstructionDetail` | JSON | Object(HTML)(TODO) | The detailed instruction|
+| `InstructionDetail` | JSON | String | The detailed instruction|
 
 
 **Example**
@@ -136,7 +134,7 @@ TODO
 | ---------- | -------- | ------ | ---------------- |
 | `RoomID` | JSON | Int | Guest's room ID |
 | `RequestDetail` | JSON | String | The request detail |
-| `RequestTime` | JSON | Date(TODO) | The request time |
+| `RequestTime` | JSON | Timestamp | The request time |
 
 **Response Codes**
 | Code              | Description            |
@@ -144,10 +142,10 @@ TODO
 | `200 OK`          | Succeed |
 | `400 Bad Request` | Invalid parameters |
 
-**Returns** TODO
+**Returns** 
 | Key        | Location       | Type   | Description  |
 | ---------- | -------------- | ------ | ------------ |
-| `isFound` | JSON | Boolean | Weather the guest is found in the database|
+| `isSuccess` | JSON | Boolean | Whether the request is successfully sent to the hotel front-end|
 
 
 **Example**
@@ -160,7 +158,7 @@ TODO
 | android.nfc.tech | Support Android advanced NFC functions |
 | android.nfc.cardemulation |  Support Android NFC card emulation |
 | android.net.wifi | Support Android wifi suggestions and connection |
-| TODO | Live Chat |
+| LiveChat API | Live Chat |
 
 
 ## View UI/UX
