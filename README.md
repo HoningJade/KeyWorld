@@ -35,7 +35,6 @@ Users go through four stages with our app, which are: hotel setup, guest door op
 The following figure shows our engine architecture.
 ![Engine](/assets/engine.png)
 Our engine architecture has three main blocks: resident front-end, hotel front-end, and back-end (including the database).
-TODO: add blocks for the instructions
 
 **Virtual key:** 
 In the beginning, the hotel needs to upload the room-key information from the hotel front-end through the key managament block to the card module in the back-end, and then the card module will save the corresponding room-key information in the database of room info table.
