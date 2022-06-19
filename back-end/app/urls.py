@@ -3,4 +3,5 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('keyUpload/', views.keyUpload, name='keyUpload'),
 ]
