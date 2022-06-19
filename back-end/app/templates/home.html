@@ -5,6 +5,7 @@
     <style>
         /*Typography*/
         html {
+            //font: 16px 'Open Sans Condensed', 'Roboto Condensed', Verdana, sans-serif;
             font: 16px 'Times New Roman', 'Times New Roman', Verdana, sans-serif;
         }
         h1 {
@@ -99,7 +100,7 @@
         }
         header .nav-ul a {
             display: block;
-            padding: 1.5em 0.5em;
+            padding: 3em 0.5em;
             font-size: 1.5em;
             text-align: center;
             text-transform: uppercase;
@@ -111,10 +112,10 @@
         header .nav-ul a:active {
             color: #0f55b2;
         }
-        header li:first-child a {
+        /*header li:first-child a {
             background: #0d4a9a;
             color: #fff;
-        }
+        }*/
         header li:first-child a:hover {
             color: #fff;
         }
@@ -324,10 +325,10 @@
   <header role="banner">
     <nav role="navigation">
       <h1><a href="#">KeyWorld</a></h1>
-      <ul class="nav-ul">
+      <ul class="nav-ul" style="list-style: none;">
         <li><a href="#">Home</a></li>
-        <li><a href="#">Reviews</a></li>
-        <li><a href="#">Contacts</a></li>
+        <li><a href="#">Review</a></li>
+        <li><a href="#">Contact</a></li>
       </ul>
     </nav>
   </header>
@@ -357,10 +358,10 @@
 
 <footer>
   <nav role="navigation">
-    <ul class="nav-ul">
+    <ul class="nav-ul" style="list-style: none;">
       <li><a href="#">Home</a></li>
-      <li><a href="#">Reviews</a></li>
-      <li><a href="#">Contacts</a></li>
+      <li><a href="#">Review</a></li>
+      <li><a href="#">Contact</a></li>
     </ul>
   </nav>
   <p class="copy">&copy; Alex Devero Design 2014</p>
