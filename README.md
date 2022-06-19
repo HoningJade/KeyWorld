@@ -77,6 +77,7 @@ Guests can request room service through the room service request block on the re
 | `RoomID` | JSON | Int | Room ID |
 | `GuestFirstName` | JSON | String | Guest's first name |
 | `GuestLastName` | JSON | String | Guest's last name |
+| `CheckinCode` | JSON | String | Guest's check in code |
 | `AvailabilityStartTime` | JSON | Timestamp | When the key starts the availability |
 | `AvailabilityEndTime` | JSON | Timestamp | When the key ends the availability |
 
@@ -98,7 +99,7 @@ Guests can request room service through the room service request block on the re
 | Key        | Location | Type   | Description      |
 | ---------- | -------- | ------ | ---------------- |
 | `GuestLastName` | JSON | String | Guest's last name |
-| `CheckinCode` | JSON | Integer | Guest's ceck in code |
+| `CheckinCode` | JSON | String | Guest's check in code |
 
 **Response Codes**
 | Code              | Description            |
