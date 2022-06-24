@@ -17,11 +17,6 @@ class SelService : AppCompatActivity() {
         _service.value = ""
     }
 
-    init {
-        // Set initial values for the service
-        resetService()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_selservice)
