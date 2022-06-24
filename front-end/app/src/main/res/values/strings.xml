@@ -1,6 +1,17 @@
 <resources>
     <string name="app_name">KeyWorld</string>
+
+    <string name="last_name">Last Name</string>
+    <string name="last_name_input">Pi</string>
+    <string name="code">Code</string>
+    <string name="code_input">123456</string>
+    <string name="code_hint">Password</string>
+    <string name="enter">Enter</string>
+
+    <string name="service_list">Service List</string>
     <string name="service1">Charge Delivery</string>
     <string name="service2">Cleaning Service</string>
     <string name="service3">Damage Repair</string>
+    <string name="submit_service">request service</string>
+
 </resources>
