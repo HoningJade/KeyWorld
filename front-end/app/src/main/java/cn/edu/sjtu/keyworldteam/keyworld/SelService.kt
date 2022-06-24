@@ -7,6 +7,8 @@ import androidx.lifecycle.MutableLiveData
 
 class SelService : AppCompatActivity() {
     private val _service = MutableLiveData<String>()
+
+    // android:checked="@{service.equals(@string/service1)}"
     val service: LiveData<String> = _service
 
     fun setService(desiredService: String) {
