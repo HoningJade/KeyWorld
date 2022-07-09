@@ -30,16 +30,19 @@
 
     <EditText
         android:id="@+id/lastNameInput"
-        android:layout_width="wrap_content"
+        android:layout_width="290dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="60dp"
         android:autofillHints=""
         android:ems="10"
+        android:hint="@string/last_name_hint"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="@string/last_name_input"
+        android:textColorHint="#78909C"
         android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lastName" />
 
@@ -48,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:text="@string/code"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,17 +59,20 @@
 
     <EditText
         android:id="@+id/codeInput"
-        android:layout_width="wrap_content"
+        android:layout_width="290dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="60dp"
         android:autofillHints="no"
         android:ems="10"
         android:hint="@string/code_hint"
         android:inputType="numberPassword"
         android:minHeight="48dp"
-        android:text="@string/code_input"
+        android:textColorHint="#78909C"
         android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/code" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

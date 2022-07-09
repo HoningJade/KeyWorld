@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/ic_key"
+        android:icon="@drawable/ic_key"
+        android:title="@string/bar_key"/>
+
+    <item
+        android:id="@+id/ic_wifi"
+        android:icon="@drawable/ic_wifi"
+        android:title="@string/bar_wifi"/>
+
+    <item
+        android:id="@+id/ic_service"
+        android:icon="@drawable/ic_room_service"
+        android:title="@string/bar_service"/>
+
+    <item
+        android:id="@+id/ic_checkout"
+        android:icon="@drawable/ic_exit"
+        android:title="@string/bar_checkout"/>
+</menu>
