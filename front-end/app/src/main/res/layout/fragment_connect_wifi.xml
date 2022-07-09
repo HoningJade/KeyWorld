@@ -35,7 +35,7 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/wifiHint"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"
