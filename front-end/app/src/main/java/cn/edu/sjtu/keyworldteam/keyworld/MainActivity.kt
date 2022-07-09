@@ -33,11 +33,11 @@ class MainActivity : AppCompatActivity() {
             // set message of alert dialog
             dialogBuilder.setMessage("Required information is missing.")
                 // set title of alert dialog
-                .setTitle("Caution")
+                .setTitle("CAUTION")
                 // if the dialog is cancelable
                 .setCancelable(false)
                 // negative button text and action
-                .setNegativeButton("Cancel", DialogInterface.OnClickListener {
+                .setNegativeButton("CANCEL", DialogInterface.OnClickListener {
                         dialog, _ -> dialog.cancel()
                 })
 

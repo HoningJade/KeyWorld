@@ -14,6 +14,9 @@
         android:theme="@style/Theme.KeyWorld"
         tools:targetApi="31">
         <activity
+            android:name=".SendReview"
+            android:exported="false" />
+        <activity
             android:name=".BottomNavigation"
             android:exported="false" />
         <activity

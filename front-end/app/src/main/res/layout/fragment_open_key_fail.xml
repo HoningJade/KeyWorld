@@ -8,7 +8,7 @@
     tools:context=".fragments.OpenKeyFail">
 
     <TextView
-        android:id="@+id/roomNum"
+        android:id="@+id/roomNum3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"
@@ -40,6 +40,19 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/roomNum" />
+        app:layout_constraintTop_toBottomOf="@+id/roomNum3" />
+
+    <ImageButton
+        android:id="@+id/renewButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/transparent"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        android:src="@drawable/ic_autorenew"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
