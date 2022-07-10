@@ -16,13 +16,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun startRoom(view: View?) {
-        var lastNameText = findViewById<EditText>(R.id.lastNameInput)
+        val lastNameText = findViewById<EditText>(R.id.lastNameInput)
 //        Toast.makeText(this, lastNameText.text, Toast.LENGTH_SHORT).show()
-        var codeText = findViewById<EditText>(R.id.codeInput)
+        val codeText = findViewById<EditText>(R.id.codeInput)
 //        Toast.makeText(this, codeText.text, Toast.LENGTH_SHORT).show()
 
         if (lastNameText.text.isNotEmpty() && codeText.text.isNotEmpty()) {
-            startActivity(Intent(this, SelService::class.java))
+            // TODO: Verify the information of customers
+            startActivity(Intent(this, BottomNavigation::class.java))
         }
         else {
 //            Toast.makeText(this, "Required information is missing", Toast.LENGTH_SHORT).show()
@@ -32,11 +33,11 @@ class MainActivity : AppCompatActivity() {
             // set message of alert dialog
             dialogBuilder.setMessage("Required information is missing.")
                 // set title of alert dialog
-                .setTitle("Caution")
+                .setTitle("CAUTION")
                 // if the dialog is cancelable
                 .setCancelable(false)
                 // negative button text and action
-                .setNegativeButton("Cancel", DialogInterface.OnClickListener {
+                .setNegativeButton("CANCEL", DialogInterface.OnClickListener {
                         dialog, _ -> dialog.cancel()
                 })
 

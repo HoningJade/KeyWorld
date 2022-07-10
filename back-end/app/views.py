@@ -6,3 +6,6 @@ def home(request):
 
 def keyUpload(request):
     return render(request, 'keyUpload.html', {})
+
+def residentUpdate(request):
+    return render(request, 'residentUpdate.html', {})
