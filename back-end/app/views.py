@@ -21,11 +21,12 @@ def serviceSelect(request):
     if request.method != 'POST':
             return HttpResponse(status=404)
     json_data = json.loads(request.body)
-    room = json_data['room']
-    service = json_data['service']
-    requestTime = json_data['requestTime']
+    room = json_data['roomid']
+    service = json_data['requestdetail']
+    requestTime = json_data['timestamp']
     cursor = connection.cursor()
     cursor.execute('INSERT INTO serviceRequest (room, service, requestTime) VALUES '
                 '(%s, %s, %d);', (room, service, requestTime))
-    #TODO: update databse table
+    # TODO: notification
     return JsonResponse({})
+
