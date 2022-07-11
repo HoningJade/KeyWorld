@@ -23,6 +23,8 @@ class MainActivity : AppCompatActivity() {
 
         if (lastNameText.text.isNotEmpty() && codeText.text.isNotEmpty()) {
             // TODO: Verify the information of customers
+
+            MySingleton.roomid = 301
             startActivity(Intent(this, BottomNavigation::class.java))
         }
         else {

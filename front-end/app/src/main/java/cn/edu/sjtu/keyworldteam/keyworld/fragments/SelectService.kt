@@ -14,7 +14,13 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import cn.edu.sjtu.keyworldteam.keyworld.MySingleton
+import cn.edu.sjtu.keyworldteam.keyworld.PostStore.postMsg
+import cn.edu.sjtu.keyworldteam.keyworld.Postt
 import cn.edu.sjtu.keyworldteam.keyworld.R
+import java.time.Instant
+import java.time.format.DateTimeFormatter
+
 
 class SelectService : Fragment() {
 
@@ -67,13 +73,19 @@ class SelectService : Fragment() {
                 setService(radioButton.text as String)
                 Toast.makeText(requireContext(), _service.value, Toast.LENGTH_SHORT).show()
 
-                // TODO: Send service to back-end
+                // Send service to back-end
+                val msg = Postt(
+                    roomid = MySingleton.roomid,
+                    requestdetail = radioButton.text.toString(),
+                    timestamp = DateTimeFormatter.ISO_INSTANT.format(Instant.now()).toString()
+                )
 
+                postMsg(requireContext(), msg)
 
                 val fragment = RequestServiceSuccess()
-                (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
-            }
-            else {
+                (activity as FragmentActivity).supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, fragment).commit()
+            } else {
 //                Toast.makeText(requireContext(), "None is selected", Toast.LENGTH_SHORT).show()
                 val dialogBuilder = AlertDialog.Builder(requireContext())
 
@@ -100,7 +112,8 @@ class SelectService : Fragment() {
 
         liveChatButton.setOnClickListener {
             val fragment = LiveChat()
-            (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+            (activity as FragmentActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, fragment).commit()
         }
 
         return view
