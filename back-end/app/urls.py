@@ -8,6 +8,6 @@ urlpatterns = [
     path('serviceList/', views.serviceList, name='serviceList'),
     path('liveChat/', views.liveChat, name='liveChat'),
     # path(r'^keyUpload/$', views.keyUpload, name='keyUpload'),
+    path('serviceRequestList/', views.serviceRequestList, name='serviceRequestList'),
+    path('serviceSelect/', views.serviceSelect, name='serviceSelect'),
 ]
-
-
