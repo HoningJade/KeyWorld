@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Service List Page</title>
+    <style>
+        html,
+    body {
+        height: 100%;
+    }
+    
+    body {
+        margin: 0;
+        font-family: sans-serif;
+        /* background: linear-gradient(45deg, #83b1af, #a28cb1); */
+        font-weight: 100;
+    }
+    
+    .container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    table {
+        width: 800px;
+        border-collapse: collapse;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    
+    th,
+    td {
+        padding: 15px;
+        background-color: rgba(255,255,255,0.2);
+        color: rgb(0, 0, 0);
+    }
+    
+    th {
+        text-align: left;
+    }
+    
+    thead {
+        th {
+            background-color: #55608f;
+        }
+    }
+    
+    tbody {
+        tr {
+            &:hover {
+                background-color: rgba(255,255,255,0.3);
+            }
+        }
+        td {
+            position: relative;
+            &:hover {
+                &:before {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    top: -9999px;
+                    bottom: -9999px;
+                    background-color: rgba(255,255,255,0.2);
+                    z-index: -1;
+                }
+            }
+        }
+    }
+    </style>
+    </head>
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Room Number</th>
+                    <th>Request</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1001</td>
+                    <td>Cleaning service</td>
+                    <td>Pending</td>
+                </tr>
+                <tr>
+                    <td>1220</td>
+                    <td>Damage repair</td>
+                    <td>Pending</td>
+                </tr>
+                <tr>
+                    <td>3108</td>
+                    <td>Charger delivery</td>
+                    <td>Pending</td>
+                </tr>
+                <tr>
+                    <td>1202</td>
+                    <td>Cleaning service</td>
+                    <td>Finished</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</html>
+
