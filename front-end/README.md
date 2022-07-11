@@ -1,6 +1,6 @@
 ### Frontend 
 
-#### Post Service
+##### Post Service
 
 The frontend posts service requests selected by the user through `postmsg` API to the backend. The format of request is:
 
@@ -8,15 +8,16 @@ The frontend posts service requests selected by the user through `postmsg` API t
 {	
    "roomid": int,	
    "requestdetail": string,
-    "timestamp": string/Timestamp
+    "timestamp": string
 }
 ```
+
+##### Receive Response
 
 The frontend receives request response from the backend through `getmsg` API. The format of response is:
 
 ```kotlin
 {	
-   "code": 
+   "code": 200 - Success; 400 - Bad Request
 }
 ```
-
