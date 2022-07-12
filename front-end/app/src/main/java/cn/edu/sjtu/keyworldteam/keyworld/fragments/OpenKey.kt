@@ -10,8 +10,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil.setContentView
 import androidx.fragment.app.FragmentActivity
+import cn.edu.sjtu.keyworldteam.keyworld.MySingleton
 import cn.edu.sjtu.keyworldteam.keyworld.R
 
 class OpenKey : Fragment() {
@@ -24,7 +28,10 @@ class OpenKey : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_open_key, container, false)
-
+        val tv1: TextView? = view?.findViewById(R.id.roomNum1)
+        if (tv1 != null) {
+            tv1.text = "Room: " + MySingleton.roomid.toString()
+        }
         button = view.findViewById(R.id.openKeyButton)
         button.setOnClickListener{
 //            Toast.makeText(requireContext(), "Clicked!", Toast.LENGTH_SHORT).show()
@@ -71,6 +78,5 @@ class OpenKey : Fragment() {
 
         return view
     }
-
 
 }
