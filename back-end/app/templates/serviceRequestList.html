@@ -70,7 +70,6 @@
     }
     </style>
     </head>
-    serviceList
     <div class="container">
         <table>
             <thead>
@@ -81,9 +80,9 @@
                 </tr>
             </thead>
             <tbody>
-                {% for request in request_lists %}
+                {% for request in serviceRequestList %}
                 <tr>
-                    <td>{{request.room}}</td>
+                    <td>{{request.room_number}}</td>
                     <td>{{request.service}}</td>
                     <td>{{request.status}}</td>
                 </tr>

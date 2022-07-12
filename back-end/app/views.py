@@ -53,8 +53,8 @@ def serviceRequestList(request):
     "fetch all service request and display"
     cursor = connection.cursor()
     cursor.execute('SELECT * FROM services ORDER BY request_time DESC;')
-    serviceList = dictfetchall(cursor)
-    return render(request, 'serviceRequestList.html', {'serviceList': serviceList})
+    serviceRequestList = dictfetchall(cursor)
+    return render(request, 'serviceRequestList.html', {'serviceRequestList': serviceRequestList})
 
 def dictfetchall(cursor):
     "Return all rows from a cursor as a dict"
