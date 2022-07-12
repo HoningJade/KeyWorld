@@ -6,4 +6,7 @@ class Postt(var roomid: Int? = null,
 
 object MySingleton {
     var roomid: Int = 100
+    var key: String = ""
+    var starttime: String = ""
+    var endtime: String = ""
 }
