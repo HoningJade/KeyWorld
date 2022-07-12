@@ -48,8 +48,12 @@ class ConnectWifi : Fragment() {
             val handler = Handler(Looper.getMainLooper())
             handler.postDelayed({
                 if (alert.isShowing) {
-                    val fragment = ConnectWifiSuccess()
-                    (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+                    val transaction = activity?.supportFragmentManager?.beginTransaction()
+                    if (transaction != null) {
+                        transaction.replace(R.id.fragment_container, ConnectWifiSuccess())
+                        transaction.disallowAddToBackStack()
+                        transaction.commit()
+                    }
                     alert.dismiss()
                 }
             }, 3000)

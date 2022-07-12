@@ -6,16 +6,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import cn.edu.sjtu.keyworldteam.keyworld.R
 
 class OpenKeyFail : Fragment() {
+
+    private lateinit var returnButton: ImageButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_open_key_fail, container, false)
+        val view = inflater.inflate(R.layout.fragment_open_key_fail, container, false)
+
+        returnButton = view.findViewById(R.id.renewButton2)
+        returnButton.setOnClickListener{
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            if (transaction != null) {
+                transaction.replace(R.id.fragment_container, OpenKey())
+                transaction.disallowAddToBackStack()
+                transaction.commit()
+            }
+        }
+
+        return view
     }
 
 }
