@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import cn.edu.sjtu.keyworldteam.keyworld.databinding.ActivityMainBinding
@@ -28,6 +29,8 @@ class WifiConnection : AppCompatActivity() {
     var nfcAdapter: NfcAdapter? = null
     var pendingIntent: PendingIntent? = null
     var myTag: Tag? = null
+
+    private lateinit var returnButton: ImageButton
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +57,11 @@ class WifiConnection : AppCompatActivity() {
         )
         val tagDetected = IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED)
         tagDetected.addCategory(Intent.CATEGORY_DEFAULT)
+
+        returnButton = findViewById(R.id.returnButton1)
+        returnButton.setOnClickListener {
+            finish()
+        }
     }
 
     /******************************************************************************
