@@ -84,11 +84,19 @@ def getKey(request):
         return HttpResponse(status=404)
     
     json_data = json.loads(request.body)
-    username = json_data['roomid'] #TODO: check with front end
-    code = json_data['requestdetail']
+    username = json_data['lastname'] 
+    code = json_data['code']
 
     cursor = connection.cursor()
-    cursor.execute('SELECT * FROM residents WHERE username = %s, code = $s;', (username, code))
+    cursor.execute('SELECT residents.room_number, \
+                           rooms.key,\
+                           residents.start_date, \
+                           rersidents.end_date\
+                    FROM residents \
+                    JOIN rooms ON residents.room_number = rooms.room_number \
+                    WHERE residents.username = %s AND \
+                          residents.code = $s;',\
+                    (username, code))
     response = dictfetchall(cursor);
     
     if not response:
