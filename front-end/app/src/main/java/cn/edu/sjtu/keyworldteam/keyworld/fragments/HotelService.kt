@@ -23,14 +23,22 @@ class HotelService : Fragment() {
 
         instructionButton = view.findViewById(R.id.instructionButton)
         instructionButton.setOnClickListener{
-            val fragment = Instruction()
-            (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            if (transaction != null) {
+                transaction.replace(R.id.fragment_container, Instruction())
+                transaction.disallowAddToBackStack()
+                transaction.commit()
+            }
         }
 
         serviceButton = view.findViewById(R.id.selectServiceButton)
         serviceButton.setOnClickListener{
-            val fragment = SelectService()
-            (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            if (transaction != null) {
+                transaction.replace(R.id.fragment_container, SelectService())
+                transaction.disallowAddToBackStack()
+                transaction.commit()
+            }
         }
 
         return view

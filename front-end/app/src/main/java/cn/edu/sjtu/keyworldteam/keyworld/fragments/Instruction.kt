@@ -10,12 +10,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.fragment.app.FragmentActivity
 import cn.edu.sjtu.keyworldteam.keyworld.R
 
 class Instruction : Fragment() {
 
     private lateinit var button: Button
+    private lateinit var returnButton: ImageButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,13 +50,27 @@ class Instruction : Fragment() {
             val handler = Handler(Looper.getMainLooper())
             handler.postDelayed({
                 if (alert.isShowing) {
-                    val fragment = InstructionSuccess()
-                    (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+                    val transaction = activity?.supportFragmentManager?.beginTransaction()
+                    if (transaction != null) {
+                        transaction.replace(R.id.fragment_container, InstructionSuccess())
+                        transaction.disallowAddToBackStack()
+                        transaction.commit()
+                    }
                     alert.dismiss()
                 }
             }, 3000)
 
             // TODO: Verify Instruction NFC tag
+        }
+
+        returnButton = view.findViewById(R.id.returnButton2)
+        returnButton.setOnClickListener{
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            if (transaction != null) {
+                transaction.replace(R.id.fragment_container, HotelService())
+                transaction.disallowAddToBackStack()
+                transaction.commit()
+            }
         }
 
         return view
