@@ -28,7 +28,6 @@ def keyUpload(request):
 def residentUpdate(request):
     return render(request, 'residentUpdate.html', {})
 
-<<<<<<< HEAD
 def serviceList(request):
     return render(request, 'serviceList.html', {})
 
@@ -49,11 +48,24 @@ def liveChat(request):
 #                    '(%s, %s, 0);', (room_num, nfc_key))
 #     return render(request, 'keyUpload.html', {})
 #     return render(request, 'test.html', {})
-=======
+
 def serviceRequestList(request):
-    return render(request, 'serviceRequestList.php', {})
+    "fetch all service request and display"
+    cursor = connection.cursor()
+    cursor.execute('SELECT * FROM services ORDER BY request_time DESC;')
+    serviceList = dictfetchall(cursor)
+    return render(request, 'serviceRequestList.html', {'serviceList': serviceList})
+
+def dictfetchall(cursor):
+    "Return all rows from a cursor as a dict"
+    columns = [col[0] for col in cursor.description]
+    return [
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+    ]
 
 def serviceSelect(request):
+    "insert user's selection of service"
     if request.method != 'POST':
             return HttpResponse(status=404)
     json_data = json.loads(request.body)
@@ -66,4 +78,3 @@ def serviceSelect(request):
     # TODO: notification
     return JsonResponse({})
 
->>>>>>> cbae79f7b975237397262f9758e8cf7e7f474fac
