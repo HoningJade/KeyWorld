@@ -12,6 +12,7 @@ The frontend posts service requests selected by the user through `postmsg` API t
 }
 ```
 
+<<<<<<< HEAD
 #### Get Room Information
 
 The frontend receives request response from the backend through `getmsg` API. 
@@ -26,5 +27,14 @@ The format of response should be:
     "VirtualKey": string
     "AvailabilityStartTime": Timestamp
     "AvailabilityEndTime": Timestamp
+=======
+#### Receive Response
+
+The frontend receives request response from the backend through `getmsg` API. The format of response is:
+
+```kotlin
+{	
+   "code": 200 - Success; 400 - Bad Request
+>>>>>>> 032ce7c65708ccdcb3f4b346098a4b7a9234c362
 }
 ```

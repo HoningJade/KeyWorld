@@ -5,6 +5,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <style>
       html, body {
+        /* background: linear-gradient(45deg, #83b1af, #a28cb1); */
         display: flex;
         justify-content: center;
         font-family: Roboto, Arial, sans-serif;
@@ -60,7 +61,8 @@
     </style>
   </head>
   <body>
-    <form action="/action_page.php">
+    <form action="" method='POST'>
+      {% csrf_token %}
       <h1>Upload Room-key Information</h1>
       <div class="formcontainer">
       <hr/>

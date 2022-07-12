@@ -4,6 +4,7 @@
     <string name="bar_wifi">Wi-Fi</string>
     <string name="bar_service">Service</string>
     <string name="bar_checkout">Checkout</string>
+    <string name="return_button">Return</string>
 
     <string name="last_name">Last Name</string>
     <string name="last_name_hint">Your last Name</string>

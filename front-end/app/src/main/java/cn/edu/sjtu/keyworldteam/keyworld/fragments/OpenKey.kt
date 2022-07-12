@@ -40,8 +40,12 @@ class OpenKey : Fragment() {
                 .setNegativeButton("CANCEL",
                     DialogInterface.OnClickListener { dialog, _ ->
                         dialog.cancel()
-                        val fragment = OpenKeyFail()
-                        (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+                        val transaction = activity?.supportFragmentManager?.beginTransaction()
+                        if (transaction != null) {
+                            transaction.replace(R.id.fragment_container, OpenKeyFail())
+                            transaction.disallowAddToBackStack()
+                            transaction.commit()
+                        }
                     })
 
             // create dialog box
@@ -52,8 +56,12 @@ class OpenKey : Fragment() {
             val handler = Handler(Looper.getMainLooper())
             handler.postDelayed({
                 if (alert.isShowing) {
-                    val fragment = OpenKeySuccess()
-                    (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+                    val transaction = activity?.supportFragmentManager?.beginTransaction()
+                    if (transaction != null) {
+                        transaction.replace(R.id.fragment_container, OpenKeySuccess())
+                        transaction.disallowAddToBackStack()
+                        transaction.commit()
+                    }
                     alert.dismiss()
                 }
             }, 3000)
