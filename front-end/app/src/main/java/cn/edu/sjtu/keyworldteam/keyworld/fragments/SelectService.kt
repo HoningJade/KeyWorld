@@ -73,13 +73,12 @@ class SelectService : Fragment() {
                 setService(radioButton.text as String)
                 Toast.makeText(requireContext(), _service.value, Toast.LENGTH_SHORT).show()
 
-                // Send service to back-end
+                // Send service request to back-end
                 val msg = Postt(
                     roomid = MySingleton.roomid,
                     requestdetail = radioButton.text.toString(),
                     timestamp = DateTimeFormatter.ISO_INSTANT.format(Instant.now()).toString()
                 )
-
                 postMsg(requireContext(), msg)
 
                 val fragment = RequestServiceSuccess()
