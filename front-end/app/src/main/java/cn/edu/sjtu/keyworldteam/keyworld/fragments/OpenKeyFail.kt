@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.TextView
+import cn.edu.sjtu.keyworldteam.keyworld.MySingleton
 import cn.edu.sjtu.keyworldteam.keyworld.R
 
 class OpenKeyFail : Fragment() {
@@ -19,7 +21,10 @@ class OpenKeyFail : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_open_key_fail, container, false)
-
+        val tv1: TextView? = view?.findViewById(R.id.roomNum3)
+        if (tv1 != null) {
+            tv1.text = "Room: " + MySingleton.roomid.toString()
+        }
         returnButton = view.findViewById(R.id.renewButton2)
         returnButton.setOnClickListener{
             val transaction = activity?.supportFragmentManager?.beginTransaction()

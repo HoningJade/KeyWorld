@@ -34,7 +34,7 @@ object PostStore {
             Request.Method.POST,
             serverUrl+"postmsg/", JSONObject(jsonObj),
             { Log.d("postRequest", "request posted!") },
-            { error -> Log.e("postRequest", error.localizedMessage ?: "JsonObjectRequest error") }
+            { error -> Log.e("postRequest", error.localizedMessage ?: "JsonObjectRequest error")}
         )
         if (!this::queue.isInitialized) {
             queue = newRequestQueue(context)
