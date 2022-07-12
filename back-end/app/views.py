@@ -73,8 +73,9 @@ def serviceSelect(request):
     service = json_data['requestdetail']
     requestTime = json_data['timestamp']
     cursor = connection.cursor()
-    cursor.execute('INSERT INTO serviceRequest (room, service, requestTime) VALUES '
-                '(%s, %s, %d);', (room, service, requestTime))
+    cursor.execute('INSERT INTO services (room_number, service, request_time, status) \
+                    VALUES (%d, %s, %d, %s);', \
+                    (room, service, requestTime, 'pending'))
     # TODO: notification
     return JsonResponse({})
 
@@ -84,11 +85,19 @@ def getKey(request):
         return HttpResponse(status=404)
     
     json_data = json.loads(request.body)
-    username = json_data['roomid'] #TODO: check with front end
-    code = json_data['requestdetail']
+    username = json_data['lastname'] 
+    code = json_data['code']
 
     cursor = connection.cursor()
-    cursor.execute('SELECT * FROM residents WHERE username = %s, code = $s;', (username, code))
+    cursor.execute('SELECT residents.room_number, \
+                           rooms.key,\
+                           residents.start_date, \
+                           rersidents.end_date\
+                    FROM residents \
+                    JOIN rooms ON residents.room_number = rooms.room_number \
+                    WHERE residents.username = %s AND \
+                          residents.code = $s;',\
+                    (username, code))
     response = dictfetchall(cursor);
     
     if not response:
