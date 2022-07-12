@@ -2,6 +2,7 @@ package cn.edu.sjtu.keyworldteam.keyworld.fragments
 
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,6 +14,8 @@ import android.widget.Button
 import android.widget.ImageButton
 import androidx.fragment.app.FragmentActivity
 import cn.edu.sjtu.keyworldteam.keyworld.R
+import cn.edu.sjtu.keyworldteam.keyworld.ReadInstruction
+import cn.edu.sjtu.keyworldteam.keyworld.WifiConnection
 
 class Instruction : Fragment() {
 
@@ -28,39 +31,40 @@ class Instruction : Fragment() {
 
         button = view.findViewById(R.id.instructionReaderButton)
         button.setOnClickListener {
-            val dialogBuilder = AlertDialog.Builder(requireContext())
-
-            // set message of alert dialog
-            dialogBuilder.setMessage("Please keep the phone close to the NFC tag.")
-                // set title of alert dialog
-                .setTitle("READING...")
-                // if the dialog is cancelable
-                .setCancelable(false)
-                // negative button text and action
-                .setNegativeButton("CANCEL",
-                    DialogInterface.OnClickListener { dialog, _ ->
-                        dialog.cancel()
-                    })
-
-            // create dialog box
-            val alert = dialogBuilder.create()
-            // show alert dialog
-            alert.show()
-
-            val handler = Handler(Looper.getMainLooper())
-            handler.postDelayed({
-                if (alert.isShowing) {
-                    val transaction = activity?.supportFragmentManager?.beginTransaction()
-                    if (transaction != null) {
-                        transaction.replace(R.id.fragment_container, InstructionSuccess())
-                        transaction.disallowAddToBackStack()
-                        transaction.commit()
-                    }
-                    alert.dismiss()
-                }
-            }, 3000)
+//            val dialogBuilder = AlertDialog.Builder(requireContext())
+//
+//            // set message of alert dialog
+//            dialogBuilder.setMessage("Please keep the phone close to the NFC tag.")
+//                // set title of alert dialog
+//                .setTitle("READING...")
+//                // if the dialog is cancelable
+//                .setCancelable(false)
+//                // negative button text and action
+//                .setNegativeButton("CANCEL",
+//                    DialogInterface.OnClickListener { dialog, _ ->
+//                        dialog.cancel()
+//                    })
+//
+//            // create dialog box
+//            val alert = dialogBuilder.create()
+//            // show alert dialog
+//            alert.show()
+//
+//            val handler = Handler(Looper.getMainLooper())
+//            handler.postDelayed({
+//                if (alert.isShowing) {
+//                    val transaction = activity?.supportFragmentManager?.beginTransaction()
+//                    if (transaction != null) {
+//                        transaction.replace(R.id.fragment_container, InstructionSuccess())
+//                        transaction.disallowAddToBackStack()
+//                        transaction.commit()
+//                    }
+//                    alert.dismiss()
+//                }
+//            }, 3000)
 
             // TODO: Verify Instruction NFC tag
+            startActivity(Intent(requireContext(), ReadInstruction::class.java))
         }
 
         returnButton = view.findViewById(R.id.returnButton2)
