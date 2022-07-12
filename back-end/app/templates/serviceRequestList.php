@@ -84,7 +84,7 @@
         }
 
         //get results from database
-        $result = $connection->query("SELECT * FROM //TODO: table");
+        $result = $connection->query("SELECT * FROM reviews");
         $all_property = array();  //declare an array for saving property
 
         //showing property
