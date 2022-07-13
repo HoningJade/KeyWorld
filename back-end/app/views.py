@@ -65,7 +65,7 @@ def dictfetchall(cursor):
     ]
 
 @csrf_exempt
-def serviceSelect(request):
+def roomServiceRequest(request):
     "insert user's selection of service"
     if request.method != 'POST':
             return HttpResponse(status=404)
@@ -74,9 +74,11 @@ def serviceSelect(request):
     service = json_data['requestdetail']
     requestTime = json_data['timestamp']
     cursor = connection.cursor()
+    cursor.execute('select count(*) from services;')
+    count = cursor.fetchone()
     cursor.execute('INSERT INTO services (room_number, service, request_time, status, id) \
                     VALUES (%s, %s, %s, %s, %s);', \
-                    (room, service, requestTime, 'pending', '1')) #TODO: check if id self increment
+                    (room, service, requestTime, 'pending', count[0]+1)) #TODO: check if id self increment
     # TODO: notification
     return JsonResponse({})
 

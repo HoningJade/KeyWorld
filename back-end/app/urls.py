@@ -9,6 +9,6 @@ urlpatterns = [
     path('liveChat/', views.liveChat, name='liveChat'),
     # path(r'^keyUpload/$', views.keyUpload, name='keyUpload'),
     # path('serviceRequestList/', views.serviceRequestList, name='serviceRequestList'),
-    path('serviceSelect/', views.serviceSelect, name='serviceSelect'),
+    path('roomServiceRequest/', views.roomServiceRequest, name='roomServiceRequest'),
     path('getKey/', views.getKey, name='getKey'),
 ]
