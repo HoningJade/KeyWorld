@@ -78,30 +78,31 @@ def serviceSelect(request):
     # TODO: notification
     return JsonResponse({})
 
+
+@csrf_exempt
 def getKey(request):
     "use name and code to fetch the key"
     if request.method != 'GET':
         return HttpResponse(status=404)
-    
-    json_data = json.loads(request.body)
-    username = json_data['lastname'] 
-    code = json_data['code']
 
+    username = request.GET.get('lastname')
+    code = request.GET.get('code')
+    
     cursor = connection.cursor()
-    cursor.execute('SELECT residents.room_number, \
+    cursor.execute('SELECT residents.username,\
                            rooms.key,\
-                           residents.start_date, \
-                           rersidents.end_date\
-                    FROM residents \
-                    JOIN rooms ON residents.room_number = rooms.room_number \
-                    WHERE residents.username = %s AND \
-                          residents.code = $s;',\
-                    (username, code))
-    response = dictfetchall(cursor);
+                           residents.start_date,\
+                           residents.end_date\
+                    FROM residents\
+                    JOIN rooms ON residents.room_number = rooms.room_number\
+                    WHERE residents.username = %s AND residents.code = %s;',\
+                    (username,code))
+    
+    response = dictfetchall(cursor)
     
     if not response:
         return JsonResponse(status=404, data={"message": "wrong code and username"})
     if len(response) > 1:
         return JsonResponse(status=404, data={"message": "something went wrong, please contact the hotel"})
-  
-    return JsonResponse(response)
+
+    return JsonResponse(response[0])
