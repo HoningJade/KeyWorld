@@ -64,7 +64,8 @@ def dictfetchall(cursor):
         for row in cursor.fetchall()
     ]
 
-def serviceSelect(request):
+@csrf_exempt
+def roomServiceRequest(request):
     "insert user's selection of service"
     if request.method != 'POST':
             return HttpResponse(status=404)
@@ -73,8 +74,11 @@ def serviceSelect(request):
     service = json_data['requestdetail']
     requestTime = json_data['timestamp']
     cursor = connection.cursor()
-    cursor.execute('INSERT INTO serviceRequest (room, service, requestTime) VALUES '
-                '(%s, %s, %d);', (room, service, requestTime))
+    cursor.execute('select count(*) from services;')
+    count = cursor.fetchone()
+    cursor.execute('INSERT INTO services (room_number, service, request_time, status, id) \
+                    VALUES (%s, %s, %s, %s, %s);', \
+                    (room, service, requestTime, 'pending', count[0]+1)) #TODO: check if id self increment
     # TODO: notification
     return JsonResponse({})
 
@@ -85,10 +89,12 @@ def keyFetch(request):
     if request.method != 'GET':
         return HttpResponse(status=404)
 
+
     username = request.GET.get('lastname')
     code = request.GET.get('code')
     
     cursor = connection.cursor()
+
     cursor.execute('SELECT residents.room_number,\
                            rooms.key,\
                            residents.start_date,\
@@ -99,6 +105,7 @@ def keyFetch(request):
                     (username,code))
     
     response = dictfetchall(cursor)
+
     
     if not response:
         return JsonResponse(status=404, data={"message": "wrong code and username"})

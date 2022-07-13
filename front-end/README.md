@@ -12,13 +12,19 @@ The frontend posts service requests selected by the user through `postmsg` API t
 }
 ```
 
-#### Receive Response
+#### Get Room Information
 
-The frontend receives request response from the backend through `getmsg` API. The format of response is:
+The frontend receives request response from the backend through `getmsg` API. 
+
+The request URL has two parameters: `lastname` and `code`.
+
+The format of response should be:
 
 ```kotlin
 {	
-   "code": 200 - Success; 400 - Bad Request
+   "roomid": int (example: 301)
+    "VirtualKey": string
+    "AvailabilityStartTime": Timestamp
+    "AvailabilityEndTime": Timestamp
 }
 ```
-

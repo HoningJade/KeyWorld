@@ -10,6 +10,7 @@ import android.content.IntentFilter
 import android.nfc.*
 import android.os.Parcelable
 import android.util.Log
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import cn.edu.sjtu.keyworldteam.keyworld.databinding.ActivityReadInstructionBinding
@@ -26,6 +27,8 @@ class ReadInstruction : AppCompatActivity()  {
     var nfcAdapter: NfcAdapter? = null
     var pendingIntent: PendingIntent? = null
     var myTag: Tag? = null
+
+    private lateinit var returnButton: ImageButton
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +55,11 @@ class ReadInstruction : AppCompatActivity()  {
         )
         val tagDetected = IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED)
         tagDetected.addCategory(Intent.CATEGORY_DEFAULT)
+
+        returnButton = findViewById(R.id.returnButton3)
+        returnButton.setOnClickListener {
+            finish()
+        }
     }
 
     /******************************************************************************

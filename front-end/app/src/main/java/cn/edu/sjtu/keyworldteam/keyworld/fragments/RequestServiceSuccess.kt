@@ -22,8 +22,12 @@ class RequestServiceSuccess : Fragment() {
 
         requestDone = view.findViewById(R.id.requestDoneButton)
         requestDone.setOnClickListener {
-            val fragment = HotelService()
-            (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            if (transaction != null) {
+                transaction.replace(R.id.fragment_container, HotelService())
+                transaction.disallowAddToBackStack()
+                transaction.commit()
+            }
         }
 
         return view

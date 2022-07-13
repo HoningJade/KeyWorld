@@ -26,6 +26,7 @@ class Checkout : Fragment() {
         button = view.findViewById(R.id.checkConfirmButton)
         button.setOnClickListener {
             startActivity(Intent(requireContext(), SendReview::class.java))
+            activity?.finish()
         }
 
         return view
