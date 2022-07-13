@@ -16,7 +16,7 @@ class SendReview : AppCompatActivity() {
 
         button = findViewById(R.id.sendReviewButton)
         button.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
     }
 }

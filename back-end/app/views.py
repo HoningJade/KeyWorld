@@ -71,7 +71,8 @@ def dictfetchall(cursor):
         for row in cursor.fetchall()
     ]
 
-def serviceSelect(request):
+@csrf_exempt
+def roomServiceRequest(request):
     "insert user's selection of service"
     if request.method != 'POST':
             return HttpResponse(status=404)
@@ -80,45 +81,51 @@ def serviceSelect(request):
     service = json_data['requestdetail']
     requestTime = json_data['timestamp']
     cursor = connection.cursor()
-    cursor.execute('INSERT INTO services (room_number, service, request_time, status) \
-                    VALUES (%d, %s, %d, %s);', \
-                    (room, service, requestTime, 'pending'))
-    # TODO: notification
+    cursor.execute('select count(*) from services;')
+    count = cursor.fetchone()
+    cursor.execute('INSERT INTO services (room_number, service, request_time, status, id) \
+                    VALUES (%s, %s, %s, %s, %s);', \
+                    (room, service, requestTime, 'pending', count[0]+1)) #TODO: check if id self increment
+
     head = 'New Service Request!'
     body = 'Room '+room+' has a new request: '+service
     webNotification("allusers",head,body)
         
     return JsonResponse({})
 
+
 def webNotification(group_name,head,body):
     payload = {'head': head, 'body': body}
     send_group_notification(group_name=group_name, payload=payload, ttl=1000)
 
 
-def getKey(request):
+@csrf_exempt
+def keyFetch(request):
     "use name and code to fetch the key"
     if request.method != 'GET':
         return HttpResponse(status=404)
-    
-    json_data = json.loads(request.body)
-    username = json_data['lastname'] 
-    code = json_data['code']
 
+
+    username = request.GET.get('lastname')
+    code = request.GET.get('code')
+    
     cursor = connection.cursor()
-    cursor.execute('SELECT residents.room_number, \
+
+    cursor.execute('SELECT residents.room_number,\
                            rooms.key,\
-                           residents.start_date, \
-                           rersidents.end_date\
-                    FROM residents \
-                    JOIN rooms ON residents.room_number = rooms.room_number \
-                    WHERE residents.username = %s AND \
-                          residents.code = $s;',\
-                    (username, code))
-    response = dictfetchall(cursor);
+                           residents.start_date,\
+                           residents.end_date\
+                    FROM residents\
+                    JOIN rooms ON residents.room_number = rooms.room_number\
+                    WHERE residents.username = %s AND residents.code = %s;',\
+                    (username,code))
+    
+    response = dictfetchall(cursor)
+
     
     if not response:
         return JsonResponse(status=404, data={"message": "wrong code and username"})
     if len(response) > 1:
-        return JsonResponse(status=404, data={"message": "something went wrong, please contact the hotel"})
-  
-    return JsonResponse(response)
+        return JsonResponse(status=400, data={"message": "something went wrong, please contact the hotel"})
+
+    return JsonResponse(response[0])

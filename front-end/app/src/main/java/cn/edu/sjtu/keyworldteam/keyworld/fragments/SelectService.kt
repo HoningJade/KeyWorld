@@ -7,10 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -33,6 +30,7 @@ class SelectService : Fragment() {
     val service: LiveData<String> = _service
 
     private lateinit var liveChatButton: Button
+    private lateinit var returnButton: ImageButton
 
     fun setService(desiredService: String) {
         _service.value = desiredService
@@ -73,18 +71,20 @@ class SelectService : Fragment() {
                 setService(radioButton.text as String)
                 Toast.makeText(requireContext(), _service.value, Toast.LENGTH_SHORT).show()
 
-                // Send service to back-end
+                // Send service request to back-end
                 val msg = Postt(
                     roomid = MySingleton.roomid,
                     requestdetail = radioButton.text.toString(),
                     timestamp = DateTimeFormatter.ISO_INSTANT.format(Instant.now()).toString()
                 )
-
                 postMsg(requireContext(), msg)
 
-                val fragment = RequestServiceSuccess()
-                (activity as FragmentActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, fragment).commit()
+                val transaction = activity?.supportFragmentManager?.beginTransaction()
+                if (transaction != null) {
+                    transaction.replace(R.id.fragment_container, RequestServiceSuccess())
+                    transaction.disallowAddToBackStack()
+                    transaction.commit()
+                }
             } else {
 //                Toast.makeText(requireContext(), "None is selected", Toast.LENGTH_SHORT).show()
                 val dialogBuilder = AlertDialog.Builder(requireContext())
@@ -109,11 +109,23 @@ class SelectService : Fragment() {
         }
 
         liveChatButton = view.findViewById(R.id.liveChat)
-
         liveChatButton.setOnClickListener {
-            val fragment = LiveChat()
-            (activity as FragmentActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment).commit()
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            if (transaction != null) {
+                transaction.replace(R.id.fragment_container, LiveChat())
+                transaction.disallowAddToBackStack()
+                transaction.commit()
+            }
+        }
+
+        returnButton = view.findViewById(R.id.returnButton4)
+        returnButton.setOnClickListener{
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            if (transaction != null) {
+                transaction.replace(R.id.fragment_container, HotelService())
+                transaction.disallowAddToBackStack()
+                transaction.commit()
+            }
         }
 
         return view

@@ -10,8 +10,8 @@ urlpatterns = [
     path('liveChat/', views.liveChat, name='liveChat'),
     # path(r'^keyUpload/$', views.keyUpload, name='keyUpload'),
     # path('serviceRequestList/', views.serviceRequestList, name='serviceRequestList'),
-    path('serviceSelect/', views.serviceSelect, name='serviceSelect'),
+    path('roomServiceRequest/', views.roomServiceRequest, name='roomServiceRequest'),
     re_path(r'^webpush/', include('webpush.urls')),
     path('register/', views.register, name = 'registerNotification'),
-    path('getKey/', views.getKey, name='getKey'),
-] 
+    path('keyFetch/', views.keyFetch, name='keyFetch'),
+
