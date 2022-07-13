@@ -64,6 +64,7 @@ def dictfetchall(cursor):
         for row in cursor.fetchall()
     ]
 
+@csrf_exempt
 def serviceSelect(request):
     "insert user's selection of service"
     if request.method != 'POST':
