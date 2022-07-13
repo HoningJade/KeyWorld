@@ -53,8 +53,8 @@ def serviceRequestList(request):
     "fetch all service request and display"
     cursor = connection.cursor()
     cursor.execute('SELECT * FROM services ORDER BY request_time DESC;')
-    serviceList = dictfetchall(cursor)
-    return render(request, 'serviceRequestList.html', {'serviceList': serviceList})
+    serviceRequestList = dictfetchall(cursor)
+    return render(request, 'serviceRequestList.html', {'serviceRequestList': serviceRequestList})
 
 def dictfetchall(cursor):
     "Return all rows from a cursor as a dict"
@@ -64,7 +64,8 @@ def dictfetchall(cursor):
         for row in cursor.fetchall()
     ]
 
-def serviceSelect(request):
+@csrf_exempt
+def roomServiceRequest(request):
     "insert user's selection of service"
     if request.method != 'POST':
             return HttpResponse(status=404)
@@ -73,8 +74,11 @@ def serviceSelect(request):
     service = json_data['requestdetail']
     requestTime = json_data['timestamp']
     cursor = connection.cursor()
-    cursor.execute('INSERT INTO serviceRequest (room, service, requestTime) VALUES '
-                '(%s, %s, %d);', (room, service, requestTime))
+    cursor.execute('select count(*) from services;')
+    count = cursor.fetchone()
+    cursor.execute('INSERT INTO services (room_number, service, request_time, status, id) \
+                    VALUES (%s, %s, %s, %s, %s);', \
+                    (room, service, requestTime, 'pending', count[0]+1)) #TODO: check if id self increment
     # TODO: notification
     return JsonResponse({})
 
@@ -84,11 +88,19 @@ def getKey(request):
         return HttpResponse(status=404)
     
     json_data = json.loads(request.body)
-    username = json_data['roomid'] #TODO: check with front end
-    code = json_data['requestdetail']
+    username = json_data['lastname'] 
+    code = json_data['code']
 
     cursor = connection.cursor()
-    cursor.execute('SELECT * FROM residents WHERE username = %s, code = $s;', (username, code))
+    cursor.execute('SELECT residents.room_number, \
+                           rooms.key,\
+                           residents.start_date, \
+                           rersidents.end_date\
+                    FROM residents \
+                    JOIN rooms ON residents.room_number = rooms.room_number \
+                    WHERE residents.username = %s AND \
+                          residents.code = $s;',\
+                    (username, code))
     response = dictfetchall(cursor);
     
     if not response:
