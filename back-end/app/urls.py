@@ -10,5 +10,5 @@ urlpatterns = [
     # path(r'^keyUpload/$', views.keyUpload, name='keyUpload'),
     # path('serviceRequestList/', views.serviceRequestList, name='serviceRequestList'),
     path('serviceSelect/', views.serviceSelect, name='serviceSelect'),
-    path('getKey/', views.getKey, name='getKey'),
+    path('keyFetch/', views.keyFetch, name='keyFetch'),
 ]

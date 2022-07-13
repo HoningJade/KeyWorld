@@ -80,7 +80,7 @@ def serviceSelect(request):
 
 
 @csrf_exempt
-def getKey(request):
+def keyFetch(request):
     "use name and code to fetch the key"
     if request.method != 'GET':
         return HttpResponse(status=404)
@@ -89,7 +89,7 @@ def getKey(request):
     code = request.GET.get('code')
     
     cursor = connection.cursor()
-    cursor.execute('SELECT residents.username,\
+    cursor.execute('SELECT residents.room_number,\
                            rooms.key,\
                            residents.start_date,\
                            residents.end_date\
@@ -103,6 +103,6 @@ def getKey(request):
     if not response:
         return JsonResponse(status=404, data={"message": "wrong code and username"})
     if len(response) > 1:
-        return JsonResponse(status=404, data={"message": "something went wrong, please contact the hotel"})
+        return JsonResponse(status=400, data={"message": "something went wrong, please contact the hotel"})
 
     return JsonResponse(response[0])
