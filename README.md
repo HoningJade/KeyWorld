@@ -94,26 +94,27 @@ Guests can request room service through the room service request block on the re
 
 **Example**
 
-### KeyFetch
+### keyFetch
 **Request Parameters**
 | Key        | Location | Type   | Description      |
 | ---------- | -------- | ------ | ---------------- |
-| `GuestLastName` | JSON | String | Guest's last name |
-| `CheckinCode` | JSON | String | Guest's check in code |
+| `lastname` | JSON | String | Guest's last name |
+| `code` | JSON | String | Guest's check in code |
 
 **Response Codes**
 | Code              | Description            |
 | ----------------- | ---------------------- |
 | `200 OK`          | Succeed |
 | `400 Bad Request` | Invalid parameters |
+| `404 Not Found`   | name code pair not found |
 
 **Returns**
 | Key        | Location       | Type   | Description  |
 | ---------- | -------------- | ------ | ------------ |
-| `isFound` | JSON | Boolean | Whether the guest is found in the database|
-| `VirtualKey` | JSON | String | The virtual key information for the card emulator |
-| `AvailabilityStartTime` | JSON | Timestamp | When the key starts the availability |
-| `AvailabilityEndTime` | JSON | Timestamp | When the key ends the availability |
+| `room_number` | JSON | Int | The guest's room number |
+| `key` | JSON | String | The virtual key information for the card emulator |
+| `start_date` | JSON | Timestamp | When the key starts the availability |
+| `end_date` | JSON | Timestamp | When the key ends the availability |
 
 ### InstructionFetch
 **Request Parameters**
