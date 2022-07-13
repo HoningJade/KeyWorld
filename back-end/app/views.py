@@ -84,10 +84,15 @@ def serviceSelect(request):
                     VALUES (%d, %s, %d, %s);', \
                     (room, service, requestTime, 'pending'))
     # TODO: notification
-    payload = {'head': 'New Service Request!', 'body': 'Room '+room+' has a new request: '+service}
-    send_group_notification(group_name="my_group", payload=payload, ttl=1000)
+    head = 'New Service Request!'
+    body = 'Room '+room+' has a new request: '+service
+    webNotification("allusers",head,body)
         
     return JsonResponse({})
+
+def webNotification(group_name,head,body):
+    payload = {'head': head, 'body': body}
+    send_group_notification(group_name=group_name, payload=payload, ttl=1000)
 
 
 def getKey(request):

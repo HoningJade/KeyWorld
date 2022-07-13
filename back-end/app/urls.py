@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf import settings
 from . import views
 
@@ -11,7 +11,7 @@ urlpatterns = [
     # path(r'^keyUpload/$', views.keyUpload, name='keyUpload'),
     # path('serviceRequestList/', views.serviceRequestList, name='serviceRequestList'),
     path('serviceSelect/', views.serviceSelect, name='serviceSelect'),
-    path(r'^webpush/', include('webpush.urls')),
+    re_path(r'^webpush/', include('webpush.urls')),
     path('register/', views.register, name = 'registerNotification'),
     path('getKey/', views.getKey, name='getKey'),
 ] 
