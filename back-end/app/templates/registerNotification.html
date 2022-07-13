@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
-{% load webpush_notifications %}
   <head>
+    <meta name="vapid-key" content="{{ vapid_key }}">
+    {% if user.id %}
+        <meta name="user_id" content="{{ user.id }}">
+    {% endif %}
+    {% load webpush_notifications %}
+    {% webpush_header %}
     <title>Simple login form</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <style>
@@ -60,9 +65,9 @@
         }
       }
     </style>
-    {% webpush_header %}
   </head>
   <body>
+    <h1>Subscribe for Notifications</h1>
     {% webpush_button %}
   </body>
 </html>
