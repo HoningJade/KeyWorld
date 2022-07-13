@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app.apps.AppConfig'
+    'app.apps.AppConfig',
+    'webpush',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +129,10 @@ STATIC_ROOT = BASE_DIR / 'static'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#WEBPUSH (for web push notifications)
+WEBPUSH_SETTINGS = {
+    "VAPID_PUBLIC_KEY": "BJHRW31LV4k_TzpdK1jk8E8NJ-WMPrWypJ_PZFVnLhsIqSJYH-gdNfQ0FZVxRko1XW3bOz6TFt0ozQb2r0Bo5BY",
+    "VAPID_PRIVATE_KEY":"yrPDBCnHRF22zA1eDvJLPtJPV3F8vRvtS_ydYEJgGng",
+    "VAPID_ADMIN_EMAIL": "cinryzh@gmail.com" #TODO: update VAPID KEY
+}

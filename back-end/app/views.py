@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User, Group
 import json
 from django.db import connection
 from django.http import JsonResponse, HttpResponse
+from webpush import send_group_notification
 
 # Create your views here.
 def home(request):
@@ -48,7 +50,12 @@ def liveChat(request):
 #                    '(%s, %s, 0);', (room_num, nfc_key))
 #     return render(request, 'keyUpload.html', {})
 #     return render(request, 'test.html', {})
+def register(request):
+    webpush = {"group": 'allusers' } # The group_name should be the name you would define.
+    return render(request, 'registerNotification.html', {'webpush':webpush})
 
+    
+    
 def serviceRequestList(request):
     "fetch all service request and display"
     cursor = connection.cursor()
@@ -77,7 +84,11 @@ def serviceSelect(request):
                     VALUES (%d, %s, %d, %s);', \
                     (room, service, requestTime, 'pending'))
     # TODO: notification
+    payload = {'head': 'New Service Request!', 'body': 'Room '+room+' has a new request: '+service}
+    send_group_notification(group_name="my_group", payload=payload, ttl=1000)
+        
     return JsonResponse({})
+
 
 def getKey(request):
     "use name and code to fetch the key"
