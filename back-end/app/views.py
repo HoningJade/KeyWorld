@@ -73,9 +73,9 @@ def serviceSelect(request):
     service = json_data['requestdetail']
     requestTime = json_data['timestamp']
     cursor = connection.cursor()
-    cursor.execute('INSERT INTO services (room_number, service, request_time, status) \
-                    VALUES (%d, %s, %d, %s);', \
-                    (room, service, requestTime, 'pending'))
+    cursor.execute('INSERT INTO services (room_number, service, request_time, status, id) \
+                    VALUES (%s, %s, %s, %s, %s);', \
+                    (room, service, requestTime, 'pending', '1')) #TODO: check if id self increment
     # TODO: notification
     return JsonResponse({})
 
