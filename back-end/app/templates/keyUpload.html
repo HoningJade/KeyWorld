@@ -58,6 +58,77 @@
         float: none;
         }
       }
+
+
+
+      /*Navigation*/
+      nav h1 {
+            float: left;
+            padding: 0 0.25em 0 0;
+            font-size: 4.5em;
+            text-transform: uppercase;
+        }
+        nav h1 a {
+            color: #0d4a9a;
+        }
+        .nav-ul {
+            display: flex;
+        }
+        header li {
+            width: 20%;
+        }
+        header li:not(:first-child) {
+            margin-left: 15%;
+        }
+        header .nav-ul a {
+            display: block;
+            padding: 3em 0.5em;
+            font-size: 1.5em;
+            text-align: center;
+            text-transform: uppercase;
+            color: #333;
+        }
+        header .nav-ul a:focus, header .nav-ul a:hover {
+            color: #0d4a9a;
+        }
+        header .nav-ul a:active {
+            color: #0f55b2;
+        }
+        /*header li:first-child a {
+            background: #0d4a9a;
+            color: #fff;
+        }*/
+        header li:first-child a:hover {
+            color: #fff;
+        }
+        /*Footer*/
+        footer {
+              padding: 0em 0;
+              width: 100%;
+              text-align: center;
+              background: #d3d3d3;
+          }
+          footer .nav-ul {
+              justify-content: center;
+              margin-bottom: 1em;
+          }
+          footer li:not(:first-child) {
+              margin-left: 2.75em;
+          }
+          footer li:first-child a {
+              color: #333;
+          }
+          footer a {
+              font-size: 0.85em;
+              font-weight: bold;
+              color: #a9a9a9;
+          }
+          footer a:focus, footer a:hover {
+              color: #333;
+          }
+          .copy {
+              font-size: 0.85em;
+          }
     </style>
   </head>
   <body>
@@ -74,5 +145,16 @@
       </div>
       <button type="submit">Submit</button>
     </form>
+
+    <footer>
+      <nav role="navigation">
+        <ul class="nav-ul" style="list-style: none;">
+          <li><a href="/">Home</a></li>
+          <li><a href="#">Review</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+    </footer>
+
   </body>
 </html>
