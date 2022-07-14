@@ -21,7 +21,7 @@ def keyUpload(request):
                 return render(request, 'error.html', {})
             else:
                 cursor.execute('INSERT INTO rooms (room_number, key, availability) VALUES '
-                        '(%s, %s, 0);', (room_number, key))
+                        '(%s, %s, 0);', (room_number, key,))
                 return render(request, 'keyUpload.html', {})
                 
     return render(request, 'keyUpload.html', {})
@@ -74,6 +74,8 @@ def roomServiceRequest(request):
     body = 'Room '+room+' has a new request: '+service
     webNotification("allusers",head,body)
         
+    # return JsonResponse(status=200, {"service count": "enter"}) // error
+    # return JsonResponse({"msg": count})
     return JsonResponse({})
 
 
@@ -92,7 +94,6 @@ def keyFetch(request):
     code = request.GET.get('code')
     
     cursor = connection.cursor()
-
     cursor.execute('SELECT residents.room_number,\
                            rooms.key,\
                            residents.start_date,\
@@ -103,13 +104,10 @@ def keyFetch(request):
                     (username, code,))
     
     result = dictfetchall(cursor)
-
     
     if not result:
-        return JsonResponse(status=404, data={"msg": "wrong code and username"})
+        return JsonResponse(status=404, data={"msg": "wrong code or username"})
     if len(result) > 1:
         return JsonResponse(status=400, data={"msg": "something went wrong, please contact the hotel"})
 
-    response['msg'] = result[0]
-
-    return JsonResponse(status=200, data=response)
+    return JsonResponse(status=200, data=result[0])
