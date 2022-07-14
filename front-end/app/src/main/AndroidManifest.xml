@@ -17,7 +17,7 @@
         <activity
             android:name=".WifiConnection"
             android:exported="true" >
-            <!--<intent-filter>
+            <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -27,7 +27,7 @@
 
             <meta-data
                 android:name="android.nfc.action.TECH_DISCOVERED"
-                android:resource="@xml/nfc_tech_filter" />-->
+                android:resource="@xml/nfc_tech_filter" />
         </activity>
 
         <activity
