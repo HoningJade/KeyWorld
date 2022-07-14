@@ -21,7 +21,7 @@
         border: 1px solid #ccc;
         box-sizing: border-box;
       }
-      button {
+      input[type=submit] {
         background-color: #0d4a9a;
         color: white;
         padding: 14px 0;
@@ -34,7 +34,7 @@
         text-align:center;
         fone-size:18;
       }
-      button:hover {
+      input[type=submit]:hover {
         opacity: 0.8;
       }
       .formcontainer {
@@ -140,13 +140,14 @@
         <label for="Code"><strong>Resident Code</strong></label>
         <input type="text" placeholder="Enter Resident Code" name="code" required>
         <label for="RoomNum"><strong>Room Number</strong></label>
-        <input type="text" placeholder="Enter Room number" name="RoomNum" required>
+        <input type="text" placeholder="Enter Room number" name="room_number" required>
         <label for="StartDate"><strong>Start Date</strong></label>
-        <input type="text" placeholder="Enter Start date" name="start" required>
+        <input type="text" placeholder="Enter Start date (YYYY-MM-DD)" name="start" required>
         <label for="EndDate"><strong>End Date</strong></label>
-        <input type="text" placeholder="Enter End date" name="end" required>
+        <input type="text" placeholder="Enter End date (YYYY-MM-DD)" name="end" required>
       </div>
-      <button type="submit">Submit</button>
+      <input type="submit" name="Add" value="Add">
+      <input type="submit" name="Update" value="Update">
     </form>
 
     <footer>

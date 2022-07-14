@@ -15,18 +15,68 @@ def keyUpload(request):
         if request.POST.get('room') and request.POST.get('key'):
             room_number = request.POST.get('room')
             key = request.POST.get('key')
+
             cursor = connection.cursor()
-            cursor.execute('SELECT * FROM rooms WHERE room_number=%s', (room_number,))
-            if (cursor.fetchall()):
-                return render(request, 'error.html', {})
+            if 'Add' in request.POST:
+                cursor.execute('SELECT * FROM rooms WHERE room_number=%s', (room_number,))
+                if cursor.fetchall():
+                    return render(request, 'error.html', {})
+                else:
+                    cursor.execute('INSERT INTO rooms (room_number, key, availability) VALUES '
+                            '(%s, %s, 0);', (room_number, key,))
+                    return render(request, 'keyUpload.html', {})
+
+            elif 'Update' in request.POST:
+                cursor.execute('SELECT * FROM rooms WHERE room_number=%s', (room_number,))
+                if not cursor.fetchall():
+                    return render(request, 'error.html', {})
+                else:
+                    cursor.execute('UPDATE rooms SET key = %s WHERE room_number = %s', (key, room_number,))
+                    return render(request, 'keyUpload.html', {})
+
             else:
-                cursor.execute('INSERT INTO rooms (room_number, key, availability) VALUES '
-                        '(%s, %s, 0);', (room_number, key,))
-                return render(request, 'keyUpload.html', {})
+                return render(request, 'error.html', {})
                 
     return render(request, 'keyUpload.html', {})
 
 def residentUpdate(request):
+    if request.method == 'POST':
+        if request.POST.get('name') and request.POST.get('code') and request.POST.get('room_number')\
+            and request.POST.get('start') and request.POST.get('end'):
+            username = request.POST.get('name')
+            code = request.POST.get('code')
+            room_number = request.POST.get('room_number')
+            start_date = request.POST.get('start')
+            end_date = request.POST.get('end')
+            
+            cursor = connection.cursor()
+            cursor.execute('SELECT * FROM rooms WHERE room_number=%s', (room_number,))
+            if not cursor.fetchall():  # room does not exist
+                return render(request, 'error.html', {})
+            
+            if 'Add' in request.POST:
+                cursor.execute('SELECT * FROM residents WHERE room_number=%s AND username=%s', (room_number, username,))
+                if cursor.fetchall():
+                    return render(request, 'error.html', {})
+                else:
+                    cursor.execute('INSERT INTO residents (username, code, room_number, start_date, end_date) VALUES '
+                            '(%s, %s, %s, %s, %s);', (username, code, room_number, start_date, end_date,))
+                    # TODO: set room availability
+                    return render(request, 'residentUpdate.html', {})
+
+            elif 'Update' in request.POST: 
+                cursor.execute('SELECT * FROM residents WHERE room_number=%s AND username=%s', (room_number, username,))
+                if not cursor.fetchall():
+                    return render(request, 'error.html', {})
+                else:
+                    cursor.execute('UPDATE residents SET code=%s, start_date=%s, end_date=%s '
+                            'WHERE room_number=%s AND username=%s;', (code, start_date, end_date, room_number, username))
+                    # TODO: set room availability
+                    return render(request, 'residentUpdate.html', {})
+
+            else:
+                return render(request, 'error.html', {})
+
     return render(request, 'residentUpdate.html', {})
 
 def serviceList(request):
