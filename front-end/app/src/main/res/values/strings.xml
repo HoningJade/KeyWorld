@@ -37,10 +37,17 @@
     <string name="request_success">Request Success!</string>
     <string name="request_done">Done</string>
 
+    <string name="my_message">Can you send a pair of slipper to room 512?</string>
+    <string name="other_message">Sure, coming</string>
+    <string name="message_hint">Enter your message.</string>
+
     <string name="checkout_text">Sure to check out of your current hotel?</string>
     <string name="checkout_confirm">Yes</string>
 
     <string name="send_review">Send</string>
+    <string name="rating">Rating</string>
+    <string name="review">Review</string>
+    <string name="review_hint">Enter your review of the hotel.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
