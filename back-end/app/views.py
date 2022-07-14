@@ -16,15 +16,14 @@ def keyUpload(request):
             room_number = request.POST.get('room')
             key = request.POST.get('key')
             cursor = connection.cursor()
-            cursor.execute('INSERT INTO rooms (room_number, key, availability) VALUES '
+            cursor.execute('SELECT * FROM rooms WHERE room_number=%s', (room_number,))
+            if (cursor.fetchall()):
+                return render(request, 'error.html', {})
+            else:
+                cursor.execute('INSERT INTO rooms (room_number, key, availability) VALUES '
                         '(%s, %s, 0);', (room_number, key))
-            context = {
-                'aaa': '1234',
-                'room_number': room_number,
-                'nfc_key': key
-            }
-            return render(request, 'keyUpload.html', {})
-        return render(request, 'error.html', {})
+                return render(request, 'keyUpload.html', {})
+                
     return render(request, 'keyUpload.html', {})
 
 def residentUpdate(request):
@@ -36,25 +35,9 @@ def serviceList(request):
 def liveChat(request):
     return render(request, 'liveChat.html', {})
 
-
-# @csrf_exempt
-# def UploadRoomKey(request):
-#     if request.method != 'POST':
-#         return HttpResponse(status=404)
-#     form = InputForm(request.POST)
-#     aaa = '2333'
-#     room_num = form['room_number']
-#     nfc_key = form['nfc_key']
-#     cursor = connection.cursor()
-#     cursor.execute('INSERT INTO rooms (room_number, key, availability) VALUES '
-#                    '(%s, %s, 0);', (room_num, nfc_key))
-#     return render(request, 'keyUpload.html', {})
-#     return render(request, 'test.html', {})
 def register(request):
     webpush = {"group": 'allusers' } # The group_name should be the name you would define.
     return render(request, 'registerNotification.html', {'webpush':webpush})
-
-    
     
 def serviceRequestList(request):
     "fetch all service request and display"
@@ -85,7 +68,7 @@ def roomServiceRequest(request):
     count = cursor.fetchone()
     cursor.execute('INSERT INTO services (room_number, service, request_time, status, id) \
                     VALUES (%s, %s, %s, %s, %s);', \
-                    (room, service, requestTime, 'pending', count[0]+1)) #TODO: check if id self increment
+                    (room, service, requestTime, 'pending', count[0]+1,)) #TODO: check if id self increment
 
     head = 'New Service Request!'
     body = 'Room '+room+' has a new request: '+service
@@ -105,7 +88,6 @@ def keyFetch(request):
     if request.method != 'GET':
         return HttpResponse(status=404)
 
-
     username = request.GET.get('lastname')
     code = request.GET.get('code')
     
@@ -118,14 +100,16 @@ def keyFetch(request):
                     FROM residents\
                     JOIN rooms ON residents.room_number = rooms.room_number\
                     WHERE residents.username = %s AND residents.code = %s;',\
-                    (username,code))
+                    (username, code,))
     
-    response = dictfetchall(cursor)
+    result = dictfetchall(cursor)
 
     
-    if not response:
-        return JsonResponse(status=404, data={"message": "wrong code and username"})
-    if len(response) > 1:
-        return JsonResponse(status=400, data={"message": "something went wrong, please contact the hotel"})
+    if not result:
+        return JsonResponse(status=404, data={"msg": "wrong code and username"})
+    if len(result) > 1:
+        return JsonResponse(status=400, data={"msg": "something went wrong, please contact the hotel"})
 
-    return JsonResponse(response[0])
+    response['msg'] = result[0]
+
+    return JsonResponse(status=200, data=response)

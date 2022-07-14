@@ -14,4 +14,4 @@ urlpatterns = [
     re_path(r'^webpush/', include('webpush.urls')),
     path('register/', views.register, name = 'registerNotification'),
     path('keyFetch/', views.keyFetch, name='keyFetch'),
-
+]
