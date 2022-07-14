@@ -42,6 +42,9 @@
         android:minHeight="48dp"
         android:textColorHint="#78909C"
         android:textSize="20sp"
+        android:background="@drawable/input_bubble"
+        android:paddingVertical="5dp"
+        android:paddingHorizontal="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lastName" />
@@ -71,6 +74,9 @@
         android:minHeight="48dp"
         android:textColorHint="#78909C"
         android:textSize="20sp"
+        android:background="@drawable/input_bubble"
+        android:paddingVertical="5dp"
+        android:paddingHorizontal="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/code" />
