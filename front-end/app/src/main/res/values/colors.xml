@@ -15,7 +15,10 @@
     <color name="blue_700">#304FFE</color>
 
     <color name="aqua">#6AA3F6</color>
+    <color name="aqua_500">#5FACFF</color>
     <color name="aqua_transparent">#1A6AA3F6</color>
+
+    <color name="orange">#FF9385</color>
 
     <color name="green">#48D667</color>
     <color name="red">#D64848</color>
