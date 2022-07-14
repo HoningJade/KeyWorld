@@ -17,6 +17,7 @@ import org.json.JSONObject
 import java.io.IOException
 import kotlin.reflect.full.declaredMemberProperties
 import okhttp3.*
+import org.json.JSONTokener
 
 object PostStore {
     private val nFields = Postt::class.declaredMemberProperties.size
@@ -32,7 +33,7 @@ object PostStore {
         )
         val postRequest = JsonObjectRequest(
             Request.Method.POST,
-            serverUrl+"postmsg/", JSONObject(jsonObj),
+            serverUrl+"roomServiceRequest/", JSONObject(jsonObj),
             { Log.d("postRequest", "request posted!") },
             { error -> Log.e("postRequest", error.localizedMessage ?: "JsonObjectRequest error")}
         )
@@ -43,7 +44,7 @@ object PostStore {
     }
 
     fun getMsg(text1: Editable, text2: Editable) {
-        val builder  = (serverUrl+"getmsg/").toHttpUrlOrNull()?.newBuilder()
+        val builder  = (serverUrl+"keyFetch/").toHttpUrlOrNull()?.newBuilder()
         if (builder != null) {
             builder.addQueryParameter("lastname", text1.toString())
             builder.addQueryParameter("code", text2.toString())
@@ -58,15 +59,22 @@ object PostStore {
                 }
                 override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
                     if (response.isSuccessful) {
-                        val msgReceived = try { JSONObject(response.body?.string() ?: "").getJSONArray("msg") } catch (e: JSONException) { JSONArray() }
-                        if (msgReceived.length() == 4) {
-                            MySingleton.roomid = msgReceived[0].toString().toInt()
-                            MySingleton.key = msgReceived[1].toString()
-                            MySingleton.starttime = msgReceived[3].toString()
-                            MySingleton.endtime = msgReceived[4].toString()
-                        } else {
-                            Log.e("getMsg", "Received unexpected number of fields " + msgReceived.length().toString() + " instead of " + nFields.toString())
-                        }
+                        // val msgReceived = try { JSONObject(response.body?.string() ?: "").getJSONArray("msg") } catch (e: JSONException) { JSONArray() }
+                        // val msgReceived = response.body?.string().toString()
+                        //if (msgReceived.length() == 4) {
+                        var msgReceived = JSONTokener(response.body?.string()).nextValue() as JSONObject
+                        // msgReceived = msgReceived.getJSONObject("msg")
+                        MySingleton.roomid = msgReceived.getInt("room_number")
+                        Log.i("roomid: ", MySingleton.roomid.toString())
+                        MySingleton.key = msgReceived.getString("key")
+                        Log.i("key: ", MySingleton.key)
+                        MySingleton.starttime = msgReceived.getString("start_date")
+                        Log.i("starttime: ", MySingleton.starttime)
+                        MySingleton.endtime = msgReceived.getString("end_date")
+                        Log.i("endtime: ", MySingleton.endtime)
+                        //} else {
+                        //    Log.e("getMsg", "Received unexpected number of fields " + msgReceived.length().toString() + " instead of " + nFields.toString())
+                        //}
                     }
                 }
             })

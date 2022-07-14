@@ -2,7 +2,7 @@
 
 #### Post Service
 
-The frontend posts service requests selected by the user through `postmsg` API to the backend. The format of request is:
+The frontend posts service requests selected by the user through `keyFetch` API to the backend. The format of request is:
 
 ```kotlin
 {	
@@ -14,7 +14,7 @@ The frontend posts service requests selected by the user through `postmsg` API t
 
 #### Get Room Information
 
-The frontend receives request response from the backend through `getmsg` API. 
+The frontend receives request response from the backend through `roomServiceRequest` API. 
 
 The request URL has two parameters: `lastname` and `code`.
 
@@ -22,9 +22,9 @@ The format of response should be:
 
 ```kotlin
 {	
-   "roomid": int (example: 301)
-    "VirtualKey": string
-    "AvailabilityStartTime": Timestamp
-    "AvailabilityEndTime": Timestamp
+   "room_number": int (example: 301)
+    "key": string
+    "start_date": Timestamp
+    "end_date": Timestamp
 }
 ```
