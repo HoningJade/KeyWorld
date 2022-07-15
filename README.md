@@ -222,7 +222,7 @@ The final UI/UX overview is shown below ([detailed version here](https://www.fig
 |:-----------:|:------------:|
 |Yuanqi Guo|Implementation of "Read Instruction from NFC tags", implementation of "Get WiFi Info from NFC tags"|
 |Xinrui Zhao| Back-end for the KeyFetch and roomServiceRequest, hotel side pending service page |
-|Ruiyu Li||
+|Ruiyu Li| frontend implementation of log-in and service request, server communication protocol design and document, UI/UX of select service |
 |Yixin Shi||
 |Churong Ji||
 |Ruge Xu|UI/UX Design and Implementation, Activity Connections in Kotlin|
