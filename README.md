@@ -225,4 +225,4 @@ The final UI/UX overview is shown below ([detailed version here](https://www.fig
 |Ruiyu Li||
 |Yixin Shi||
 |Churong Ji||
-|Ruge Xu||
+|Ruge Xu|UI/UX Design and Implementation, Activity Connections in Kotlin|
