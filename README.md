@@ -221,7 +221,7 @@ The final UI/UX overview is shown below ([detailed version here](https://www.fig
 | Team member | Contribution |
 |:-----------:|:------------:|
 |Yuanqi Guo||
-|Xinrui Zhao||
+|Xinrui Zhao| Back-end for the KeyFetch and roomServiceRequest, hotel side pending service page |
 |Ruiyu Li||
 |Yixin Shi||
 |Churong Ji||
