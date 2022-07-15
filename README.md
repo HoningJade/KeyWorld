@@ -225,4 +225,4 @@ The final UI/UX overview is shown below ([detailed version here](https://www.fig
 |Ruiyu Li| frontend implementation of log-in and service request, server communication protocol design and document, UI/UX of select service |
 |Yixin Shi| Hotel side UI design, Room key upload Implementation, Database Design and Management |
 |Churong Ji|  Hotel side UI, Database, Back-end APIs (key fetch and service upload), Hotel side key&resident upload|
-|Ruge Xu|UI/UX Design and Implementation, Activity Connections in Kotlin|
+|Ruge Xu|Resident side UI/UX Design, App UI Implementation, Activity Connections in Kotlin|
