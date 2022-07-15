@@ -166,7 +166,57 @@ Guests can request room service through the room service request block on the re
 
 
 ## View UI/UX
-leave this section blank for now.  You will populate it with your UI/UX design in a latter assignment. 
+The final UI/UX overview is shown below ([detailed version here](https://www.figma.com/file/GR2Qz36NjUOARcIVuveBgr/UI%2FUX-Flow-Design-(Final)?node-id=0%3A1)).
+![Final UI/UX Flow](/assets/UIUX_flow.png)
+### UX - NFC key
+- Enter code (obtained from hotel) and last name to get the key.
+- The key is stored in the phone, press open to activate the virtual key.
+- There will be response of whether the door is successfully opened.
+### UX - NFC WiFi
+- Click the button to start WiFi connection.
+- Guide the user to find the NFC tag and read the tag.
+- Display connection feedback.
+### UX - Hotel Service
+- Select what type of hotel service.
+- If the user chooses to read the instruction tag, the detailed information will be displayed in the window.
+- If the user chooses to send a service request, user can select service from a list.
+- If the user needs some special service which is not listed, he/she can send through live chat.
+### UX - Checkout
+- Confirm that the user is exiting the current hotel.
+- Allow users to rate and write reviews for the hotel.
+### Mockup Usability Test Results
+|                   | Evaluation Metric | KeyWorld |
+| :---------------: | :---------------: | :------: |
+| **Open the door** |                   |          |
+| Get virtual key (hotel just sent you a code) | <= 30 sec | 83.3% |
+| Open the room | <= 2 click + move the phone to the door | 100% |
+| **Wifi Connection** |                 |          |
+| Connect to wifi | <= 15 sec (include finding tag) + move the phone to the tag | 66.7% |
+| **Room Instruction** |                |          |
+| Seeing tag “room instruction” | <= 2 click + move the phone to the tag | 100% |
+| Learn how to use the curtain | <= 2 click + move the phone to the tag | 100% |
+| **Room Service** |
+| Request cleaning service (to test buttons for service) | <= 40 sec (find service and send request) | 100% |
+| Ask hotel to give you slippers (to test live chat) | <= 1 min (get connected with hotel staff via chat) | 100% |
+| Send review to the hotel | <= 3 click (find where to enter and send review) | 83.3% |
+- The icon with name “Reader” confuses users without technical background.
+- Some users tend to find wifi connection in the section of service.
+- Our app does not provide enough explanations so that it takes efforts for users to understand and use the app.
+- The word “Interrupt” in prompt is confusing.
+- Live chat is of the same priority with other services while in reality it should only be chosen when the service in not included in other services.
+### Design Justification - Open Key
+- We added corresponding prompts to guide users because two interviewees in our test reported that they are unsure about what to do after clicking the “open” button.
+- We added room number so that users don’t need to memorize them.
+### Design Justification - Connect WiFi
+- The success rate of wifi connection task is 66.7%. 
+- Interviewees reported that they have no idea what “reader” is and find it difficult to relate wifi connection with reader.
+- We thus directly renamed the second section to “wifi”, and moved “instruction” into “service” section to avoid exposing technical terms to users.
+### Design Justification - Request Service
+- The success rate of asking hotel for slippers is only 83.3%.
+- One interviewee kept looking for slippers in the “select service” section and did not think of using live chat. 
+- We moved “live chat” to “select service” section so that users can communicate with hotel staff when they cannot find the service they want. 
+
+
 ## Team Roster
 | Team member | Contribution |
 |:-----------:|:------------:|
