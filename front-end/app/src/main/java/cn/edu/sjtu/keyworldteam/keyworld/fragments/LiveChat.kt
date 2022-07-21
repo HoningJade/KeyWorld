@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ListView
 import cn.edu.sjtu.keyworldteam.keyworld.R
 
 class LiveChat : Fragment() {
 
     private lateinit var returnButton: ImageButton
+    private lateinit var listView: ListView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,6 +29,13 @@ class LiveChat : Fragment() {
                 transaction.disallowAddToBackStack()
                 transaction.commit()
             }
+        }
+
+        listView = view.findViewById<ListView>(R.id.chatListView)
+
+        // TODO: Get chat information from back-end
+        val chatList = {
+            "chat"
         }
 
         return view
