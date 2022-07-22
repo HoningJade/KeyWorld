@@ -62,14 +62,18 @@
             android:minHeight="48dp"
             tools:ignore="Autofill" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_gchat_send"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_alignParentEnd="true"
-            android:background="?attr/selectableItemBackground"
+            android:layout_margin="3dp"
+            android:background="@drawable/send_message_button"
             android:text="@string/send_message"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:allowClickWhenDisabled="false"/>
 
     </RelativeLayout>
 

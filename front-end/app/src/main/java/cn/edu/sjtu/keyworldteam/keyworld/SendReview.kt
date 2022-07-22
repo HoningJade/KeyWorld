@@ -23,7 +23,7 @@ class SendReview : AppCompatActivity() {
         val rBar = findViewById<RatingBar>(R.id.ratingBar)
         button.setOnClickListener {
             val msg = rBar.rating.toString() // Rating number
-            Toast.makeText(this, "Rating is: $msg", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "Rating is: $msg", Toast.LENGTH_SHORT).show()
 
             val reviewText = findViewById<EditText>(R.id.reviewInput) // Review text
             if (reviewText.text.isNotEmpty()) {
