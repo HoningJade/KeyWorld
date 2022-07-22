@@ -1,32 +1,32 @@
 package cn.edu.sjtu.keyworldteam.keyworld.fragments
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cn.edu.sjtu.keyworldteam.keyworld.Message
 import cn.edu.sjtu.keyworldteam.keyworld.MessageListAdapter
 import cn.edu.sjtu.keyworldteam.keyworld.R
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class LiveChat : Fragment() {
 
     private lateinit var returnButton: ImageButton
 
     private lateinit var sendButton: Button
+    private lateinit var sendText: EditText
 
     private lateinit var mMessageAdapter: MessageListAdapter
     private lateinit var mMessageRecycler: RecyclerView
     private lateinit var mMessageArrayList: ArrayList<Message>
-
-    lateinit var messages : Array<String>
-    lateinit var times : Array<String>
-    lateinit var fromUsers : Array<Boolean>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,12 +54,60 @@ class LiveChat : Fragment() {
         mMessageRecycler.adapter = mMessageAdapter
 
         sendButton = view.findViewById(R.id.button_gchat_send)
+        sendText = view.findViewById(R.id.edit_gchat_message)
+        sendButton.isEnabled = false
+        sendButton.alpha = 0.5F
+
+        sendText.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                sendButton.isEnabled = s.toString().isNotEmpty()
+                if (s.toString().isNotEmpty()) {
+                    sendButton.alpha = 1.0F
+                }
+                else {
+                    sendButton.alpha = 0.5F
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+        })
+
         sendButton.setOnClickListener {
-            val sendText = view.findViewById<EditText>(R.id.edit_gchat_message)
-            // TODO: Send message and refresh message
+            val messageText = sendText.text.toString() // Message
+
+            val timestamp = Date()
+            val dateFormatter = SimpleDateFormat("KK:mm a", Locale.getDefault())
+            val dateString = dateFormatter.format(timestamp) // Time
+//            Toast.makeText(requireContext(), "Time is: $dateString", Toast.LENGTH_SHORT).show()
+
+            // TODO: Send message to back-end
+
+            addMessage(messageText, dateString, true)
+
+            sendText.text.clear()
+//            Toast.makeText(requireContext(), "Message is: $messageText", Toast.LENGTH_SHORT).show()
         }
 
+        // TODO: Receive message from back-end
+        // TODO: Use addMessage(messageText, timeText, false) to add message bubble
+
         return view
+    }
+
+    private fun addMessage(messageText: String, timeText: String, fromUser: Boolean) {
+        if (fromUser) {
+            mMessageArrayList.add(Message.User(messageText, timeText))
+        }
+        else {
+            mMessageArrayList.add(Message.Hotel(messageText, timeText))
+        }
+        mMessageAdapter = MessageListAdapter(mMessageArrayList)
+        mMessageRecycler.adapter = mMessageAdapter
     }
 
     private fun dataInitialize() {
@@ -67,20 +115,22 @@ class LiveChat : Fragment() {
 
         // TODO: Get chat information from back-end
 
-        messages = arrayOf(
+        // Test messages //
+        val messages = arrayOf(
             getString(R.string.my_message),
             getString(R.string.other_message)
         )
 
-        times = arrayOf(
+        val times = arrayOf(
             getString(R.string.my_time),
             getString(R.string.other_time)
         )
 
-        fromUsers = arrayOf(
+        val fromUsers = arrayOf(
             true,
             false
         )
+        // Test messages //
 
         for (i in messages.indices) {
             if (fromUsers[i]) {
