@@ -21,85 +21,56 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txtMyMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/my_message_bubble"
-        android:elevation="5dp"
-        android:maxWidth="240dp"
-        android:padding="15dp"
-        android:text="@string/my_message"
-        android:textColor="#ffffff"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/txtMyMessageTime"
-        android:text="12:00 PM"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="10sp"
-        android:textStyle="bold"
-        android:layout_marginRight="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/txtMyMessage"
-        app:layout_constraintRight_toLeftOf="@+id/txtMyMessage" />
-
-    <TextView
-        android:id="@+id/txtOtherUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chatRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginTop="20dp"
-        android:text="John Doe"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtMyMessage" />
-
-    <TextView
-        android:id="@+id/txtOtherMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/other_message_bubble"
-        android:elevation="5dp"
-        android:maxWidth="240dp"
-        android:padding="15dp"
-        android:text="@string/other_message"
-        android:textColor="#ffffff"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtOtherUser" />
-
-    <TextView
-        android:id="@+id/txtOtherMessageTime"
-        android:text="12:00 PM"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="10sp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toRightOf="@+id/txtOtherMessage"
-        android:layout_marginLeft="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/txtOtherMessage" />
-
-    <EditText
-        android:id="@+id/messageInput"
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="80dp"
-        android:background="@drawable/send_message_bubble"
-        android:ems="10"
-        android:hint="@string/message_hint"
-        android:inputType="textMultiLine"
-        android:minHeight="48dp"
-        android:paddingHorizontal="20dp"
-        android:paddingVertical="5dp"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="20dp"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintBottom_toTopOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/returnButton5" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#e0e0e0"
+        app:layout_constraintBottom_toTopOf="@+id/layout_gchat_chatbox" />
+
+    <RelativeLayout
+        android:id="@+id/layout_gchat_chatbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <EditText
+            android:id="@+id/edit_gchat_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:layout_toStartOf="@+id/button_gchat_send"
+            android:background="@android:color/transparent"
+            android:hint="@string/message_hint"
+            android:inputType="text"
+            android:maxLines="6"
+            android:minHeight="48dp"
+            tools:ignore="Autofill" />
+
+        <Button
+            android:id="@+id/button_gchat_send"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:background="?attr/selectableItemBackground"
+            android:text="@string/send_message"
+            android:textColor="@color/black" />
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout >
