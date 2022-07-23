@@ -28,8 +28,8 @@ import kotlin.experimental.and
 
 class WifiConnection : AppCompatActivity() {
 
-    private lateinit var tvNFCContent: TextView
-    private lateinit var binding: ActivityWifiConnectionBinding
+//    private lateinit var tvNFCContent: TextView
+//    private lateinit var binding: ActivityWifiConnectionBinding
     var nfcAdapter: NfcAdapter? = null
     var pendingIntent: PendingIntent? = null
     var myTag: Tag? = null
@@ -38,30 +38,30 @@ class WifiConnection : AppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityWifiConnectionBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        tvNFCContent = binding.wifiInfo
-
-        setWifi("Open","AndroidWifi","")
-
-//        nfcAdapter = NfcAdapter.getDefaultAdapter(this)
-//        if (nfcAdapter == null) {
-//            // Stop here, we definitely need NFC
-//            Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show()
-//            finish()
-//        }
+//        binding = ActivityWifiConnectionBinding.inflate(layoutInflater)
+//        setContentView(binding.root)
 //
-//        //For when the activity is launched by the intent-filter for android.nfc.action.NDEF_DISCOVERE
-//        readFromIntent(intent)
-//        pendingIntent = PendingIntent.getActivity(
-//            this,
-//            0,
-//            Intent(this, javaClass).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
-//            PendingIntent.FLAG_IMMUTABLE
-//        )
-//        val tagDetected = IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED)
-//        tagDetected.addCategory(Intent.CATEGORY_DEFAULT)
+//        tvNFCContent = binding.wifiInfo
+
+//        setWifi("Open","AndroidWifi","")
+
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this)
+        if (nfcAdapter == null) {
+            // Stop here, we definitely need NFC
+            Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show()
+            finish()
+        }
+
+        //For when the activity is launched by the intent-filter for android.nfc.action.NDEF_DISCOVERE
+        readFromIntent(intent)
+        pendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            Intent(this, javaClass).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
+            PendingIntent.FLAG_IMMUTABLE
+        )
+        val tagDetected = IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED)
+        tagDetected.addCategory(Intent.CATEGORY_DEFAULT)
 
         returnButton = findViewById(R.id.returnButton1)
         returnButton.setOnClickListener {
@@ -82,12 +82,14 @@ class WifiConnection : AppCompatActivity() {
                 for (i in rawMsgs.indices) {
                     msgs.add(i, rawMsgs[i] as NdefMessage)
                 }
-                buildTagViews(msgs.toTypedArray())
+               decodeTag(msgs.toTypedArray())
+
+
             }
         }
     }
 
-    private fun buildTagViews(msgs: Array<NdefMessage>) {
+    private fun decodeTag(msgs: Array<NdefMessage>) {
         if (msgs == null || msgs.isEmpty()) return
         var text = ""
         val payload = msgs[0].records[0].payload
@@ -104,18 +106,14 @@ class WifiConnection : AppCompatActivity() {
         } catch (e: UnsupportedEncodingException) {
             Log.e("UnsupportedEncoding", e.toString())
         }
-
-
-
             //wifi tag
             var lines = text.lines()
             var authentication = lines[0]
             var encryption = lines[1]
             var SSID = lines[2]
             var Password = lines[3]
-            tvNFCContent.text = "Authentication: $authentication \n" +
-                    "Encryption: $encryption \nSSID: $SSID \nPassword: $Password"
 
+            setWifi(authentication, SSID, Password)
 
     }
 
@@ -145,14 +143,14 @@ class WifiConnection : AppCompatActivity() {
     }*/
 
     /******************************************************************************
-     * Connect to WIFI
+     * Connect to WIFI (support authentication method: open(without password) / WPA2
      ****************************************************************************/
 
     fun setWifi(authentication: String, ssid: String, password: String) {
         val suggestions = ArrayList<WifiNetworkSuggestion>()
 
         //Open configuration
-        if(authentication == "Open") {
+        if(authentication == "open") {
             suggestions.add(
                 WifiNetworkSuggestion.Builder()
                     .setSsid(ssid)
@@ -180,6 +178,10 @@ class WifiConnection : AppCompatActivity() {
         startActivityForResult(intent, 10)
     }
 
+    /******************************************************************************
+     * user reaction to the connection
+     ****************************************************************************/
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == 10) {
@@ -187,7 +189,7 @@ class WifiConnection : AppCompatActivity() {
                 // user agreed to save configurations: still need to check individual results
                 if (data != null && data.hasExtra(EXTRA_WIFI_NETWORK_RESULT_LIST)) {
                     for (code in data.getIntegerArrayListExtra(EXTRA_WIFI_NETWORK_RESULT_LIST)!!) {
-                        when (code) {
+                        when (code) { //TODO: link to connection result page
                             ADD_WIFI_RESULT_SUCCESS ->
                                 Log.i("wifi", "connect succeed")
                             ADD_WIFI_RESULT_ADD_OR_UPDATE_FAILED ->
