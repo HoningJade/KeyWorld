@@ -27,8 +27,8 @@ class ConnectWifi : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_connect_wifi, container, false)
 
-        button = view.findViewById(R.id.wifiButton)
-        button.setOnClickListener {
+//        button = view.findViewById(R.id.wifiButton)
+//        button.setOnClickListener {
 //            val dialogBuilder = AlertDialog.Builder(requireContext())
 //
 //            // set message of alert dialog
@@ -60,10 +60,10 @@ class ConnectWifi : Fragment() {
 //                    alert.dismiss()
 //                }
 //            }, 3000)
-
-            // TODO: Verify WiFi NFC tag
-            startActivity(Intent(requireContext(), WifiConnection::class.java))
-        }
+//
+//        }
+        // TODO: Verify WiFi NFC tag
+        startActivity(Intent(requireContext(), WifiConnection::class.java))
 
         return view
     }

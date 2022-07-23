@@ -32,6 +32,7 @@ class ReadInstruction : AppCompatActivity()  {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.i("instruction","start NFC for instruction read")
         binding = ActivityReadInstructionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

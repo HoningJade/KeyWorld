@@ -18,7 +18,9 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat.startActivityForResult
 import cn.edu.sjtu.keyworldteam.keyworld.databinding.ActivityMainBinding
+import cn.edu.sjtu.keyworldteam.keyworld.databinding.ActivityReadInstructionBinding
 import cn.edu.sjtu.keyworldteam.keyworld.databinding.ActivityWifiConnectionBinding
 import java.io.UnsupportedEncodingException
 import java.nio.charset.Charset
@@ -29,7 +31,11 @@ import kotlin.experimental.and
 class WifiConnection : AppCompatActivity() {
 
 //    private lateinit var tvNFCContent: TextView
-//    private lateinit var binding: ActivityWifiConnectionBinding
+    private lateinit var binding: ActivityWifiConnectionBinding
+    lateinit var authentication: String
+    lateinit var encryption: String
+    lateinit var ssid: String
+    lateinit var password: String
     var nfcAdapter: NfcAdapter? = null
     var pendingIntent: PendingIntent? = null
     var myTag: Tag? = null
@@ -43,30 +49,34 @@ class WifiConnection : AppCompatActivity() {
 //
 //        tvNFCContent = binding.wifiInfo
 
-//        setWifi("Open","AndroidWifi","")
+        authentication = "open"
+        ssid = "AndroidWifi"
+        password = ""
+        setWifi(authentication, ssid, password)
 
-        nfcAdapter = NfcAdapter.getDefaultAdapter(this)
-        if (nfcAdapter == null) {
-            // Stop here, we definitely need NFC
-            Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show()
-            finish()
-        }
+//
+//        nfcAdapter = NfcAdapter.getDefaultAdapter(this)
+//        if (nfcAdapter == null) {
+//            // Stop here, we definitely need NFC
+//            Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show()
+//            finish()
+//        }
+//
+//        //For when the activity is launched by the intent-filter for android.nfc.action.NDEF_DISCOVERE
+//        readFromIntent(intent)
+//        pendingIntent = PendingIntent.getActivity(
+//            this,
+//            0,
+//            Intent(this, javaClass).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
+//            PendingIntent.FLAG_IMMUTABLE
+//        )
+//        val tagDetected = IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED)
+//        tagDetected.addCategory(Intent.CATEGORY_DEFAULT)
 
-        //For when the activity is launched by the intent-filter for android.nfc.action.NDEF_DISCOVERE
-        readFromIntent(intent)
-        pendingIntent = PendingIntent.getActivity(
-            this,
-            0,
-            Intent(this, javaClass).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
-            PendingIntent.FLAG_IMMUTABLE
-        )
-        val tagDetected = IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED)
-        tagDetected.addCategory(Intent.CATEGORY_DEFAULT)
-
-        returnButton = findViewById(R.id.returnButton1)
-        returnButton.setOnClickListener {
-            finish()
-        }
+//        returnButton = findViewById(R.id.returnButton1)
+//        returnButton.setOnClickListener {
+//            finish()
+//        }
     }
 
     /******************************************************************************
@@ -108,12 +118,12 @@ class WifiConnection : AppCompatActivity() {
         }
             //wifi tag
             var lines = text.lines()
-            var authentication = lines[0]
-            var encryption = lines[1]
-            var SSID = lines[2]
-            var Password = lines[3]
+            authentication = lines[0]
+            encryption = lines[1]
+            ssid = lines[2]
+            password = lines[3]
 
-            setWifi(authentication, SSID, Password)
+            setWifi(authentication, ssid, password)
 
     }
 
@@ -183,6 +193,7 @@ class WifiConnection : AppCompatActivity() {
      ****************************************************************************/
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == 10) {
             if (resultCode == RESULT_OK) {
@@ -190,12 +201,30 @@ class WifiConnection : AppCompatActivity() {
                 if (data != null && data.hasExtra(EXTRA_WIFI_NETWORK_RESULT_LIST)) {
                     for (code in data.getIntegerArrayListExtra(EXTRA_WIFI_NETWORK_RESULT_LIST)!!) {
                         when (code) { //TODO: link to connection result page
-                            ADD_WIFI_RESULT_SUCCESS ->
+                            ADD_WIFI_RESULT_SUCCESS -> {
+                                binding = ActivityWifiConnectionBinding.inflate(layoutInflater)
+                                setContentView(binding.root)
+                                binding.wifiInfo.text = "SSID: $ssid \nPassword: $password"
                                 Log.i("wifi", "connect succeed")
+
+                                returnButton = findViewById(R.id.returnButton1)
+                                returnButton.setOnClickListener {
+                                    finish()
+                                }
+                            }
                             ADD_WIFI_RESULT_ADD_OR_UPDATE_FAILED ->
                                 Log.i("wifi", "invalid configuration")
-                            ADD_WIFI_RESULT_ALREADY_EXISTS ->
+                            ADD_WIFI_RESULT_ALREADY_EXISTS -> {
+                                binding = ActivityWifiConnectionBinding.inflate(layoutInflater)
+                                setContentView(binding.root)
+                                binding.wifiInfo.text = "SSID: $ssid \nPassword: $password"
                                 Log.i("wifi", "already existed")
+
+                                returnButton = findViewById(R.id.returnButton1)
+                                returnButton.setOnClickListener {
+                                    finish()
+                                }
+                            }
                             else ->
                                 Log.e("wifi", "something wrong")
                         }

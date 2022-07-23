@@ -29,8 +29,8 @@ class Instruction : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_instruction, container, false)
 
-        button = view.findViewById(R.id.instructionReaderButton)
-        button.setOnClickListener {
+//        button = view.findViewById(R.id.instructionReaderButton)
+//        button.setOnClickListener {
 //            val dialogBuilder = AlertDialog.Builder(requireContext())
 //
 //            // set message of alert dialog
@@ -62,10 +62,10 @@ class Instruction : Fragment() {
 //                    alert.dismiss()
 //                }
 //            }, 3000)
-
-            // TODO: Verify Instruction NFC tag
-            startActivity(Intent(requireContext(), ReadInstruction::class.java))
-        }
+//
+//        }
+        // TODO: Verify Instruction NFC tag
+        startActivity(Intent(requireContext(), ReadInstruction::class.java))
 
         returnButton = view.findViewById(R.id.returnButton2)
         returnButton.setOnClickListener{
