@@ -55,6 +55,7 @@ object PostStore {
 
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: okhttp3.Call, e: IOException) {
+                    e.printStackTrace()
                     Log.e("getMsg", "Failed GET request")
                 }
                 override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
