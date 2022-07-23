@@ -160,7 +160,7 @@ Guests can request room service through the room service request block on the re
 | android.nfc | Support Android basic NFC functions |
 | android.nfc.tech | Support Android advanced NFC functions |
 | android.nfc.cardemulation |  Support Android NFC card emulation |
-| android.net.wifi | Support Android wifi suggestions and connection |
+| ACTION_WIFI_ADD_NETWORKS | add WIFI configurations to the saved network or subscription list |
 | LiveChat API | Live Chat |
 | django-webpush | hotel notification web push|
 
