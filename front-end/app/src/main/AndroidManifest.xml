@@ -4,6 +4,7 @@
     package="cn.edu.sjtu.keyworldteam.keyworld">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.NFC" />
 
     <application
         android:allowBackup="true"
@@ -15,12 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KeyWorld"
         tools:targetApi="31">
+
         <activity
-<<<<<<< Updated upstream
-            android:name=".NFCReader"
-=======
             android:name=".WifiConnection"
->>>>>>> Stashed changes
             android:exported="true">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
@@ -34,14 +32,21 @@
                 android:name="android.nfc.action.TECH_DISCOVERED"
                 android:resource="@xml/nfc_tech_filter" />
         </activity>
-
-        <activity
-            android:name=".WifiConnection"
-            android:exported="false">
-        </activity>
         <activity
             android:name=".ReadInstruction"
             android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.nfc.action.TECH_DISCOVERED"
+                android:resource="@xml/nfc_tech_filter" />
         </activity>
         <activity
             android:name=".SendReview"

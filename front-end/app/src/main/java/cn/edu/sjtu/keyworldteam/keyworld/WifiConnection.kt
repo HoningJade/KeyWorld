@@ -5,17 +5,23 @@ import android.app.Activity
 import android.app.PendingIntent
 import android.content.Intent
 import android.content.IntentFilter
+import android.net.wifi.WifiNetworkSuggestion
 import android.nfc.NdefMessage
 import android.nfc.NfcAdapter
 import android.nfc.Tag
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcelable
+import android.provider.Settings.*
+import android.text.Editable
 import android.util.Log
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat.startActivityForResult
 import cn.edu.sjtu.keyworldteam.keyworld.databinding.ActivityMainBinding
+import cn.edu.sjtu.keyworldteam.keyworld.databinding.ActivityReadInstructionBinding
 import cn.edu.sjtu.keyworldteam.keyworld.databinding.ActivityWifiConnectionBinding
 import java.io.UnsupportedEncodingException
 import java.nio.charset.Charset
@@ -26,9 +32,6 @@ import kotlin.experimental.and
 class WifiConnection : AppCompatActivity() {
 
     private lateinit var tvNFCContent: TextView
-<<<<<<< Updated upstream
-    private lateinit var binding: ActivityWifiConnectionBinding
-=======
     private lateinit var tvNFCTag: TextView
     private lateinit var binding: ActivityWifiConnectionBinding
     private lateinit var binding1: ActivityReadInstructionBinding
@@ -36,7 +39,6 @@ class WifiConnection : AppCompatActivity() {
     lateinit var encryption: String
     lateinit var ssid: String
     lateinit var password: String
->>>>>>> Stashed changes
     var nfcAdapter: NfcAdapter? = null
     var pendingIntent: PendingIntent? = null
     var myTag: Tag? = null
@@ -45,12 +47,6 @@ class WifiConnection : AppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-<<<<<<< Updated upstream
-        binding = ActivityWifiConnectionBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        tvNFCContent = binding.wifiInfo
-=======
 //        binding = ActivityWifiConnectionBinding.inflate(layoutInflater)
 //        setContentView(binding.root)
 //
@@ -62,7 +58,6 @@ class WifiConnection : AppCompatActivity() {
         //setWifi(authentication, ssid, password)
 
 //
->>>>>>> Stashed changes
 
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this)
@@ -83,23 +78,16 @@ class WifiConnection : AppCompatActivity() {
         val tagDetected = IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED)
         tagDetected.addCategory(Intent.CATEGORY_DEFAULT)
 
-<<<<<<< Updated upstream
-        returnButton = findViewById(R.id.returnButton1)
-        returnButton.setOnClickListener {
-            finish()
-        }
-=======
 
 
 //        returnButton = findViewById(R.id.returnButton1)
 //        returnButton.setOnClickListener {
 //            finish()
 //        }
->>>>>>> Stashed changes
     }
 
 
-/******************************************************************************
+    /******************************************************************************
      * Read From NFC Tag
      ****************************************************************************/
 
@@ -113,12 +101,14 @@ class WifiConnection : AppCompatActivity() {
                 for (i in rawMsgs.indices) {
                     msgs.add(i, rawMsgs[i] as NdefMessage)
                 }
-                buildTagViews(msgs.toTypedArray())
+                decodeTag(msgs.toTypedArray())
+
+
             }
         }
     }
 
-    private fun buildTagViews(msgs: Array<NdefMessage>) {
+    private fun decodeTag(msgs: Array<NdefMessage>) {
         if (msgs == null || msgs.isEmpty()) return
         var text = ""
         val payload = msgs[0].records[0].payload
@@ -135,32 +125,17 @@ class WifiConnection : AppCompatActivity() {
         } catch (e: UnsupportedEncodingException) {
             Log.e("UnsupportedEncoding", e.toString())
         }
-<<<<<<< Updated upstream
+        //wifi tag
+        /*var lines = text.lines()
+        authentication = lines[1]
+        encryption = lines[2]
+        ssid = lines[3]
+        password = lines[4]
 
-
-
-            //wifi tag
-            var lines = text.lines()
-            var authentication = lines[0]
-            var encryption = lines[1]
-            var SSID = lines[2]
-            var Password = lines[3]
-            tvNFCContent.text = "Authentication: $authentication \n" +
-                    "Encryption: $encryption \nSSID: $SSID \nPassword: $Password"
-    }
-=======
-            //wifi tag
-            /*var lines = text.lines()
-            authentication = lines[1]
-            encryption = lines[2]
-            ssid = lines[3]
-            password = lines[4]
-
-            setWifi(authentication, ssid, password)*/
+        setWifi(authentication, ssid, password)*/
 
         val lines = text.lines()
         val flag = lines[0]
->>>>>>> Stashed changes
 
         if (flag == "instr"){
             //instruction tag
@@ -177,6 +152,7 @@ class WifiConnection : AppCompatActivity() {
 
             tvNFCTag.text = title
             tvNFCContent.text = "$instruction"
+
 
 
         }else if (flag == "wifi"){
@@ -196,15 +172,9 @@ class WifiConnection : AppCompatActivity() {
 
 
 
-<<<<<<< Updated upstream
-    companion object {
-        const val ERROR_DETECTED = "No NFC tag detected!"
-    }*/
-}
-=======
 
 
-/******************************************************************************
+    /******************************************************************************
      * Connect to WIFI (support authentication method: open(without password) / WPA2
      ****************************************************************************/
 
@@ -242,7 +212,7 @@ class WifiConnection : AppCompatActivity() {
     }
 
 
-/******************************************************************************
+    /******************************************************************************
      * user reaction to the connection
      ****************************************************************************/
 
@@ -294,4 +264,3 @@ class WifiConnection : AppCompatActivity() {
 
 
 }
->>>>>>> Stashed changes
