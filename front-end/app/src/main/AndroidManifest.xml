@@ -16,7 +16,11 @@
         android:theme="@style/Theme.KeyWorld"
         tools:targetApi="31">
         <activity
+<<<<<<< Updated upstream
             android:name=".NFCReader"
+=======
+            android:name=".WifiConnection"
+>>>>>>> Stashed changes
             android:exported="true">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />

@@ -1,5 +1,6 @@
 package cn.edu.sjtu.keyworldteam.keyworld
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import cn.edu.sjtu.keyworldteam.keyworld.databinding.ActivityMainBinding
@@ -14,6 +15,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import cn.edu.sjtu.keyworldteam.keyworld.databinding.ActivityReadInstructionBinding
+import cn.edu.sjtu.keyworldteam.keyworld.databinding.ActivityWifiConnectionBinding
 import java.io.UnsupportedEncodingException
 import java.nio.charset.Charset
 import java.nio.file.Files.lines
@@ -80,6 +82,7 @@ class ReadInstruction : AppCompatActivity()  {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun buildTagViews(msgs: Array<NdefMessage>) {
         if (msgs == null || msgs.isEmpty()) return
         var text = ""
@@ -98,47 +101,34 @@ class ReadInstruction : AppCompatActivity()  {
             Log.e("UnsupportedEncoding", e.toString())
         }
 
-        //instruction tag
-        var lines = text.lines()
-        //extract tag name
-        var title = lines[0]
-        //extract instruction text
-        var instruction = text.subSequence(title.length,text.length)
-        tvNFCTag.text = "$title"
-        tvNFCContent.text = "$instruction"
+        val lines = text.lines()
+        val flag = lines[0]
 
-        /*    //wifi tag
-            var lines = text.lines()
-            var authentication = lines[0]
-            var encryption = lines[1]
-            var SSID = lines[2]
-            var Password = lines[3]
-            tvNFCContent.text = "authentication: $authentication \n" +
-                    "encryption: $encryption \n SSID: $SSID \n Password: $Password"*/
-    }
+        if (flag == "instr"){
+            //instruction tag
 
+            //extract tag name
+            val title = lines[1]
+            //extract instruction text
+            val instruction = text.subSequence(flag.length + title.length + 2,text.length)
 
-    /**
-     * For reading the NFC when the app is already launched
-     */
-    /*override fun onNewIntent(intent: Intent) {
-        setIntent(intent)
-        readFromIntent(intent)
-        if (NfcAdapter.ACTION_TAG_DISCOVERED == intent.action) {
-            myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
+            tvNFCTag.text = title
+            tvNFCContent.text = "$instruction"
+
+        }else if (flag == "wifi"){
+            //wifi tag
+            val authentication = lines[1]
+            val encryption = lines[2]
+            val SSID = lines[3]
+            val Password = lines[4]
+
+            tvNFCTag.text = "wifi"
+            tvNFCContent.text = "Authentication: $authentication \n" +
+                    "Encryption: $encryption \nSSID: $SSID \nPassword: $Password"
+        }else{
+            return
         }
+
     }
 
-    public override fun onPause() {
-        super.onPause()
-    }
-
-    public override fun onResume() {
-        super.onResume()
-    }
-
-
-    companion object {
-        const val ERROR_DETECTED = "No NFC tag detected!"
-    }*/
 }
