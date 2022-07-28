@@ -19,7 +19,7 @@
 
         <activity
             android:name=".WifiConnection"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
 
