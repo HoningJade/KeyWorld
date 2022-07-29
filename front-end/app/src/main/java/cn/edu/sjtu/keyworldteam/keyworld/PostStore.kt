@@ -100,6 +100,23 @@ object PostStore {
         queue.add(postRequest)
     }
 
+    fun sendChat(context: Context, postt: Chat) {
+        val jsonObj = mapOf(
+            "roomid" to postt.roomid,
+            "chatts" to postt.chatts,
+        )
+        val postRequest = JsonObjectRequest(
+            Request.Method.POST,
+            serverUrl+"receiveChat/", JSONObject(jsonObj),
+            { Log.d("sendChat", "chat posted!") },
+            { error -> Log.e("sendChat", error.localizedMessage ?: "JsonObjectRequest error")}
+        )
+        if (!this::queue.isInitialized) {
+            queue = newRequestQueue(context)
+        }
+        queue.add(postRequest)
+    }
+
     /*fun getMsg(context: Context, url: String, completion: () -> Unit) {
         val getRequest = JsonObjectRequest(url,
             { response ->

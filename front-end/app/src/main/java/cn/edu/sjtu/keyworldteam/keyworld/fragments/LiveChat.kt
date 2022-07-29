@@ -10,9 +10,8 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import cn.edu.sjtu.keyworldteam.keyworld.Message
-import cn.edu.sjtu.keyworldteam.keyworld.MessageListAdapter
-import cn.edu.sjtu.keyworldteam.keyworld.R
+import cn.edu.sjtu.keyworldteam.keyworld.*
+import cn.edu.sjtu.keyworldteam.keyworld.PostStore.sendChat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -85,7 +84,12 @@ class LiveChat : Fragment() {
             val dateString = dateFormatter.format(timestamp) // Time
 //            Toast.makeText(requireContext(), "Time is: $dateString", Toast.LENGTH_SHORT).show()
 
-            // TODO: Send message to back-end
+            // Send message to back-end
+            val msg = Chat(
+                roomid = MySingleton.roomid,
+                chatts = messageText
+            )
+            sendChat(requireContext(), msg)
 
             addMessage(messageText, dateString, true)
 
