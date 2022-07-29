@@ -27,7 +27,7 @@ object PostStore {
 
     fun postMsg(context: Context, postt: Postt) {
         val jsonObj = mapOf(
-            "roomid" to "101", // postt.roomid,
+            "roomid" to postt.roomid,
             "requestdetail" to postt.requestdetail,
             "timestamp" to "17:18:30.698589" // postt.timestamp
         )
@@ -80,6 +80,24 @@ object PostStore {
             })
 
         }
+    }
+
+    fun postReview(context: Context, postt: Review) {
+        val jsonObj = mapOf(
+            "roomid" to postt.roomid,
+            "rating" to postt.rating,
+            "review" to postt.review
+        )
+        val postRequest = JsonObjectRequest(
+            Request.Method.POST,
+            serverUrl+"receiveReview/", JSONObject(jsonObj),
+            { Log.d("postReview", "review posted!") },
+            { error -> Log.e("postReview", error.localizedMessage ?: "JsonObjectRequest error")}
+        )
+        if (!this::queue.isInitialized) {
+            queue = newRequestQueue(context)
+        }
+        queue.add(postRequest)
     }
 
     /*fun getMsg(context: Context, url: String, completion: () -> Unit) {
