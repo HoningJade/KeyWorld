@@ -11,9 +11,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="100dp"
         android:text="@string/rating"
         android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,6 +26,10 @@
         android:layout_marginStart="60dp"
         android:layout_marginTop="20dp"
         android:contentDescription="@string/rating"
+        android:numStars="5"
+        android:rating="3.5"
+        android:stepSize="0.5"
+        android:theme="@style/RatingBar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rating" />
 
@@ -35,6 +41,8 @@
         android:layout_marginTop="30dp"
         android:text="@string/review"
         android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
 
@@ -43,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="80dp"
-        android:layout_marginBottom="140dp"
+        android:layout_marginBottom="120dp"
         android:text="@string/send_review"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -51,17 +59,17 @@
     <EditText
         android:id="@+id/reviewInput"
         android:layout_width="290dp"
-        android:layout_height="120dp"
+        android:layout_height="160dp"
         android:layout_marginStart="60dp"
         android:layout_marginTop="20dp"
-        android:ems="10"
-        android:inputType="textMultiLine"
-        android:hint="@string/review_hint"
+        android:autofillHints=""
         android:background="@drawable/input_bubble"
-        android:paddingVertical="5dp"
+        android:ems="10"
+        android:hint="@string/review_hint"
+        android:inputType="textMultiLine"
         android:paddingHorizontal="20dp"
+        android:paddingVertical="5dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/review"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@+id/review" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

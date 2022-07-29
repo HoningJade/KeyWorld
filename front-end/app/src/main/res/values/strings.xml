@@ -39,7 +39,10 @@
 
     <string name="my_message">Can you send a pair of slipper to room 512?</string>
     <string name="other_message">Sure, coming</string>
+    <string name="my_time">10:00 AM</string>
+    <string name="other_time">10:15 AM</string>
     <string name="message_hint">Enter your message.</string>
+    <string name="send_message">Send</string>
 
     <string name="checkout_text">Sure to check out of your current hotel?</string>
     <string name="checkout_confirm">Yes</string>

@@ -36,3 +36,14 @@ To access: https://18.116.30.203/
 | `id` | integer    | Primary key |   |
 | `room_number` | integer | Not null & Foreign key references rooms (room_number) on delete cascade |    |
 | `review` | text |  |   |
+
+P.S.
+
+Yixin Shi's contribution on skeletal project: 
+
+keyupload page, livechat page, part of home page, database implemention
+
+commit on Jul. 11 "Key upload backend updated", 
+commit on Jul. 11 "manual merge", 
+commit on Jul. 13 "foreign key updated", 
+commit on Jul. 13 "add database description".

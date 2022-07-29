@@ -1,20 +1,27 @@
 package cn.edu.sjtu.keyworldteam.keyworld
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.PendingIntent
 import android.content.Intent
 import android.content.IntentFilter
+import android.net.wifi.WifiNetworkSuggestion
 import android.nfc.NdefMessage
 import android.nfc.NfcAdapter
 import android.nfc.Tag
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcelable
+import android.provider.Settings.*
+import android.text.Editable
 import android.util.Log
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat.startActivityForResult
 import cn.edu.sjtu.keyworldteam.keyworld.databinding.ActivityMainBinding
+import cn.edu.sjtu.keyworldteam.keyworld.databinding.ActivityReadInstructionBinding
 import cn.edu.sjtu.keyworldteam.keyworld.databinding.ActivityWifiConnectionBinding
 import java.io.UnsupportedEncodingException
 import java.nio.charset.Charset
@@ -25,7 +32,13 @@ import kotlin.experimental.and
 class WifiConnection : AppCompatActivity() {
 
     private lateinit var tvNFCContent: TextView
+    private lateinit var tvNFCTag: TextView
     private lateinit var binding: ActivityWifiConnectionBinding
+    private lateinit var binding1: ActivityReadInstructionBinding
+    lateinit var authentication: String
+    lateinit var encryption: String
+    lateinit var ssid: String
+    lateinit var password: String
     var nfcAdapter: NfcAdapter? = null
     var pendingIntent: PendingIntent? = null
     var myTag: Tag? = null
@@ -34,10 +47,17 @@ class WifiConnection : AppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityWifiConnectionBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+//        binding = ActivityWifiConnectionBinding.inflate(layoutInflater)
+//        setContentView(binding.root)
+//
+//        tvNFCContent = binding.wifiInfo
 
-        tvNFCContent = binding.wifiInfo
+        //authentication = "open"
+        //ssid = "AndroidWifi"
+        //password = ""
+        //setWifi(authentication, ssid, password)
+
+//
 
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this)
@@ -58,15 +78,19 @@ class WifiConnection : AppCompatActivity() {
         val tagDetected = IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED)
         tagDetected.addCategory(Intent.CATEGORY_DEFAULT)
 
-        returnButton = findViewById(R.id.returnButton1)
-        returnButton.setOnClickListener {
-            finish()
-        }
+
+
+//        returnButton = findViewById(R.id.returnButton1)
+//        returnButton.setOnClickListener {
+//            finish()
+//        }
     }
+
 
     /******************************************************************************
      * Read From NFC Tag
      ****************************************************************************/
+
     private fun readFromIntent(intent: Intent) {
         val action = intent.action
         if (NfcAdapter.ACTION_TAG_DISCOVERED == action || NfcAdapter.ACTION_TECH_DISCOVERED == action || NfcAdapter.ACTION_NDEF_DISCOVERED == action) {
@@ -77,12 +101,14 @@ class WifiConnection : AppCompatActivity() {
                 for (i in rawMsgs.indices) {
                     msgs.add(i, rawMsgs[i] as NdefMessage)
                 }
-                buildTagViews(msgs.toTypedArray())
+                decodeTag(msgs.toTypedArray())
+
+
             }
         }
     }
 
-    private fun buildTagViews(msgs: Array<NdefMessage>) {
+    private fun decodeTag(msgs: Array<NdefMessage>) {
         if (msgs == null || msgs.isEmpty()) return
         var text = ""
         val payload = msgs[0].records[0].payload
@@ -99,41 +125,142 @@ class WifiConnection : AppCompatActivity() {
         } catch (e: UnsupportedEncodingException) {
             Log.e("UnsupportedEncoding", e.toString())
         }
+        //wifi tag
+        /*var lines = text.lines()
+        authentication = lines[1]
+        encryption = lines[2]
+        ssid = lines[3]
+        password = lines[4]
+
+        setWifi(authentication, ssid, password)*/
+
+        val lines = text.lines()
+        val flag = lines[0]
+
+        if (flag == "instr"){
+            //instruction tag
+
+            binding1 = ActivityReadInstructionBinding.inflate(layoutInflater)
+            setContentView(binding1.root)
+
+            tvNFCContent = binding1.equipmentInstruction
+            tvNFCTag = binding1.equipmentName
+            //extract tag name
+            val title = lines[1]
+            //extract instruction text
+            val instruction = text.subSequence(flag.length + title.length + 2,text.length)
+
+            tvNFCTag.text = title
+            tvNFCContent.text = "$instruction"
 
 
 
+        }else if (flag == "wifi"){
             //wifi tag
             var lines = text.lines()
-            var authentication = lines[0]
-            var encryption = lines[1]
-            var SSID = lines[2]
-            var Password = lines[3]
-            tvNFCContent.text = "Authentication: $authentication \n" +
-                    "Encryption: $encryption \nSSID: $SSID \nPassword: $Password"
+            authentication = lines[1]
+            encryption = lines[2]
+            ssid = lines[3]
+            password = lines[4]
+
+            setWifi(authentication, ssid, password)
+        }else{
+            return
+        }
+
     }
 
 
-    /**
-     * For reading the NFC when the app is already launched
-     */
-    /*override fun onNewIntent(intent: Intent) {
-        setIntent(intent)
-        readFromIntent(intent)
-        if (NfcAdapter.ACTION_TAG_DISCOVERED == intent.action) {
-            myTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
+
+
+
+    /******************************************************************************
+     * Connect to WIFI (support authentication method: open(without password) / WPA2
+     ****************************************************************************/
+
+
+    fun setWifi(authentication: String, ssid: String, password: String) {
+        val suggestions = ArrayList<WifiNetworkSuggestion>()
+
+        //Open configuration
+        if(authentication == "open") {
+            suggestions.add(
+                WifiNetworkSuggestion.Builder()
+                    .setSsid(ssid)
+                    .build()
+            )
+        }
+
+        // WPA2 configuration
+        if(authentication == "WPA2") {
+            suggestions.add(
+                WifiNetworkSuggestion.Builder()
+                    .setSsid(ssid)
+                    .setWpa2Passphrase(password)
+                    .build()
+            )
+        }
+
+        // Create intent
+        val bundle = Bundle()
+        bundle.putParcelableArrayList(EXTRA_WIFI_NETWORK_LIST, suggestions)
+        val intent = Intent(ACTION_WIFI_ADD_NETWORKS)
+        intent.putExtras(bundle)
+
+        // Launch intent
+        startActivityForResult(intent, 10)
+    }
+
+
+    /******************************************************************************
+     * user reaction to the connection
+     ****************************************************************************/
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == 10) {
+            if (resultCode == RESULT_OK) {
+                // user agreed to save configurations: still need to check individual results
+                if (data != null && data.hasExtra(EXTRA_WIFI_NETWORK_RESULT_LIST)) {
+                    for (code in data.getIntegerArrayListExtra(EXTRA_WIFI_NETWORK_RESULT_LIST)!!) {
+                        when (code) { //TODO: link to connection result page
+                            ADD_WIFI_RESULT_SUCCESS -> {
+                                binding = ActivityWifiConnectionBinding.inflate(layoutInflater)
+                                setContentView(binding.root)
+                                binding.wifiInfo.text = "SSID: $ssid \nPassword: $password"
+                                Log.i("wifi", "connect succeed")
+
+                                returnButton = findViewById(R.id.returnButton1)
+                                returnButton.setOnClickListener {
+                                    finish()
+                                }
+                            }
+                            ADD_WIFI_RESULT_ADD_OR_UPDATE_FAILED ->
+                                Log.i("wifi", "invalid configuration")
+                            ADD_WIFI_RESULT_ALREADY_EXISTS -> {
+                                binding = ActivityWifiConnectionBinding.inflate(layoutInflater)
+                                setContentView(binding.root)
+                                binding.wifiInfo.text = "SSID: $ssid \nPassword: $password"
+                                Log.i("wifi", "already existed")
+
+                                returnButton = findViewById(R.id.returnButton1)
+                                returnButton.setOnClickListener {
+                                    finish()
+                                }
+                            }
+                            else ->
+                                Log.e("wifi", "something wrong")
+                        }
+                    }
+                }
+            } else {
+                Log.i("wifi", "user declined")
+            }
         }
     }
 
-    public override fun onPause() {
-        super.onPause()
-    }
-
-    public override fun onResume() {
-        super.onResume()
-    }
 
 
-    companion object {
-        const val ERROR_DETECTED = "No NFC tag detected!"
-    }*/
 }

@@ -160,7 +160,7 @@ Guests can request room service through the room service request block on the re
 | android.nfc | Support Android basic NFC functions |
 | android.nfc.tech | Support Android advanced NFC functions |
 | android.nfc.cardemulation |  Support Android NFC card emulation |
-| android.net.wifi | Support Android wifi suggestions and connection |
+| ACTION_WIFI_ADD_NETWORKS | add WIFI configurations to the saved network or subscription list |
 | LiveChat API | Live Chat |
 | django-webpush | hotel notification web push|
 
@@ -220,9 +220,9 @@ The final UI/UX overview is shown below ([detailed version here](https://www.fig
 ## Team Roster
 | Team member | Contribution |
 |:-----------:|:------------:|
-|Yuanqi Guo||
-|Xinrui Zhao||
-|Ruiyu Li||
-|Yixin Shi||
-|Churong Ji||
-|Ruge Xu|UI/UX Design and Implementation, Activity Connections in Kotlin|
+|Yuanqi Guo|Implementation of "Read Instruction from NFC tags", implementation of "Get WiFi Info from NFC tags"|
+|Xinrui Zhao| Back-end for the KeyFetch and roomServiceRequest, hotel side pending service page |
+|Ruiyu Li| frontend implementation of log-in and service request, server communication protocol design and document, UI/UX of select service |
+|Yixin Shi| Hotel side UI design, Room key upload Implementation, Database Design and Management |
+|Churong Ji|  Hotel side UI, Database, Back-end APIs (key fetch and service upload), Hotel side key&resident upload|
+|Ruge Xu|Resident side UI/UX Design, App UI Implementation, Activity Connections in Kotlin|
