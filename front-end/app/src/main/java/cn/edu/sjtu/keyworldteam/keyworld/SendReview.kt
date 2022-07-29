@@ -2,14 +2,15 @@ package cn.edu.sjtu.keyworldteam.keyworld
 
 import android.app.AlertDialog
 import android.content.DialogInterface
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RatingBar
-import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
+import cn.edu.sjtu.keyworldteam.keyworld.PostStore.postReview
+import java.time.Instant
+import java.time.format.DateTimeFormatter
 
 class SendReview : AppCompatActivity() {
 
@@ -27,7 +28,14 @@ class SendReview : AppCompatActivity() {
 
             val reviewText = findViewById<EditText>(R.id.reviewInput) // Review text
             if (reviewText.text.isNotEmpty()) {
-                // TODO: Send rating and reviews
+                // Send rating and reviews
+                val msgToPost = Review(
+                    roomid = MySingleton.roomid,
+                    rating = msg.toFloat(),
+                    review = reviewText.text.toString()
+                )
+                postReview(applicationContext, msgToPost)
+
                 finish()
             }
             else {
