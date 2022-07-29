@@ -27,9 +27,9 @@ object PostStore {
 
     fun postMsg(context: Context, postt: Postt) {
         val jsonObj = mapOf(
-            "roomid" to postt.roomid,
+            "roomid" to "101", // postt.roomid,
             "requestdetail" to postt.requestdetail,
-            "timestamp" to postt.timestamp
+            "timestamp" to "17:18:30.698589" // postt.timestamp
         )
         val postRequest = JsonObjectRequest(
             Request.Method.POST,
