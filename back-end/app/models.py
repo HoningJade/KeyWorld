@@ -23,6 +23,7 @@ class Reviews(models.Model):
     id = models.IntegerField(primary_key=True)
     room_number = models.ForeignKey('rooms',on_delete=models.CASCADE,)
     review = models.TextField(blank=True, null=True)
+    rating = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
