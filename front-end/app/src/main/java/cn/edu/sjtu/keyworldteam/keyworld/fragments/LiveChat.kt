@@ -3,6 +3,7 @@ package cn.edu.sjtu.keyworldteam.keyworld.fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +13,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cn.edu.sjtu.keyworldteam.keyworld.*
 import cn.edu.sjtu.keyworldteam.keyworld.PostStore.sendChat
+import okhttp3.Callback
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
+import org.json.JSONArray
+import org.json.JSONObject
+import org.json.JSONTokener
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.text.Typography.times
 
 class LiveChat : Fragment() {
 
@@ -91,7 +99,7 @@ class LiveChat : Fragment() {
             )
             sendChat(requireContext(), msg)
 
-            addMessage(messageText, dateString, true)
+            // addMessage(messageText, dateString, true)
 
             sendText.text.clear()
 //            Toast.makeText(requireContext(), "Message is: $messageText", Toast.LENGTH_SHORT).show()
@@ -117,9 +125,48 @@ class LiveChat : Fragment() {
     private fun dataInitialize() {
         mMessageArrayList = arrayListOf()
 
-        // TODO: Get chat information from back-end
+        val nFields = 2
+        // Get chat information from back-end
+        val builder  = (PostStore.serverUrl +"sendChat/").toHttpUrlOrNull()?.newBuilder()
+        if (builder != null) {
+            val url: String = builder.build().toString()
+            val request = okhttp3.Request.Builder()
+                .url(url)
+                .build()
 
-        // Test messages //
+            PostStore.client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: okhttp3.Call, e: IOException) {
+                    Log.e("sendChat", "Failed GET request")
+                }
+                override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
+                    if (response.isSuccessful) {
+                        // val msgReceived = try { JSONObject(response.body?.string() ?: "").getJSONArray("msg") } catch (e: JSONException) { JSONArray() }
+                        // val msgReceived = response.body?.string().toString()
+                        //if (msgReceived.length() == 4) {
+                        val msgReceived = JSONTokener(response.body?.string()).nextValue() as JSONObject
+                        // msgReceived = msgReceived.getJSONObject("msg")
+                        val msgList = msgReceived.getJSONArray("chatts")
+                        for (i in 0 until msgList.length()) {
+                            val chattEntry = msgList[i] as JSONArray
+                            if (chattEntry.length() == nFields) {
+                                if (chattEntry[0] == "customer") {
+                                    val message = Message.User(chattEntry[1] as String, getString(R.string.my_time))
+                                    mMessageArrayList.add(message)
+                                } else {
+                                    val message = Message.Hotel(chattEntry[1] as String, getString(R.string.my_time))
+                                    mMessageArrayList.add(message)
+                                }
+                            } else {
+                                Log.e("getChatts", "Received unexpected number of fields " + chattEntry.length().toString() + " instead of " + nFields.toString())
+                            }
+                        }
+                    }
+                }
+            })
+
+        }
+
+/*        // Test messages //
         val messages = arrayOf(
             getString(R.string.my_message),
             getString(R.string.other_message)
@@ -145,7 +192,7 @@ class LiveChat : Fragment() {
                 val message = Message.Hotel(messages[i], times[i])
                 mMessageArrayList.add(message)
             }
-        }
+        }*/
     }
 }
 
