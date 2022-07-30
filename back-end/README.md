@@ -37,6 +37,15 @@ To access: https://18.116.30.203/
 | `room_number` | integer | Not null & Foreign key references rooms (room_number) on delete cascade |    |
 | `review` | text |  |   |
 
+**Table liveChats**
+| Column name       | Type | Constraint    |  Note   |
+| ---------- | -------- | ------ | ---------------- |
+| `room_number` | integer | Primary key & Foreign key references rooms (room_number) on delete cascade |    |
+| `message_id` | integer | Not null |   |
+| `owner` | character varying(255) | Not null |   |
+| `message` | text | Not null |   |
+
+
 P.S.
 
 Yixin Shi's contribution on skeletal project: 
