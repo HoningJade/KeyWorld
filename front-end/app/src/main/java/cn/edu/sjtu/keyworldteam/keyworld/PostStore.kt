@@ -21,9 +21,9 @@ import org.json.JSONTokener
 
 object PostStore {
     private val nFields = Postt::class.declaredMemberProperties.size
-    private val client = OkHttpClient()
+    val client = OkHttpClient()
     private lateinit var queue: RequestQueue
-    private const val serverUrl = "https://18.116.30.203/"
+    const val serverUrl = "https://18.116.30.203/"
 
     fun postMsg(context: Context, postt: Postt) {
         val jsonObj = mapOf(
