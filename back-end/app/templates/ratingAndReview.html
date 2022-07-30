@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Service List Page</title>
+    <title>Rating and Review Page</title>
     <style>
         html,
     body {
@@ -71,35 +71,21 @@
     </style>
     </head>
     <div class="container">
+        <h3>Average Rating: {{avg_rating}}/5.00</h3>
         <table>
             <thead>
                 <tr>
                     <th>Room Number</th>
-                    <th>Request</th>
-                    <th>Status</th>
+                    <th>Review</th>
                 </tr>
             </thead>
             <tbody>
+                {% for result in results %}
                 <tr>
-                    <td>1001</td>
-                    <td>Cleaning service</td>
-                    <td>Pending</td>
+                    <td>{{result.room_number}}</td>
+                    <td>{{result.review}}</td>
                 </tr>
-                <tr>
-                    <td>1220</td>
-                    <td>Damage repair</td>
-                    <td>Pending</td>
-                </tr>
-                <tr>
-                    <td>3108</td>
-                    <td>Charger delivery</td>
-                    <td>Pending</td>
-                </tr>
-                <tr>
-                    <td>1202</td>
-                    <td>Cleaning service</td>
-                    <td>Finished</td>
-                </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
