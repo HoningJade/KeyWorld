@@ -167,12 +167,13 @@ def ratingAndReview(request):
     cursor = connection.cursor()
     cursor.execute('select avg(rating) from reviews;')    
     avg_rating = cursor.fetchone()[0]
+    avg_rating = round(avg_rating, 2)
     cursor.execute('select room_number, review from reviews;')
-    result = dictfetchall(cursor)
+    results = dictfetchall(cursor)
     
     context = {
-        'rating': rating,
-        'result': result,
+        'avg_rating': avg_rating,
+        'results': results,
     }
     return render(request, 'ratingAndReview.html', context)
 

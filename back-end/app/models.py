@@ -24,7 +24,6 @@ class Reviews(models.Model):
     room_number = models.ForeignKey('rooms',on_delete=models.CASCADE,)
     review = models.TextField(blank=True, null=True)
     rating = models.IntegerField(blank=True, null=True)
-
     class Meta:
         managed = False
         db_table = 'reviews'

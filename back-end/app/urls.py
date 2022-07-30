@@ -13,5 +13,5 @@ urlpatterns = [
     path('register/', views.register, name = 'registerNotification'),
     path('keyFetch/', views.keyFetch, name='keyFetch'),
     path('receiveReview/', views.receiveReview, name='receiveReview'),
-    path('ratingAndReview', views.ratingAndReview, name='ratingAndReview'),
+    path('ratingAndReview/', views.ratingAndReview, name='ratingAndReview'),
 ]
