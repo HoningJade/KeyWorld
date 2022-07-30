@@ -9,10 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cn.edu.sjtu.keyworldteam.keyworld.*
 import cn.edu.sjtu.keyworldteam.keyworld.PostStore.sendChat
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import okhttp3.Callback
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import org.json.JSONArray
@@ -35,6 +40,7 @@ class LiveChat : Fragment() {
     private lateinit var mMessageRecycler: RecyclerView
     private lateinit var mMessageArrayList: ArrayList<Message>
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -105,8 +111,14 @@ class LiveChat : Fragment() {
 //            Toast.makeText(requireContext(), "Message is: $messageText", Toast.LENGTH_SHORT).show()
         }
 
-        // TODO: Receive message from back-end
-        // TODO: Use addMessage(messageText, timeText, false) to add message bubble
+        // Use addMessage(messageText, timeText, false) to add message bubble
+        // Receive message from back-end
+        lifecycleScope.launch {
+            while(true) {
+                updateMsg()
+                delay(5000)
+            }
+        }
 
         return view
     }
@@ -193,6 +205,50 @@ class LiveChat : Fragment() {
                 mMessageArrayList.add(message)
             }
         }*/
+    }
+
+    suspend fun updateMsg() {
+        mMessageArrayList = arrayListOf()
+
+        val nFields = 2
+        // Get chat information from back-end
+        val builder  = (PostStore.serverUrl +"sendChat/").toHttpUrlOrNull()?.newBuilder()
+        if (builder != null) {
+            val url: String = builder.build().toString()
+            val request = okhttp3.Request.Builder()
+                .url(url)
+                .build()
+
+            PostStore.client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: okhttp3.Call, e: IOException) {
+                    Log.e("sendChat", "Failed GET request")
+                }
+                override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
+                    if (response.isSuccessful) {
+                        // val msgReceived = try { JSONObject(response.body?.string() ?: "").getJSONArray("msg") } catch (e: JSONException) { JSONArray() }
+                        // val msgReceived = response.body?.string().toString()
+                        //if (msgReceived.length() == 4) {
+                        val msgReceived = JSONTokener(response.body?.string()).nextValue() as JSONObject
+                        // msgReceived = msgReceived.getJSONObject("msg")
+                        val msgList = msgReceived.getJSONArray("chatts")
+                        for (i in 0 until msgList.length()) {
+                            val chattEntry = msgList[i] as JSONArray
+                            if (chattEntry.length() == nFields) {
+                                if (chattEntry[0] == "customer") {
+                                    val message = Message.User(chattEntry[1] as String, getString(R.string.my_time))
+                                    mMessageArrayList.add(message)
+                                } else {
+                                    val message = Message.Hotel(chattEntry[1] as String, getString(R.string.my_time))
+                                    mMessageArrayList.add(message)
+                                }
+                            } else {
+                                Log.e("getChatts", "Received unexpected number of fields " + chattEntry.length().toString() + " instead of " + nFields.toString())
+                            }
+                        }
+                    }
+                }
+            })
+        }
     }
 }
 
