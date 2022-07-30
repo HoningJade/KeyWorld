@@ -79,9 +79,6 @@ def residentUpdate(request):
 
     return render(request, 'residentUpdate.html', {})
 
-def serviceList(request):
-    return render(request, 'serviceList.html', {})
-
 def liveChat(request):
     return render(request, 'liveChat.html', {})
 
@@ -113,6 +110,7 @@ def roomServiceRequest(request):
     room = json_data['roomid']
     service = json_data['requestdetail']
     requestTime = json_data['timestamp']
+    print(requestTime, type(requestTime))
     cursor = connection.cursor()
     cursor.execute('select count(*) from services;')
     count = cursor.fetchone()
@@ -161,3 +159,34 @@ def keyFetch(request):
         return JsonResponse(status=400, data={"msg": "something went wrong, please contact the hotel"})
 
     return JsonResponse(status=200, data=result[0])
+
+def ratingAndReview(request):
+    if request.method != 'GET':
+        return HttpResponse(status=404)
+
+    cursor = connection.cursor()
+    cursor.execute('select avg(rating) from reviews;')    
+    avg_rating = cursor.fetchone()[0]
+    cursor.execute('select room_number, review from reviews;')
+    result = dictfetchall(cursor)
+    
+    context = {
+        'rating': rating,
+        'result': result,
+    }
+    return render(request, 'ratingAndReview.html', context)
+
+def receiveReview(request):
+    if request.method != 'POST':
+        return HttpResponse(status=404)
+    json_data = json.loads(request.body)
+    room_number = json_data['room_number']
+    rating = json_data['rating']
+    review = json_data['review']
+    cursor = connection.cursor() 
+    cursor.execute('select count(*) from services;')
+    count = cursor.fetchone()
+    cursor.execute('INSERT INTO reviews (room_number, review, rating, id) \
+                    VALUES (%s, %s, %s, %s);', \
+                    (room_number, review, rating, count[0]+1,))
+    return JsonResponse({})
