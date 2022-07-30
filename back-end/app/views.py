@@ -79,9 +79,6 @@ def residentUpdate(request):
 
     return render(request, 'residentUpdate.html', {})
 
-def liveChat(request):
-    return render(request, 'liveChat.html', {})
-
 def register(request):
     webpush = {"group": 'allusers' } # The group_name should be the name you would define.
     return render(request, 'registerNotification.html', {'webpush':webpush})
@@ -110,7 +107,6 @@ def roomServiceRequest(request):
     room = json_data['roomid']
     service = json_data['requestdetail']
     requestTime = json_data['timestamp']
-    print(requestTime, type(requestTime))
     cursor = connection.cursor()
     cursor.execute('select count(*) from services;')
     count = cursor.fetchone()
@@ -177,6 +173,7 @@ def ratingAndReview(request):
     }
     return render(request, 'ratingAndReview.html', context)
 
+@csrf_exempt
 def receiveReview(request):
     if request.method != 'POST':
         return HttpResponse(status=404)
@@ -191,3 +188,9 @@ def receiveReview(request):
                     VALUES (%s, %s, %s, %s);', \
                     (room_number, review, rating, count[0]+1,))
     return JsonResponse({})
+
+
+def liveChat(request):
+    return render(request, 'liveChat.html', {})
+
+# def receiveChat(request):
