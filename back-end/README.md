@@ -36,15 +36,16 @@ To access: https://18.116.30.203/
 | `id` | integer    | Primary key |   |
 | `room_number` | integer | Not null & Foreign key references rooms (room_number) on delete cascade |    |
 | `review` | text |  |   |
+| `rating` | double precision |  |   |
 
-**Table liveChats**
+**Table livechats**
 | Column name       | Type | Constraint    |  Note   |
 | ---------- | -------- | ------ | ---------------- |
-| `room_number` | integer | Primary key & Foreign key references rooms (room_number) on delete cascade |    |
+| `room_number` | integer | Foreign key references rooms (room_number) on delete cascade |    |
 | `message_id` | integer | Not null |   |
 | `owner` | character varying(255) | Not null |   |
 | `message` | text | Not null |   |
-
+\* Primary key: (room_number, message_id)
 
 P.S.
 
