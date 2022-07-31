@@ -13,6 +13,7 @@ urlpatterns = [
     path('keyFetch/', views.keyFetch, name='keyFetch'),
     path('receiveReview/', views.receiveReview, name='receiveReview'),
     path('ratingAndReview/', views.ratingAndReview, name='ratingAndReview'),
-    # path('liveChat/', views.liveChat, name='liveChat'),
-    # path('receiveChat/', views.receiveChat/, name='receiveChat'),
+    path('liveChat/', views.liveChat, name='liveChat'),
+    path('receiveChat/', views.receiveChat, name='receiveChat'),
+    
 ]

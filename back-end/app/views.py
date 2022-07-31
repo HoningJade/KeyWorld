@@ -182,7 +182,7 @@ def receiveReview(request):
     rating = json_data['rating']
     review = json_data['review']
     cursor = connection.cursor() 
-    cursor.execute('select count(*) from services;')
+    cursor.execute('select count(*) from reviews;')
     count = cursor.fetchone()
     cursor.execute('INSERT INTO reviews (room_number, review, rating, id) \
                     VALUES (%s, %s, %s, %s);', \
@@ -191,6 +191,49 @@ def receiveReview(request):
 
 
 def liveChat(request):
-    return render(request, 'liveChat.html', {})
+    room_number = 101
+    if request.method == 'GET':
+        cursor = connection.cursor() 
+        cursor.execute('select message_id, owner, message from livechats where \
+                        room_number = %s order by message_id asc;', (room_number,))
+        messages = dictfetchall(cursor)
+        context = {
+            'messages': messages,
+        }    
+        return render(request, 'liveChat.html', context)
+    elif request.method == 'POST':
+        if request.POST.get('message'):
+            message = request.POST.get('message')
+            cursor = connection.cursor()
+            cursor.execute('select count(*) from livechats where room_number = %s;', (room_number,))
+            next_message_id = cursor.fetchone()[0] + 1
+            cursor.execute('insert into livechats (room_number, message_id, owner, message) \
+                    values (%s, %s, %s, %s);', (room_number, next_message_id, 'hotel staff', message,))
+            cursor.execute('select message_id, owner, message from livechats where \
+                        room_number = %s order by message_id asc;', (room_number,))
+            messages = dictfetchall(cursor)
+            context = {
+                'messages': messages,
+            }    
+            return render(request, 'liveChat.html', context)        
+    else:
+        return HttpResponse(status=404)
 
-# def receiveChat(request):
+@csrf_exempt
+def receiveChat(request):
+    if request.method != 'POST':
+        return HttpResponse(status=404)
+    json_data = json.loads(request.body)
+    room_number = json_data['room_number']
+    chatts = json_data['chatts'] 
+    cursor = connection.cursor() 
+    cursor.execute('select count(*) from livechats where room_number = %s;', (room_number,))
+    next_message_id = cursor.fetchone()[0] + 1
+    cursor.execute('insert into livechats (room_number, message_id, owner, message) \
+                    values (%s, %s, %s, %s);', (room_number, next_message_id, 'customer', chatts,))
+    return JsonResponse({})    
+
+def sendChat(request):
+    if request.method != 'GET':
+        return HttpResponse(status=404)
+    cursor = connection.cursor()     

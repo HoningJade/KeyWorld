@@ -43,12 +43,13 @@
     }
     
     .card-header .card-title {
-        padding: 0;
+        /* padding: 0; */
+        padding-left: 840px;
         border: none;
     }
     
     h4.card-title {
-        font-size: 17px;
+        font-size: 28px;
     }
     
     .card-header>*:last-child {
@@ -198,8 +199,8 @@
     }
     
     .media-chat.media-chat-reverse {
-        padding-right: 12px;
-        padding-left: 64px;
+        /* padding-right: 1080px; */
+        padding-left: 1280px;
         -webkit-box-orient: horizontal;
         -webkit-box-direction: reverse;
         flex-direction: row-reverse;
@@ -211,7 +212,7 @@
     }
     
     .media {
-        padding: 16px 12px;
+        padding: 16px 360px;
         -webkit-transition: background-color .2s linear;
         transition: background-color .2s linear;
     }
@@ -246,7 +247,7 @@
         display: flex;
         -webkit-box-align: center;
         align-items: center;
-        padding: 12px 20px;
+        padding: 12px 360px;
         background-color: #f9fafb;
     }
     
@@ -264,11 +265,13 @@
         border: none;
         outline: none !important;
         background-color: transparent;
+        margin-left: 0;
     }
     
     button, input, optgroup, select, textarea {
         font-family: Roboto,sans-serif;
         font-weight: 300;
+        margin-left: 740px;
     }
     
     .publisher-btn {
@@ -313,48 +316,52 @@
     <div class="page-content page-container" id="page-content">
         <div class="padding">
             <div class="row container d-flex justify-content-center">
-    <div class="col-md-6">
-                <div class="card card-bordered">
-                  <div class="card-header">
-                    <h4 class="card-title"><strong>Chat</strong></h4>
-                  </div>
-    
-    
-                  <div class="ps-container ps-theme-default ps-active-y" id="chat-content" style="overflow-y: scroll !important; height:400px !important;">
-                    <div class="media media-chat">
-                      <img class="avatar" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
-                      <div class="media-body">
-                        <p>Hi <br> Would youplease  deliver a pair of slippers to my room?</p>
-                        <p>Room 1201</p>
-                        <p class="meta"><time datetime="2018">23:58</time></p>
-                      </div>
+              <div class="col-md-6">
+                    <div class="card card-bordered">
+                        <div class="card-header">
+                            <h4 class="card-title"><strong>Chat</strong></h4>
+                        </div>
+            
+            
+                        <div class="ps-container ps-theme-default ps-active-y" id="chat-content" style="overflow-y: scroll !important; height:400px !important;">
+                            {% for message in messages %}
+                                {% if message.owner == "customer" %}
+                                    <div class="media media-chat">
+                                        <img class="avatar" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
+                                        <div class="media-body">
+                                        <p><p>{{message.message}}</p></p>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="media media-chat media-chat-reverse">
+                                        <img class="avatar avatar-xs" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
+                                        <div class="media-body">
+                                        <p>{{message.message}}</p>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+            
+                        <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; height: 0px; right: 2px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div></div></div>
+            
+                        <div class="publisher bt-1 border-light">
+                            <img class="avatar avatar-xs" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
+                            <form action="" method='POST'>
+                                {% csrf_token %}
+                                <input class="publisher-input" type="text" name="message" placeholder="Write something" required>
+                                <input type="submit" name="Send" value="Send">
+                            </form>
+                            <span class="publisher-btn file-group">
+                                <i class="fa fa-paperclip file-browser"></i>
+                                <input type="file">
+                            </span>
+                            <a class="publisher-btn" href="#" data-abc="true"><i class="fa fa-smile"></i></a>
+                            <a class="publisher-btn text-info" href="#" data-abc="true"><i class="fa fa-paper-plane"></i></a>
+                        </div>
+            
                     </div>
-    
-                    <div class="media media-chat media-chat-reverse">
-                      <div class="media-body">
-                        <p>Sure.</p>
-                        <p>Please wait in your room and we will deliver it in five minutes.</p>
-                        <p class="meta"><time datetime="2018">00:06</time></p>
-                      </div>
-                    </div>
-    
-    
-                  <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; height: 0px; right: 2px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div></div></div>
-    
-                  <div class="publisher bt-1 border-light">
-                    <img class="avatar avatar-xs" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
-                    <input class="publisher-input" type="text" placeholder="Write something">
-                    <span class="publisher-btn file-group">
-                      <i class="fa fa-paperclip file-browser"></i>
-                      <input type="file">
-                    </span>
-                    <a class="publisher-btn" href="#" data-abc="true"><i class="fa fa-smile"></i></a>
-                    <a class="publisher-btn text-info" href="#" data-abc="true"><i class="fa fa-paper-plane"></i></a>
-                  </div>
-    
-                 </div>
-              </div>
-              </div>
-              </div>
-              </div>
+                </div>
+                </div>
+                </div>
+                </div>
   </html>

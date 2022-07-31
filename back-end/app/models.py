@@ -49,3 +49,19 @@ class Services(models.Model):
     class Meta:
         managed = False
         db_table = 'services'
+
+
+# class LiveChats(model.Model):
+#     room_number = model.ForeignKey('rooms', on_delete=models.CASCADE)
+#     message_id = models.IntegerField(blank=False, null=False)
+#     owner = models.CharField(max_length=255, blank=False, null=False)
+#     message = models.TextField(blank=False, null=False)
+
+#     class Meta:
+#         managed = False
+#         constraints = [
+#             models.UniqueConstraint(
+#                 fields=['room_number', 'message_id'], name='unique_combination'
+#             )
+#         ]
+#         db_table = 'livechats'
