@@ -106,7 +106,7 @@ def roomServiceRequest(request):
     json_data = json.loads(request.body)
     room = json_data['roomid']
     service = json_data['requestdetail']
-    requestTime = json_data['timestamp']
+    requestTime = json_data['timestamp'].replaceAll("[TZ]", " ")
     cursor = connection.cursor()
     cursor.execute('select count(*) from services;')
     count = cursor.fetchone()
