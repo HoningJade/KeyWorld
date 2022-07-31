@@ -234,6 +234,18 @@ def receiveChat(request):
     return JsonResponse({})    
 
 def sendChat(request):
+    room_number = 101
     if request.method != 'GET':
         return HttpResponse(status=404)
-    cursor = connection.cursor()     
+    cursor = connection.cursor() 
+    cursor.execute('select owner, message from livechats where \
+                        room_number = %s order by message_id asc;', (room_number,))
+    results = cursor.fetchall()
+    live_chat = {
+        'room_number': room_number,
+        'chatts': []
+    }
+    for result in results:
+        usr_msg = [result[0], result[1]]
+        live_chat['chatts'].append(usr_msg)
+    return JsonResponse(live_chat)    

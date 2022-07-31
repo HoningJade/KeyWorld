@@ -15,5 +15,5 @@ urlpatterns = [
     path('ratingAndReview/', views.ratingAndReview, name='ratingAndReview'),
     path('liveChat/', views.liveChat, name='liveChat'),
     path('receiveChat/', views.receiveChat, name='receiveChat'),
-    
+    path('sendChat/', views.sendChat, name='sendChat'),
 ]
