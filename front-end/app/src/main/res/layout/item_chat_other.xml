@@ -51,14 +51,14 @@
     </androidx.cardview.widget.CardView>
 
 
-    <TextView
-        android:id="@+id/text_gchat_timestamp_other"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="8:00"
-        android:textColor="#C0C0C0"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@+id/card_gchat_message_other"
-        app:layout_constraintStart_toEndOf="@+id/card_gchat_message_other" />
+<!--    <TextView-->
+<!--        android:id="@+id/text_gchat_timestamp_other"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="8:00"-->
+<!--        android:textColor="#C0C0C0"-->
+<!--        android:textSize="10sp"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/card_gchat_message_other"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/card_gchat_message_other" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
