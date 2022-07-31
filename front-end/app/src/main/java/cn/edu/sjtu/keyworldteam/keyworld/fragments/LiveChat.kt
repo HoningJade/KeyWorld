@@ -39,6 +39,7 @@ class LiveChat : Fragment() {
     private lateinit var mMessageAdapter: MessageListAdapter
     private lateinit var mMessageRecycler: RecyclerView
     private lateinit var mMessageArrayList: ArrayList<Message>
+    var msgCount = 0
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreateView(
@@ -116,7 +117,9 @@ class LiveChat : Fragment() {
         lifecycleScope.launch {
             while(true) {
                 updateMsg()
-                delay(5000)
+                mMessageAdapter = MessageListAdapter(mMessageArrayList)
+                mMessageRecycler.adapter = mMessageAdapter
+                delay(1000)
             }
         }
 
@@ -158,6 +161,7 @@ class LiveChat : Fragment() {
                         val msgReceived = JSONTokener(response.body?.string()).nextValue() as JSONObject
                         // msgReceived = msgReceived.getJSONObject("msg")
                         val msgList = msgReceived.getJSONArray("chatts")
+                        msgCount = msgList.length()
                         for (i in 0 until msgList.length()) {
                             val chattEntry = msgList[i] as JSONArray
                             if (chattEntry.length() == nFields) {
@@ -208,8 +212,6 @@ class LiveChat : Fragment() {
     }
 
     suspend fun updateMsg() {
-        mMessageArrayList = arrayListOf()
-
         val nFields = 2
         // Get chat information from back-end
         val builder  = (PostStore.serverUrl +"sendChat/").toHttpUrlOrNull()?.newBuilder()
@@ -231,24 +233,29 @@ class LiveChat : Fragment() {
                         val msgReceived = JSONTokener(response.body?.string()).nextValue() as JSONObject
                         // msgReceived = msgReceived.getJSONObject("msg")
                         val msgList = msgReceived.getJSONArray("chatts")
-                        for (i in 0 until msgList.length()) {
-                            val chattEntry = msgList[i] as JSONArray
-                            if (chattEntry.length() == nFields) {
-                                if (chattEntry[0] == "customer") {
-                                    val message = Message.User(chattEntry[1] as String, getString(R.string.my_time))
-                                    mMessageArrayList.add(message)
+                        Log.i("msg number: ", msgList.length().toString())
+                        if (msgCount < msgList.length()){
+                            for (i in msgCount until msgList.length()) {
+                                val chattEntry = msgList[i] as JSONArray
+                                if (chattEntry.length() == nFields) {
+                                    if (chattEntry[0] == "customer") {
+                                        Log.i("customer msg: ", chattEntry[1] as String)
+                                        val message = Message.User(chattEntry[1] as String, getString(R.string.my_time))
+                                        mMessageArrayList.add(message)
+                                    } else {
+                                        Log.i("hotel msg: ", chattEntry[1] as String)
+                                        val message = Message.Hotel(chattEntry[1] as String, getString(R.string.my_time))
+                                        mMessageArrayList.add(message)
+                                    }
                                 } else {
-                                    val message = Message.Hotel(chattEntry[1] as String, getString(R.string.my_time))
-                                    mMessageArrayList.add(message)
+                                    Log.e("getChatts", "Received unexpected number of fields " + chattEntry.length().toString() + " instead of " + nFields.toString())
                                 }
-                            } else {
-                                Log.e("getChatts", "Received unexpected number of fields " + chattEntry.length().toString() + " instead of " + nFields.toString())
                             }
                         }
+                        msgCount = msgList.length()
                     }
                 }
             })
         }
     }
 }
-
