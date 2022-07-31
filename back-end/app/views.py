@@ -164,7 +164,7 @@ def ratingAndReview(request):
     cursor.execute('select * from reviews;')
     if cursor.fetchall():
         cursor.execute('select avg(rating) from reviews;')
-        avg_rating = cursor.fetchall()[0]
+        avg_rating = cursor.fetchone()[0]
         avg_rating = round(avg_rating, 2)
         cursor.execute('select room_number, review from reviews;')
         results = dictfetchall(cursor)
