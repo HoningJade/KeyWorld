@@ -45,7 +45,9 @@ To access: https://18.116.30.203/
 | `message_id` | integer | Not null |   |
 | `owner` | character varying(255) | Not null |   |
 | `message` | text | Not null |   |
+
 \* Primary key: (room_number, message_id)
+
 
 P.S.
 
