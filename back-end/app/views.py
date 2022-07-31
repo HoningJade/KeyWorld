@@ -199,7 +199,8 @@ def liveChat(request):
         messages = dictfetchall(cursor)
         context = {
             'messages': messages,
-        }    
+        }   
+         
         return render(request, 'liveChat.html', context)
     elif request.method == 'POST':
         if request.POST.get('message'):
@@ -214,7 +215,11 @@ def liveChat(request):
             messages = dictfetchall(cursor)
             context = {
                 'messages': messages,
-            }    
+            }  
+            head = 'New Chat!'
+            body = 'You have new messages from' + room_number
+            webNotification("allusers",head,body) 
+             
             return render(request, 'liveChat.html', context)        
     else:
         return HttpResponse(status=404)
@@ -231,6 +236,10 @@ def receiveChat(request):
     next_message_id = cursor.fetchone()[0] + 1
     cursor.execute('insert into livechats (room_number, message_id, owner, message) \
                     values (%s, %s, %s, %s);', (room_number, next_message_id, 'customer', chatts,))
+    head = 'New Chat!'
+    body = 'You have new messages from' + room_number
+    webNotification("allusers",head,body) 
+    
     return JsonResponse({})    
 
 def sendChat(request):
