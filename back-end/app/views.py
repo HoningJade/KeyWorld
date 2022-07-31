@@ -161,17 +161,21 @@ def ratingAndReview(request):
         return HttpResponse(status=404)
 
     cursor = connection.cursor()
-    cursor.execute('select avg(rating) from reviews;')    
-    avg_rating = cursor.fetchone()[0]
-    avg_rating = round(avg_rating, 2)
-    cursor.execute('select room_number, review from reviews;')
-    results = dictfetchall(cursor)
-    
-    context = {
-        'avg_rating': avg_rating,
-        'results': results,
-    }
-    return render(request, 'ratingAndReview.html', context)
+    cursor.execute('select * from reviews;')
+    if cursor.fetchall():
+        cursor.execute('select avg(rating) from reviews;')
+        avg_rating = cursor.fetchall()[0]
+        avg_rating = round(avg_rating, 2)
+        cursor.execute('select room_number, review from reviews;')
+        results = dictfetchall(cursor)
+        
+        context = {
+            'avg_rating': avg_rating,
+            'results': results,
+        }
+        return render(request, 'ratingAndReview.html', context)
+    else:
+        return render(request, 'error.html', {})    
 
 @csrf_exempt
 def receiveReview(request):
@@ -191,7 +195,7 @@ def receiveReview(request):
 
 
 def liveChat(request):
-    room_number = 101
+    room_number = 103
     if request.method == 'GET':
         cursor = connection.cursor() 
         cursor.execute('select message_id, owner, message from livechats where \
@@ -234,7 +238,7 @@ def receiveChat(request):
     return JsonResponse({})    
 
 def sendChat(request):
-    room_number = 101
+    room_number = 103
     if request.method != 'GET':
         return HttpResponse(status=404)
     cursor = connection.cursor() 
