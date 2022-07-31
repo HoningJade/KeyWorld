@@ -62,7 +62,7 @@ object PostStore {
                         // val msgReceived = try { JSONObject(response.body?.string() ?: "").getJSONArray("msg") } catch (e: JSONException) { JSONArray() }
                         // val msgReceived = response.body?.string().toString()
                         //if (msgReceived.length() == 4) {
-                        var msgReceived = JSONTokener(response.body?.string()).nextValue() as JSONObject
+                        val msgReceived = JSONTokener(response.body?.string()).nextValue() as JSONObject
                         // msgReceived = msgReceived.getJSONObject("msg")
                         MySingleton.roomid = msgReceived.getInt("room_number")
                         Log.i("roomid: ", MySingleton.roomid.toString())
@@ -84,7 +84,7 @@ object PostStore {
 
     fun postReview(context: Context, postt: Review) {
         val jsonObj = mapOf(
-            "roomid" to postt.roomid,
+            "room_number" to postt.roomid,
             "rating" to postt.rating,
             "review" to postt.review
         )
@@ -102,7 +102,7 @@ object PostStore {
 
     fun sendChat(context: Context, postt: Chat) {
         val jsonObj = mapOf(
-            "roomid" to postt.roomid,
+            "room_number" to postt.roomid,
             "chatts" to postt.chatts,
         )
         val postRequest = JsonObjectRequest(
