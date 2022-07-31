@@ -14,16 +14,16 @@ class MessageListAdapter(private val messageList: ArrayList<Message>):
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private fun bindHotel(item : Message.Hotel) {
-            val timeText : TextView = itemView.findViewById(R.id.text_gchat_timestamp_other)
+//            val timeText : TextView = itemView.findViewById(R.id.text_gchat_timestamp_other)
             val messageText : TextView = itemView.findViewById(R.id.text_gchat_message_other)
-            timeText.text =  item.time
+//            timeText.text =  item.time
             messageText.text = item.text
         }
 
         private fun bindUser(item : Message.User) {
-            val timeText : TextView = itemView.findViewById(R.id.text_gchat_timestamp_me)
+//            val timeText : TextView = itemView.findViewById(R.id.text_gchat_timestamp_me)
             val messageText : TextView = itemView.findViewById(R.id.text_gchat_message_me)
-            timeText.text =  item.time
+//            timeText.text =  item.time
             messageText.text = item.text
         }
 

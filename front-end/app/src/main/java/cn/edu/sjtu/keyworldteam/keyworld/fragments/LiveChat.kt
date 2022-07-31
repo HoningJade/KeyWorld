@@ -94,9 +94,9 @@ class LiveChat : Fragment() {
         sendButton.setOnClickListener {
             val messageText = sendText.text.toString() // Message
 
-            val timestamp = Date()
-            val dateFormatter = SimpleDateFormat("KK:mm a", Locale.getDefault())
-            val dateString = dateFormatter.format(timestamp) // Time
+//            val timestamp = Date()
+//            val dateFormatter = SimpleDateFormat("KK:mm a", Locale.getDefault())
+//            val dateString = dateFormatter.format(timestamp) // Time
 //            Toast.makeText(requireContext(), "Time is: $dateString", Toast.LENGTH_SHORT).show()
 
             // Send message to back-end
@@ -106,13 +106,12 @@ class LiveChat : Fragment() {
             )
             sendChat(requireContext(), msg)
 
-            // addMessage(messageText, dateString, true)
+//            addMessage(messageText, true)
 
             sendText.text.clear()
 //            Toast.makeText(requireContext(), "Message is: $messageText", Toast.LENGTH_SHORT).show()
         }
 
-        // Use addMessage(messageText, timeText, false) to add message bubble
         // Receive message from back-end
         lifecycleScope.launch {
             while(true) {
@@ -126,12 +125,12 @@ class LiveChat : Fragment() {
         return view
     }
 
-    private fun addMessage(messageText: String, timeText: String, fromUser: Boolean) {
+    private fun addMessage(messageText: String, fromUser: Boolean) {
         if (fromUser) {
-            mMessageArrayList.add(Message.User(messageText, timeText))
+            mMessageArrayList.add(Message.User(messageText))
         }
         else {
-            mMessageArrayList.add(Message.Hotel(messageText, timeText))
+            mMessageArrayList.add(Message.Hotel(messageText))
         }
         mMessageAdapter = MessageListAdapter(mMessageArrayList)
         mMessageRecycler.adapter = mMessageAdapter
@@ -166,10 +165,10 @@ class LiveChat : Fragment() {
                             val chattEntry = msgList[i] as JSONArray
                             if (chattEntry.length() == nFields) {
                                 if (chattEntry[0] == "customer") {
-                                    val message = Message.User(chattEntry[1] as String, getString(R.string.my_time))
+                                    val message = Message.User(chattEntry[1] as String)
                                     mMessageArrayList.add(message)
                                 } else {
-                                    val message = Message.Hotel(chattEntry[1] as String, getString(R.string.my_time))
+                                    val message = Message.Hotel(chattEntry[1] as String)
                                     mMessageArrayList.add(message)
                                 }
                             } else {
@@ -181,34 +180,6 @@ class LiveChat : Fragment() {
             })
 
         }
-
-/*        // Test messages //
-        val messages = arrayOf(
-            getString(R.string.my_message),
-            getString(R.string.other_message)
-        )
-
-        val times = arrayOf(
-            getString(R.string.my_time),
-            getString(R.string.other_time)
-        )
-
-        val fromUsers = arrayOf(
-            true,
-            false
-        )
-        // Test messages //
-
-        for (i in messages.indices) {
-            if (fromUsers[i]) {
-                val message = Message.User(messages[i], times[i])
-                mMessageArrayList.add(message)
-            }
-            else {
-                val message = Message.Hotel(messages[i], times[i])
-                mMessageArrayList.add(message)
-            }
-        }*/
     }
 
     suspend fun updateMsg() {
@@ -240,11 +211,11 @@ class LiveChat : Fragment() {
                                 if (chattEntry.length() == nFields) {
                                     if (chattEntry[0] == "customer") {
                                         Log.i("customer msg: ", chattEntry[1] as String)
-                                        val message = Message.User(chattEntry[1] as String, getString(R.string.my_time))
+                                        val message = Message.User(chattEntry[1] as String)
                                         mMessageArrayList.add(message)
                                     } else {
                                         Log.i("hotel msg: ", chattEntry[1] as String)
-                                        val message = Message.Hotel(chattEntry[1] as String, getString(R.string.my_time))
+                                        val message = Message.Hotel(chattEntry[1] as String)
                                         mMessageArrayList.add(message)
                                     }
                                 } else {
