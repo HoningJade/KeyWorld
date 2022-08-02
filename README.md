@@ -226,3 +226,7 @@ The final UI/UX overview is shown below ([detailed version here](https://www.fig
 |Yixin Shi| Hotel side UI design, Room key upload Implementation, Database Design and Management |
 |Churong Ji|  Hotel side UI, Database, Back-end APIs (key fetch and service upload), Hotel side key&resident upload|
 |Ruge Xu|Resident side UI/UX Design, App UI Implementation, Activity Connections in Kotlin|
+
+### Challenges
+
+- **Ruge Xu**: There are three challenges that I encountered. First, it is a difficult task to design the user interface in a clear and simple way and to implement the designed interface perfectly on the application. I would often go back and forth between several designs, or tweak the parameters repeatedly to achieve a better presentation. Secondly, I spent a lot of time in implementing the navigation bar. On the one hand, the navigation bar switch page needs to be implemented with fragments instead of activities, and I studied for a long time how to connect a mix of fragments and activities; on the other hand, it also took me a lot of time to let the user clearly know which page they are on. Finally, I spent a lot of effort in implementing the live chat feature. I used a recycle view element to present the chat transcript in a loop. To highlight the difference between the hotel side and the user side, I designed two kinds of dialogs, and to select different dialogs for different situations in the recycle view, I went online and consulted a lot of code before I was able to implement it.
