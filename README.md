@@ -169,21 +169,29 @@ Guests can request room service through the room service request block on the re
 The final UI/UX overview is shown below ([detailed version here](https://www.figma.com/file/GR2Qz36NjUOARcIVuveBgr/UI%2FUX-Flow-Design-(Final)?node-id=0%3A1)).
 ![Final UI/UX Flow](/assets/UIUX_flow.png)
 ### UX - NFC key
-- Enter code (obtained from hotel) and last name to get the key.
-- The key is stored in the phone, press open to activate the virtual key.
-- There will be response of whether the door is successfully opened.
+The user can obtain the key by entering the password (obtained from the hotel) and the last name. 
+
+The key is stored in the phone and the user can press the open button to activate the virtual key. 
+
+The app will give a response based on whether the door has been successfully opened or not.
 ### UX - NFC WiFi
-- Click the button to start WiFi connection.
-- Guide the user to find the NFC tag and read the tag.
-- Display connection feedback.
+Users can tap a button to start a WiFi connection.
+
+The app will guide the user to the NFC tag and read the tag.
+
+The app will give feedback based on the success of the connection.
 ### UX - Hotel Service
-- Select what type of hotel service.
-- If the user chooses to read the instruction tag, the detailed information will be displayed in the window.
-- If the user chooses to send a service request, user can select service from a list.
-- If the user needs some special service which is not listed, he/she can send through live chat.
+The user can select what type of hotel services are available in the app.
+
+If the user chooses to read the instruction tag, the user can follow the prompts given by the app and scan the NFC tag, and then the detailed instruction information will be displayed in a pop-up window.
+
+If the user chooses to send a service request to the hotel, the user can select the service from the established list.
+
+If the user needs some special service not listed, he/she can send it via live chat.
 ### UX - Checkout
-- Confirm that the user is exiting the current hotel.
-- Allow users to rate and write reviews for the hotel.
+The app confirms that the user wants to exit the current hotel.
+
+The app allows the user to rate the hotel and write a review.
 ### Mockup Usability Test Results
 |                   | Evaluation Metric | KeyWorld |
 | :---------------: | :---------------: | :------: |
@@ -205,16 +213,16 @@ The final UI/UX overview is shown below ([detailed version here](https://www.fig
 - The word “Interrupt” in prompt is confusing.
 - Live chat is of the same priority with other services while in reality it should only be chosen when the service in not included in other services.
 ### Design Justification - Open Key
-- We added corresponding prompts to guide users because two interviewees in our test reported that they are unsure about what to do after clicking the “open” button.
-- We added room number so that users don’t need to memorize them.
+First, we added corresponding prompts to guide users because two interviewees in our test reported that they are unsure about what to do after clicking the “open” button.
+Second, we added room number so that users don’t need to memorize them.
 ### Design Justification - Connect WiFi
-- The success rate of wifi connection task is 66.7%. 
-- Interviewees reported that they have no idea what “reader” is and find it difficult to relate wifi connection with reader.
-- We thus directly renamed the second section to “wifi”, and moved “instruction” into “service” section to avoid exposing technical terms to users.
+The success rate of wifi connection task is 66.7%. 
+Interviewees reported that they have no idea what “reader” is and find it difficult to relate wifi connection with reader.
+We thus directly renamed the second section to “wifi”, and moved “instruction” into “service” section to avoid exposing technical terms to users.
 ### Design Justification - Request Service
-- The success rate of asking hotel for slippers is only 83.3%.
-- One interviewee kept looking for slippers in the “select service” section and did not think of using live chat. 
-- We moved “live chat” to “select service” section so that users can communicate with hotel staff when they cannot find the service they want. 
+The success rate of asking hotel for slippers is only 83.3%.
+One interviewee kept looking for slippers in the “select service” section and did not think of using live chat. 
+We moved “live chat” to “select service” section so that users can communicate with hotel staff when they cannot find the service they want. 
 
 
 ## Team Roster
