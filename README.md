@@ -15,12 +15,17 @@
 ## Getting Started
 KeyWorld is an app that applies NFC technology to solve the hotel check-in related issues. We help hotels and their guests to easily make the room a home. 
 
-This app is developed for Android. The languages used for development are mainly Kotlin and Python. The front-end relies on the following APIs:
-1. NFC reader API: https://developer.mozilla.org/en-US/docs/Web/API/Web_NFC_API
-2. WiFi information API: https://developer.mozilla.org/en-US/docs/Web/API/Network_Information_API
-3. Live Chat API: https://documenter.getpostman.com/view/758169/livechat-rest-api/RVnPL46o
+This app is developed for Android. The languages used for development are mainly Kotlin and Python. The front-end can be directly pulled and built. For more information, see: [Migrate to Android Studio](https://developer.android.com/studio/intro/migrate)
 
-The back-end server includes both a card module and a service module to deal with the customer information verification and service requests respectively. It communicates with a database for customer & room information.
+The back-end is built with Django. It relies on the following APIs:
+1. django-webpush: https://github.com/safwanrahman/django-webpush
+
+To build the back-end, please first refer to [EECS441 lab1: Chatter Back End](https://eecs441.eecs.umich.edu/ji-asns/lab1-chatter-backend#django-web-framework) to set up a server, PostgreSQL, Django, and prepare server side HTTPS. Notice that there's no need to create the table in the database as this project can apply [django models](https://docs.djangoproject.com/en/4.0/intro/tutorial02/#creating-models) to complete it.
+
+An additional package is needed to be installed to start the project:
+  pip install django-webpush
+
+To enable communication between front-end and back-end, please refer to [EECS441 lab1: Chatter Back End - Preparing self-signed certificate for the front-end](https://eecs441.eecs.umich.edu/ji-asns/lab1-chatter-backend#preparing-self-signed-certificate-for-the-front-end) and [EECS441 lab1: Chatter Front End - Installing your self-signed certificate](https://eecs441.eecs.umich.edu/ji-asns/lab1-kotlinChatter#installing-your-self-signed-certificate)
 
 ## Model and Engine
 ### User Story Map
@@ -162,7 +167,7 @@ Guests can request room service through the room service request block on the re
 | android.nfc.cardemulation |  Support Android NFC card emulation |
 | ACTION_WIFI_ADD_NETWORKS | add WIFI configurations to the saved network or subscription list |
 | LiveChat API | Live Chat |
-| django-webpush | hotel notification web push|
+| django-webpush | hotel notification web push |
 
 
 ## View UI/UX
