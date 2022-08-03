@@ -23,7 +23,9 @@ The back-end is built with Django. It relies on the following APIs:
 To build the back-end, please first refer to [EECS441 lab1: Chatter Back End](https://eecs441.eecs.umich.edu/ji-asns/lab1-chatter-backend#django-web-framework) to set up a server, PostgreSQL, Django, and prepare server side HTTPS. Notice that there's no need to create the table in the database as this project can apply [django models](https://docs.djangoproject.com/en/4.0/intro/tutorial02/#creating-models) to complete it.
 
 An additional package is needed to be installed to start the project:
-  pip install django-webpush
+```
+ pip install django-webpush
+```
 
 To enable communication between front-end and back-end, please refer to [EECS441 lab1: Chatter Back End - Preparing self-signed certificate for the front-end](https://eecs441.eecs.umich.edu/ji-asns/lab1-chatter-backend#preparing-self-signed-certificate-for-the-front-end) and [EECS441 lab1: Chatter Front End - Installing your self-signed certificate](https://eecs441.eecs.umich.edu/ji-asns/lab1-kotlinChatter#installing-your-self-signed-certificate)
 
