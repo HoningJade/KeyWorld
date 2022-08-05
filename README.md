@@ -290,8 +290,8 @@ We moved “live chat” to “select service” section so that users can commu
 |Yuanqi Guo| NFC reader (get wifi info & read instruction tags); implementation and testing of room card; demo of all features from resident side |
 |Xinrui Zhao| PM, Back-end APIs(KeyFetch, roomServiceRequest), Hotel side UI, Wifi connection implementation |
 |Ruiyu Li| frontend implementation of live chat, log-in, service request, and send review; server-communication protocol design and document; select service UI/UX design and implementation |
-|Yixin Shi| Hotel side UI design, Room key upload Implementation, Database Design and Management |
-|Churong Ji|  Hotel side UI, Database, Back-end APIs (key fetch and service upload), Hotel side key&resident upload|
+|Yixin Shi| Card emulation, Hotel door reader implementation, Hotel side UI, Room key upload Implementation, Database Design and Management |
+|Churong Ji|  Live chat, Review and rating, Hotel side UI, Database, Back-end APIs (key fetch and service upload), Hotel side key&resident upload|
 |Ruge Xu|Resident side UI/UX Design, App UI Implementation, Activity Connections in Kotlin|
 
 ### Challenges
