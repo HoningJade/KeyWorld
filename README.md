@@ -316,9 +316,10 @@ We moved “live chat” to “select service” section so that users can commu
 - Database design and management
 
 **Churong Ji**
-- Backend (live chat, key fetch, service upload)
-- Hotel side UI, review and rating, key&resident upload
+- Backend (key fetch, key&resident upload, service upload, live chat, review and rating)
+- Hotel side UI
 - Server management
+- Database design and management
 
 **Ruge Xu**
 - All resident side UI/UX Design
