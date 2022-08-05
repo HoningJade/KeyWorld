@@ -302,7 +302,7 @@ We moved “live chat” to “select service” section so that users can commu
 - Product Manager
 - Backend APIs(KeyFetch, roomServiceRequest)
 - Wifi connection implementation (later pushed by Yuanqi to main after some NFC related modification)
-- Hotel side UI (room service)
+- Hotel side UI, room service
 
 **Ruiyu Li**
 - Frontend implementation (live chat, key fetch, service request, review)
@@ -310,7 +310,7 @@ We moved “live chat” to “select service” section so that users can commu
 - Select service UI/UX design and implementation
 
 **Yixin Shi**
-- NFC card emulation
+- NFC card emulator (virtual room card)
 - Hotel door reader implementation
 - Hotel side UI, room key upload Implementation 
 - Database design and management
