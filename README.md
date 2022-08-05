@@ -59,14 +59,72 @@ When a guest wants to read the room instruction with the NFC tag, the NFC card r
 Guests can request room service through the room service request block on the resident front-end, and the request will be sent to the customer service block on the hotel front-end via the service module on the back-end. Once the hotel receives the request, it can perform the appropriate service. After the service, guests can write review for the service and send feedback to the hotel. Besides, guests can also chat with the hotel.
 
 ## APIs and Controller
-### RoomUpload
+### receiveChat
+
 **Request Parameters**
+
+The app frontend sends new user chats to hotel server.
+
+| Key           | Location | Type   | Description                   |
+| ------------- | -------- | ------ | ----------------------------- |
+| `room_number` | JSON     | Int    | Room ID                       |
+| `chatts`      | JSON     | String | Chat message sent by the user |
+
+**Response Codes**
+
+| Code              | Description        |
+| ----------------- | ------------------ |
+| `200 OK`          | Succeed            |
+| `400 Bad Request` | Invalid parameters |
+
+### sendChat
+
+The app fronend receives new hotel chatts along with chat history from backend server.
+
+**Returns**
+
+| Key           | Location | Type                                                         | Description                              |
+| ------------- | -------- | ------------------------------------------------------------ | ---------------------------------------- |
+| `room_number` | JSON     | Int                                                          | Room ID                                  |
+| `chatts`      | JSON     | List of string list: [["username0", "message0"],        ["username1", "message1"], ... ] | New hotel chatts along with chat history |
+
+**Response Codes**
+
+| Code              | Description        |
+| ----------------- | ------------------ |
+| `200 OK`          | Succeed            |
+| `400 Bad Request` | Invalid parameters |
+
+### receiveReview
+
+The app frontend sends user review to hotel backend.
+
+**Request Parameters**
+
+| Key           | Location | Type   | Description            |
+| ------------- | -------- | ------ | ---------------------- |
+| `room_number` | JSON     | Int    | Room ID                |
+| `rating`      | JSON     | Float  | User rating of a hotel |
+| `review`      | JSON     | String | User review of a hotel |
+
+**Response Codes**
+
+| Code              | Description        |
+| ----------------- | ------------------ |
+| `200 OK`          | Succeed            |
+| `400 Bad Request` | Invalid parameters |
+
+### RoomUpload
+
+**Request Parameters**
+
 | Key        | Location | Type   | Description      |
 | ---------- | -------- | ------ | ---------------- |
 | `RoomID` | JSON | Int | Room ID |
 | `Key` | JSON | String | The key information of the room |
 
 **Response Codes**
+
 | Code              | Description            |
 | ----------------- | ---------------------- |
 | `200 OK`          | Succeed |
@@ -99,9 +157,10 @@ Guests can request room service through the room service request block on the re
 | ---------- | -------------- | ------ | ------------ |
 | `isFound` | JSON | Boolean | Whether the guest is found in the database|
 
-**Example**
-
 ### keyFetch
+
+The frontend receives request response from the backend through `keyFetch` API.
+
 **Request Parameters**
 | Key        | Location | Type   | Description      |
 | ---------- | -------- | ------ | ---------------- |
@@ -109,6 +168,7 @@ Guests can request room service through the room service request block on the re
 | `code` | JSON | String | Guest's check in code |
 
 **Response Codes**
+
 | Code              | Description            |
 | ----------------- | ---------------------- |
 | `200 OK`          | Succeed |
@@ -123,28 +183,12 @@ Guests can request room service through the room service request block on the re
 | `start_date` | JSON | Timestamp | When the key starts the availability |
 | `end_date` | JSON | Timestamp | When the key ends the availability |
 
-### InstructionFetch
-**Request Parameters**
-| Key        | Location | Type   | Description      |
-| ---------- | -------- | ------ | ---------------- |
-| `InstructionID` | JSON | Int | instruction ID |
-
-**Response Codes**
-| Code              | Description            |
-| ----------------- | ---------------------- |
-| `200 OK`          | Succeed |
-| `400 Bad Request` | Invalid parameters |
-
-**Returns** 
-| Key        | Location       | Type   | Description  |
-| ---------- | -------------- | ------ | ------------ |
-| `InstructionDetail` | JSON | String | The detailed instruction|
-
-
-**Example**
-
 ### roomServiceRequest
+
+The frontend posts service requests selected by the user through `roomServiceRequest` API to the backend. 
+
 **Request Parameters**
+
 | Key        | Location | Type   | Description      |
 | ---------- | -------- | ------ | ---------------- |
 | `roomid` | JSON | Int | Guest's room ID |
@@ -158,18 +202,17 @@ Guests can request room service through the room service request block on the re
 | `404 Not Found` | Invalid parameters |
 
 
-**Example**
-
-
 ### Third-Party SDKs
 | SDK        | Description  |
-| ---------- | -------------- | 
+| ---------- | -------------- |
 | android.nfc | Support Android basic NFC functions |
 | android.nfc.tech | Support Android advanced NFC functions |
 | android.nfc.cardemulation |  Support Android NFC card emulation |
 | ACTION_WIFI_ADD_NETWORKS | Add WIFI configurations to the saved network or subscription list |
 | kotlinx.coroutines | Support live chat |
 | django-webpush | Support hotel notification web push |
+| OkHttp | Support frontend and backend communication |
+| Volley | Support frontend and backend communication |
 
 
 ## View UI/UX
@@ -226,6 +269,7 @@ Second, we added room number so that users don’t need to memorize them.
 The success rate of wifi connection task is 66.7%. 
 Interviewees reported that they have no idea what “reader” is and find it difficult to relate wifi connection with reader.
 We thus directly renamed the second section to “wifi”, and moved “instruction” into “service” section to avoid exposing technical terms to users.
+
 ### Design Justification - Request Service
 The success rate of asking hotel for slippers is only 83.3%.
 One interviewee kept looking for slippers in the “select service” section and did not think of using live chat. 
