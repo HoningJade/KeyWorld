@@ -294,7 +294,35 @@ We moved “live chat” to “select service” section so that users can commu
 |Churong Ji|  Live chat, Review and rating, Hotel side UI, Database, Back-end APIs (key fetch and service upload), Hotel side key&resident upload|
 |Ruge Xu|Resident side UI/UX Design, App UI Implementation, Activity Connections in Kotlin|
 
+**Yuanqi Guo**
+- NFC reader (get wifi info & read instruction tags) 
+- NFC card emulator (virtual room card)
+**Xinrui Zhao**
+- Product Manager
+- Backend APIs(KeyFetch, roomServiceRequest)
+- Wifi connection implementation (later pushed by Yuanqi to main after some NFC related modification)
+- Hotel side UI (room service)
+**Ruiyu Li**
+- Frontend implementation (live chat, key fetch, service request, review)
+- Server-communication protocol design and document
+- Select service UI/UX design and implementation
+**Yixin Shi**
+- NFC card emulation
+- Hotel door reader implementation
+- Hotel side UI, room key upload Implementation 
+- Database design and management
+**Churong Ji**
+- Backend (live chat, key fetch, service upload)
+- Hotel side UI, review and rating, key&resident upload
+- Server management
+**Ruge Xu**
+- All resident side UI/UX Design
+- All App UI Implementation
+- Activity connections in Kotlin
+
+
 ### Challenges
+There are 4 major challenges we encountered during the project.1)For the NFC-related features, before study the APIs that enable use of the various tag technologies in Android, a thorough round of pre-proposal research is required since none of us were familiar with NFC operations before. Also, we investigate on ourselves to ensure that different NFC-related features can work in one app without conflict. 2)For wifi related features, we neeed to study different kinds of WPA(wifi protection access) and understand what parameters are needed to realize the function. To make wifi activities cooperate with NFC activities is also a challenge. 3) For the live chat, `kotlinx coroutines` is used to efficiently receive and display new chat messages in app page in real time, and we designed two APIs for fronend-backend communication of chat messages. 4) For the navigation bar at the front-end, the switch of pages needs to be implemented with fragments instead of activities, and we studied for a long time how to connect a mix of fragments and activities.
 
 - **Ruge Xu**: There are three challenges that I encountered. First, it is a difficult task to design the user interface in a clear and simple way and to implement the designed interface perfectly on the application. I would often go back and forth between several designs, or tweak the parameters repeatedly to achieve a better presentation. Secondly, I spent a lot of time in implementing the navigation bar. On the one hand, the navigation bar switch page needs to be implemented with fragments instead of activities, and I studied for a long time how to connect a mix of fragments and activities; on the other hand, it also took me a lot of time to let the user clearly know which page they are on. Finally, I spent a lot of effort in implementing the live chat feature. I used a recycle view element to present the chat transcript in a loop. To highlight the difference between the hotel side and the user side, I designed two kinds of dialogs, and to select different dialogs for different situations in the recycle view, I went online and consulted a lot of code before I was able to implement it.
 - **Yuanqi Guo**: When implementing the NFC-related features, the first challenge was to study the APIs that enable use of the various tag technologies in Android. Since none of us were familiar with NFC operations before, a thorough round of pre-proposal research is quite necessary. The implementation of NFC tag reader is based on a standard called NDEF (NFC Data Exchange Format), while the room key feature is developed using the host-based card emulation (HCE) technique. Although there are plenty of relevant libraries and documentations, few of them can clearly guide us to build such a project step-by-step. After lots of trial and error, I finally learned how to handle the NFC intent filters to get the desired level of priority and how to handle the detected NFC tags using NFCAdapter. Another big challenge was to ensure that different NFC-related features can work in one app without conflict. Since host-based card emulation uses a different permission type than NFC reader, there’s no conflict related to the virtual room key feature. But while reading the two types of tags (Wifi and instruction), I encountered the problem. At first, I implemented activities to handle the Wifi tag and the instruction tag separately, but it turned out that only one of them could be executed, whichever was exported first. This problem led to the same view for the users when reading both types of tags.  Therefore, I implemented extra steps to distinguish between the Wifi and the instruction tags based on the data format stored in them, before I could finally solve the problem.
