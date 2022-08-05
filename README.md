@@ -297,24 +297,29 @@ We moved “live chat” to “select service” section so that users can commu
 **Yuanqi Guo**
 - NFC reader (get wifi info & read instruction tags) 
 - NFC card emulator (virtual room card)
+
 **Xinrui Zhao**
 - Product Manager
 - Backend APIs(KeyFetch, roomServiceRequest)
 - Wifi connection implementation (later pushed by Yuanqi to main after some NFC related modification)
 - Hotel side UI (room service)
+
 **Ruiyu Li**
 - Frontend implementation (live chat, key fetch, service request, review)
 - Server-communication protocol design and document
 - Select service UI/UX design and implementation
+
 **Yixin Shi**
 - NFC card emulation
 - Hotel door reader implementation
 - Hotel side UI, room key upload Implementation 
 - Database design and management
+
 **Churong Ji**
 - Backend (live chat, key fetch, service upload)
 - Hotel side UI, review and rating, key&resident upload
 - Server management
+
 **Ruge Xu**
 - All resident side UI/UX Design
 - All App UI Implementation
