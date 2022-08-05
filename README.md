@@ -41,6 +41,7 @@ Users go through four stages with our app, which are: hotel setup, guest door op
 ### Engine Architecture
 The following figure shows our engine architecture.
 ![Engine](/assets/engine.png)
+
 Our engine architecture has three main blocks: resident front-end, hotel front-end, and back-end (including the database). The data flow is presented in the above graph. 
 
 **Virtual key:** 
