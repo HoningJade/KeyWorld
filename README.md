@@ -114,48 +114,24 @@ The app frontend sends user review to hotel backend.
 | `200 OK`          | Succeed            |
 | `400 Bad Request` | Invalid parameters |
 
-### RoomUpload
+### roomServiceRequest
+
+The frontend posts service requests selected by the user through `roomServiceRequest` API to the backend. 
 
 **Request Parameters**
 
-| Key        | Location | Type   | Description      |
-| ---------- | -------- | ------ | ---------------- |
-| `RoomID` | JSON | Int | Room ID |
-| `Key` | JSON | String | The key information of the room |
+| Key             | Location | Type      | Description        |
+| --------------- | -------- | --------- | ------------------ |
+| `roomid`        | JSON     | Int       | Guest's room ID    |
+| `requestdetail` | JSON     | String    | The request detail |
+| `timestamp`     | JSON     | Timestamp | The request time   |
 
 **Response Codes**
 
-| Code              | Description            |
-| ----------------- | ---------------------- |
-| `200 OK`          | Succeed |
-| `400 Bad Request` | Invalid parameters |
-
-**Returns** 
-| Key        | Location       | Type   | Description  |
-| ---------- | -------------- | ------ | ------------ |
-| `isSuccess` | JSON | Boolean | Whether the guest is found in the database|
-
-### GuestUpload
-**Request Parameters**
-| Key        | Location | Type   | Description      |
-| ---------- | -------- | ------ | ---------------- |
-| `RoomID` | JSON | Int | Room ID |
-| `GuestFirstName` | JSON | String | Guest's first name |
-| `GuestLastName` | JSON | String | Guest's last name |
-| `CheckinCode` | JSON | String | Guest's check in code |
-| `AvailabilityStartTime` | JSON | Timestamp | When the key starts the availability |
-| `AvailabilityEndTime` | JSON | Timestamp | When the key ends the availability |
-
-**Response Codes**
-| Code              | Description            |
-| ----------------- | ---------------------- |
-| `200 OK`          | Succeed |
-| `400 Bad Request` | Invalid parameters |
-
-**Returns** 
-| Key        | Location       | Type   | Description  |
-| ---------- | -------------- | ------ | ------------ |
-| `isFound` | JSON | Boolean | Whether the guest is found in the database|
+| Code            | Description        |
+| --------------- | ------------------ |
+| `200 OK`        | Succeed            |
+| `404 Not Found` | Invalid parameters |
 
 ### keyFetch
 
@@ -183,26 +159,56 @@ The frontend receives request response from the backend through `keyFetch` API.
 | `start_date` | JSON | Timestamp | When the key starts the availability |
 | `end_date` | JSON | Timestamp | When the key ends the availability |
 
-### roomServiceRequest
-
-The frontend posts service requests selected by the user through `roomServiceRequest` API to the backend. 
+### RoomUpload
 
 **Request Parameters**
 
-| Key        | Location | Type   | Description      |
-| ---------- | -------- | ------ | ---------------- |
-| `roomid` | JSON | Int | Guest's room ID |
-| `requestdetail` | JSON | String | The request detail |
-| `timestamp` | JSON | Timestamp | The request time |
+| Key      | Location | Type   | Description                     |
+| -------- | -------- | ------ | ------------------------------- |
+| `RoomID` | JSON     | Int    | Room ID                         |
+| `Key`    | JSON     | String | The key information of the room |
 
 **Response Codes**
-| Code              | Description            |
-| ----------------- | ---------------------- |
-| `200 OK`          | Succeed |
-| `404 Not Found` | Invalid parameters |
 
+| Code              | Description        |
+| ----------------- | ------------------ |
+| `200 OK`          | Succeed            |
+| `400 Bad Request` | Invalid parameters |
+
+**Returns** 
+
+| Key         | Location | Type    | Description                                |
+| ----------- | -------- | ------- | ------------------------------------------ |
+| `isSuccess` | JSON     | Boolean | Whether the guest is found in the database |
+
+### GuestUpload
+
+**Request Parameters**
+
+| Key                     | Location | Type      | Description                          |
+| ----------------------- | -------- | --------- | ------------------------------------ |
+| `RoomID`                | JSON     | Int       | Room ID                              |
+| `GuestFirstName`        | JSON     | String    | Guest's first name                   |
+| `GuestLastName`         | JSON     | String    | Guest's last name                    |
+| `CheckinCode`           | JSON     | String    | Guest's check in code                |
+| `AvailabilityStartTime` | JSON     | Timestamp | When the key starts the availability |
+| `AvailabilityEndTime`   | JSON     | Timestamp | When the key ends the availability   |
+
+**Response Codes**
+
+| Code              | Description        |
+| ----------------- | ------------------ |
+| `200 OK`          | Succeed            |
+| `400 Bad Request` | Invalid parameters |
+
+**Returns** 
+
+| Key       | Location | Type    | Description                                |
+| --------- | -------- | ------- | ------------------------------------------ |
+| `isFound` | JSON     | Boolean | Whether the guest is found in the database |
 
 ### Third-Party SDKs
+
 | SDK        | Description  |
 | ---------- | -------------- |
 | android.nfc | Support Android basic NFC functions |
@@ -281,7 +287,7 @@ We moved “live chat” to “select service” section so that users can commu
 |:-----------:|:------------:|
 |Yuanqi Guo| NFC reader (get wifi info & read instruction tags); implementation and testing of room card; demo of all features from resident side |
 |Xinrui Zhao| PM, Back-end APIs(KeyFetch, roomServiceRequest), Hotel side UI, Wifi connection implementation |
-|Ruiyu Li| frontend implementation of log-in and service request, server communication protocol design and document, UI/UX of select service |
+|Ruiyu Li| frontend implementation of live chat, log-in, service request, and send review; server-communication protocol design and document; select service UI/UX design and implementation |
 |Yixin Shi| Hotel side UI design, Room key upload Implementation, Database Design and Management |
 |Churong Ji|  Hotel side UI, Database, Back-end APIs (key fetch and service upload), Hotel side key&resident upload|
 |Ruge Xu|Resident side UI/UX Design, App UI Implementation, Activity Connections in Kotlin|
@@ -289,8 +295,6 @@ We moved “live chat” to “select service” section so that users can commu
 ### Challenges
 
 - **Ruge Xu**: There are three challenges that I encountered. First, it is a difficult task to design the user interface in a clear and simple way and to implement the designed interface perfectly on the application. I would often go back and forth between several designs, or tweak the parameters repeatedly to achieve a better presentation. Secondly, I spent a lot of time in implementing the navigation bar. On the one hand, the navigation bar switch page needs to be implemented with fragments instead of activities, and I studied for a long time how to connect a mix of fragments and activities; on the other hand, it also took me a lot of time to let the user clearly know which page they are on. Finally, I spent a lot of effort in implementing the live chat feature. I used a recycle view element to present the chat transcript in a loop. To highlight the difference between the hotel side and the user side, I designed two kinds of dialogs, and to select different dialogs for different situations in the recycle view, I went online and consulted a lot of code before I was able to implement it.
-
 - **Yuanqi Guo**: When implementing the NFC-related features, the first challenge was to study the APIs that enable use of the various tag technologies in Android. Since none of us were familiar with NFC operations before, a thorough round of pre-proposal research is quite necessary. The implementation of NFC tag reader is based on a standard called NDEF (NFC Data Exchange Format), while the room key feature is developed using the host-based card emulation (HCE) technique. Although there are plenty of relevant libraries and documentations, few of them can clearly guide us to build such a project step-by-step. After lots of trial and error, I finally learned how to handle the NFC intent filters to get the desired level of priority and how to handle the detected NFC tags using NFCAdapter. Another big challenge was to ensure that different NFC-related features can work in one app without conflict. Since host-based card emulation uses a different permission type than NFC reader, there’s no conflict related to the virtual room key feature. But while reading the two types of tags (Wifi and instruction), I encountered the problem. At first, I implemented activities to handle the Wifi tag and the instruction tag separately, but it turned out that only one of them could be executed, whichever was exported first. This problem led to the same view for the users when reading both types of tags.  Therefore, I implemented extra steps to distinguish between the Wifi and the instruction tags based on the data format stored in them, before I could finally solve the problem.
-
 - **Xinrui Zhao** 1)For the wifi-connection part, the first challenge was to study different kinds of WPA(wifi protection access) and understand what parameters are needed to realize the function. It takes some time to study the APIs, and given that it shall be connected to the NFC, I spent much efforts fixing the NFC parts of the skelatal product structure with Yuanqi and guarantee two parts can work cooperately. 2)For website UI, as our app also needs to develop the website end, which is not covered in the lab, I learned Django tutorials to accomplish several features. For example, though django structure has a built-in structure called models that can automatically generate database and enable developer to fetch data to the web, as we have created our own in the server, I need to figure out a way to re-connect django modules to the existing database. 3)For hotle notification, as web-push is a quite complicated feature that envolves several setup including registering service worker and subscribe users, I have quite a lot background knowledge to learn before implementing it. 4)For the back-end API, I developed the majority parts of KeyFetch, roomServiceRequest. And as all of us are not so familiar with server communication, Churong, Ruiyu and I spent hours to ensure all data types match. 5)As a non-CS student who need to work both on the front-end and back-end in this project, I felt that I learned basically everything from zero, which is definitely a challenge but also an interesting experience.
-
+- **Ruiyu Li**: One of the most challenging parts is to implement live chat. `kotlinx coroutines` is used to efficiently receive and display new chat messages in app page in real time, and we designed two APIs for fronend-backend communication of chat messages.
