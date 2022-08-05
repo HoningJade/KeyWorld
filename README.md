@@ -288,8 +288,9 @@ We moved “live chat” to “select service” section so that users can commu
 ### Contributions
 
 **Yuanqi Guo**
-- NFC reader (get wifi info & read instruction tags) 
-- NFC card emulator (virtual room card)
+- NFC readers implementation (get wifi info & read instruction tags) 
+- NFC card emulator implementation (virtual room card)
+- Hardware interface planning and testing
 
 **Xinrui Zhao**
 - Product Manager
