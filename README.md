@@ -41,22 +41,23 @@ Users go through four stages with our app, which are: hotel setup, guest door op
 ### Engine Architecture
 The following figure shows our engine architecture.
 ![Engine](/assets/engine.png)
-Our engine architecture has three main blocks: resident front-end, hotel front-end, and back-end (including the database).
+Our engine architecture has three main blocks: resident front-end, hotel front-end, and back-end (including the database). The data flow is presented in the above graph. 
 
 **Virtual key:** 
-In the beginning, the hotel needs to upload the room-key information from the hotel front-end through the key managament block to the card module in the back-end, and then the card module will save the corresponding room-key information in the database of room info table.
-
-Then, a guest can request the virtual key with a code and his/her last name. The information is then sent to the backend, and next the card module will fetch the key from the database and send it back to the guest's application.
-
+- In the beginning, the hotel needs to upload the room-key information from the hotel front-end through the key management block to the card module in the back-end, and then the card module will save the corresponding room-key information to the “room” table in our database. Also, before a guest’s virtual check-in, the hotel needs to upload guest information including check-in code and stay period in the hotel web page, which will be stored to the “resident” table.
+Then, a guest can request the virtual key with a check-in code and his/her last name. The information is then sent to the backend. If matched, the card module will fetch the key from the database and send it back to the guest's application.
 If the guest wants to open the door, he/she can activate the NFC card emulator on the front-end and approach the phone to the NFC reader on the door. After a successful match, the door should be open.
 
 **NFC tag reader**
-When a guest wants to connect to the hotel wifi with the NFC tag, the NFC card reader will be activated. Once the phone catched the NFC signal with the wifi configuration information the wifi conection block will automatically parse the information and connect the phone to the hotel wifi.
-
-When a guest wants to read the room instruction with the NFC tag, the NFC card reader will be activated. Once the phone catched the NFC signal with the instruction information, the app will send a request to the service module in the back-end, which will then fetch the detailed inistruction and send it back to the guest's application.
+- When a guest wants to connect to the hotel wifi with the NFC tag, the NFC card reader will be activated. Once the phone catched the NFC signal with the wifi configuration information the wifi connection block will automatically parse the information and connect the phone to the hotel wifi.
+- When a guest wants to read the room instruction with the NFC tag, the NFC card reader will be activated. Once the phone catched the NFC signal with the instruction information, the app reads the instructions stored in the NFC tags and displays the instructions to the guest.
 
 **Room service**
-Guests can request room service through the room service request block on the resident front-end, and the request will be sent to the customer service block on the hotel front-end via the service module on the back-end. Once the hotel receives the request, it can perform the appropriate service. After the service, guests can write review for the service and send feedback to the hotel. Besides, guests can also chat with the hotel.
+- Guests can select room service through the room service request block on the resident front-end, and the request will be sent to the guest service block on the hotel front-end via the service module on the back-end, which stores the new requested service into the “service” table and renders on the corresponding hotel web page. Once the hotel receives the request, it can perform the appropriate service. 
+- If guests think they cannot find the service they want in the provided service list, they can have a live chat with the hotel staff. Similarly, chats are sent from the room service request block on the resident front-end to our back-end’s service module, which stores the records into “livechats” table. Also, back-end forwards that change to the guest service section in the hotel web page. When a hotel staff responds, the data flow happens in the reverse order.
+
+**Rating and reviews**
+- When checking-out, guests can provide their ratings and write reviews for the hotels. Guests’ rating and review are sent from the rating and review section of the resident front-end to the back-end's feedback module. At the same time, the record is inserted into the “review” table in the database. When the hotel side inquires about customer’s ratings and reviews, the back-end calculates the average rating and collects all reviews, forwarding those to the hotel review page.
 
 ## APIs and Controller
 ### RoomUpload
