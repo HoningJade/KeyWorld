@@ -15,12 +15,19 @@
 ## Getting Started
 KeyWorld is an app that applies NFC technology to solve the hotel check-in related issues. We help hotels and their guests to easily make the room a home. 
 
-This app is developed for Android. The languages used for development are mainly Kotlin and Python. The front-end relies on the following APIs:
-1. NFC reader API: https://developer.mozilla.org/en-US/docs/Web/API/Web_NFC_API
-2. WiFi information API: https://developer.mozilla.org/en-US/docs/Web/API/Network_Information_API
-3. Live Chat API: https://documenter.getpostman.com/view/758169/livechat-rest-api/RVnPL46o
+This app is developed for Android. The languages used for development are mainly Kotlin and Python. The front-end can be directly pulled and built. For more information, see: [Migrate to Android Studio](https://developer.android.com/studio/intro/migrate)
 
-The back-end server includes both a card module and a service module to deal with the customer information verification and service requests respectively. It communicates with a database for customer & room information.
+The back-end is built with Django. It relies on the following APIs:
+1. django-webpush: https://github.com/safwanrahman/django-webpush
+
+To build the back-end, please first refer to [EECS441 lab1: Chatter Back End](https://eecs441.eecs.umich.edu/ji-asns/lab1-chatter-backend#django-web-framework) to set up a server, PostgreSQL, Django, and prepare server side HTTPS. Notice that there's no need to create the table in the database as this project can apply [django models](https://docs.djangoproject.com/en/4.0/intro/tutorial02/#creating-models) to complete it.
+
+An additional package is needed to be installed to start the project:
+```
+ pip install django-webpush
+```
+
+To enable communication between front-end and back-end, please refer to [EECS441 lab1: Chatter Back End - Preparing self-signed certificate for the front-end](https://eecs441.eecs.umich.edu/ji-asns/lab1-chatter-backend#preparing-self-signed-certificate-for-the-front-end) and [EECS441 lab1: Chatter Front End - Installing your self-signed certificate](https://eecs441.eecs.umich.edu/ji-asns/lab1-kotlinChatter#installing-your-self-signed-certificate)
 
 ## Model and Engine
 ### User Story Map
@@ -160,30 +167,38 @@ Guests can request room service through the room service request block on the re
 | android.nfc | Support Android basic NFC functions |
 | android.nfc.tech | Support Android advanced NFC functions |
 | android.nfc.cardemulation |  Support Android NFC card emulation |
-| ACTION_WIFI_ADD_NETWORKS | add WIFI configurations to the saved network or subscription list |
-| LiveChat API | Live Chat |
-| django-webpush | hotel notification web push|
+| ACTION_WIFI_ADD_NETWORKS | Add WIFI configurations to the saved network or subscription list |
+| kotlinx.coroutines | Support live chat |
+| django-webpush | Support hotel notification web push |
 
 
 ## View UI/UX
 The final UI/UX overview is shown below ([detailed version here](https://www.figma.com/file/GR2Qz36NjUOARcIVuveBgr/UI%2FUX-Flow-Design-(Final)?node-id=0%3A1)).
 ![Final UI/UX Flow](/assets/UIUX_flow.png)
 ### UX - NFC key
-- Enter code (obtained from hotel) and last name to get the key.
-- The key is stored in the phone, press open to activate the virtual key.
-- There will be response of whether the door is successfully opened.
+The user can obtain the key by entering the password (obtained from the hotel) and the last name. 
+
+The key is stored in the phone and the user can press the open button to activate the virtual key. 
+
+The app will give a response based on whether the door has been successfully opened or not.
 ### UX - NFC WiFi
-- Click the button to start WiFi connection.
-- Guide the user to find the NFC tag and read the tag.
-- Display connection feedback.
+Users can tap a button to start a WiFi connection.
+
+The app will guide the user to the NFC tag and read the tag.
+
+The app will give feedback based on the success of the connection.
 ### UX - Hotel Service
-- Select what type of hotel service.
-- If the user chooses to read the instruction tag, the detailed information will be displayed in the window.
-- If the user chooses to send a service request, user can select service from a list.
-- If the user needs some special service which is not listed, he/she can send through live chat.
+The user can select what type of hotel services are available in the app.
+
+If the user chooses to read the instruction tag, the user can follow the prompts given by the app and scan the NFC tag, and then the detailed instruction information will be displayed in a pop-up window.
+
+If the user chooses to send a service request to the hotel, the user can select the service from the established list.
+
+If the user needs some special service not listed, he/she can send it via live chat.
 ### UX - Checkout
-- Confirm that the user is exiting the current hotel.
-- Allow users to rate and write reviews for the hotel.
+The app confirms that the user wants to exit the current hotel.
+
+The app allows the user to rate the hotel and write a review.
 ### Mockup Usability Test Results
 |                   | Evaluation Metric | KeyWorld |
 | :---------------: | :---------------: | :------: |
@@ -205,24 +220,33 @@ The final UI/UX overview is shown below ([detailed version here](https://www.fig
 - The word “Interrupt” in prompt is confusing.
 - Live chat is of the same priority with other services while in reality it should only be chosen when the service in not included in other services.
 ### Design Justification - Open Key
-- We added corresponding prompts to guide users because two interviewees in our test reported that they are unsure about what to do after clicking the “open” button.
-- We added room number so that users don’t need to memorize them.
+First, we added corresponding prompts to guide users because two interviewees in our test reported that they are unsure about what to do after clicking the “open” button.
+Second, we added room number so that users don’t need to memorize them.
 ### Design Justification - Connect WiFi
-- The success rate of wifi connection task is 66.7%. 
-- Interviewees reported that they have no idea what “reader” is and find it difficult to relate wifi connection with reader.
-- We thus directly renamed the second section to “wifi”, and moved “instruction” into “service” section to avoid exposing technical terms to users.
+The success rate of wifi connection task is 66.7%. 
+Interviewees reported that they have no idea what “reader” is and find it difficult to relate wifi connection with reader.
+We thus directly renamed the second section to “wifi”, and moved “instruction” into “service” section to avoid exposing technical terms to users.
 ### Design Justification - Request Service
-- The success rate of asking hotel for slippers is only 83.3%.
-- One interviewee kept looking for slippers in the “select service” section and did not think of using live chat. 
-- We moved “live chat” to “select service” section so that users can communicate with hotel staff when they cannot find the service they want. 
+The success rate of asking hotel for slippers is only 83.3%.
+One interviewee kept looking for slippers in the “select service” section and did not think of using live chat. 
+We moved “live chat” to “select service” section so that users can communicate with hotel staff when they cannot find the service they want. 
 
 
 ## Team Roster
 | Team member | Contribution |
 |:-----------:|:------------:|
-|Yuanqi Guo|Implementation of "Read Instruction from NFC tags", implementation of "Get WiFi Info from NFC tags"|
-|Xinrui Zhao| Back-end for the KeyFetch and roomServiceRequest, hotel side pending service page |
+|Yuanqi Guo| NFC reader (get wifi info & read instruction tags); implementation and testing of room card; demo of all features from resident side |
+|Xinrui Zhao| PM, Back-end APIs(KeyFetch, roomServiceRequest), Hotel side UI, Wifi connection implementation |
 |Ruiyu Li| frontend implementation of log-in and service request, server communication protocol design and document, UI/UX of select service |
 |Yixin Shi| Hotel side UI design, Room key upload Implementation, Database Design and Management |
 |Churong Ji|  Hotel side UI, Database, Back-end APIs (key fetch and service upload), Hotel side key&resident upload|
 |Ruge Xu|Resident side UI/UX Design, App UI Implementation, Activity Connections in Kotlin|
+
+### Challenges
+
+- **Ruge Xu**: There are three challenges that I encountered. First, it is a difficult task to design the user interface in a clear and simple way and to implement the designed interface perfectly on the application. I would often go back and forth between several designs, or tweak the parameters repeatedly to achieve a better presentation. Secondly, I spent a lot of time in implementing the navigation bar. On the one hand, the navigation bar switch page needs to be implemented with fragments instead of activities, and I studied for a long time how to connect a mix of fragments and activities; on the other hand, it also took me a lot of time to let the user clearly know which page they are on. Finally, I spent a lot of effort in implementing the live chat feature. I used a recycle view element to present the chat transcript in a loop. To highlight the difference between the hotel side and the user side, I designed two kinds of dialogs, and to select different dialogs for different situations in the recycle view, I went online and consulted a lot of code before I was able to implement it.
+
+- **Yuanqi Guo**: When implementing the NFC-related features, the first challenge was to study the APIs that enable use of the various tag technologies in Android. Since none of us were familiar with NFC operations before, a thorough round of pre-proposal research is quite necessary. The implementation of NFC tag reader is based on a standard called NDEF (NFC Data Exchange Format), while the room key feature is developed using the host-based card emulation (HCE) technique. Although there are plenty of relevant libraries and documentations, few of them can clearly guide us to build such a project step-by-step. After lots of trial and error, I finally learned how to handle the NFC intent filters to get the desired level of priority and how to handle the detected NFC tags using NFCAdapter. Another big challenge was to ensure that different NFC-related features can work in one app without conflict. Since host-based card emulation uses a different permission type than NFC reader, there’s no conflict related to the virtual room key feature. But while reading the two types of tags (Wifi and instruction), I encountered the problem. At first, I implemented activities to handle the Wifi tag and the instruction tag separately, but it turned out that only one of them could be executed, whichever was exported first. This problem led to the same view for the users when reading both types of tags.  Therefore, I implemented extra steps to distinguish between the Wifi and the instruction tags based on the data format stored in them, before I could finally solve the problem.
+
+- **Xinrui Zhao** 1)For the wifi-connection part, the first challenge was to study different kinds of WPA(wifi protection access) and understand what parameters are needed to realize the function. It takes some time to study the APIs, and given that it shall be connected to the NFC, I spent much efforts fixing the NFC parts of the skelatal product structure with Yuanqi and guarantee two parts can work cooperately. 2)For website UI, as our app also needs to develop the website end, which is not covered in the lab, I learned Django tutorials to accomplish several features. For example, though django structure has a built-in structure called models that can automatically generate database and enable developer to fetch data to the web, as we have created our own in the server, I need to figure out a way to re-connect django modules to the existing database. 3)For hotle notification, as web-push is a quite complicated feature that envolves several setup including registering service worker and subscribe users, I have quite a lot background knowledge to learn before implementing it. 4)For the back-end API, I developed the majority parts of KeyFetch, roomServiceRequest. And as all of us are not so familiar with server communication, Churong, Ruiyu and I spent hours to ensure all data types match. 5)As a non-CS student who need to work both on the front-end and back-end in this project, I felt that I learned basically everything from zero, which is definitely a challenge but also an interesting experience.
+
