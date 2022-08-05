@@ -2,7 +2,7 @@
 
 #### Post Service
 
-The frontend posts service requests selected by the user through `keyFetch` API to the backend. The format of request is:
+The frontend posts service requests selected by the user through `roomServiceRequest` API to the backend. The format of request is:
 
 ```kotlin
 {	
@@ -14,7 +14,7 @@ The frontend posts service requests selected by the user through `keyFetch` API 
 
 #### Get Room Information
 
-The frontend receives request response from the backend through `roomServiceRequest` API. 
+The frontend receives request response from the backend through `keyFetch`  API. 
 
 The request URL has two parameters: `lastname` and `code`.
 
