@@ -63,7 +63,6 @@ class Instruction : Fragment() {
 //                }
 //            }, 3000)
 
-            // TODO: Verify Instruction NFC tag
             startActivity(Intent(requireContext(), ReadInstruction::class.java))
         }
 

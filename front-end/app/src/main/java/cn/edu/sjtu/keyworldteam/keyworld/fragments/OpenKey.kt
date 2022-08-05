@@ -2,9 +2,14 @@ package cn.edu.sjtu.keyworldteam.keyworld.fragments
 
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.Intent
+import android.nfc.NdefMessage
+import android.nfc.NfcAdapter
+import android.nfc.Tag
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.Parcelable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -61,22 +66,26 @@ class OpenKey : Fragment() {
             alert.show()
 
             val handler = Handler(Looper.getMainLooper())
-            handler.postDelayed({
+            handler.postDelayed ({
                 if (alert.isShowing) {
                     val transaction = activity?.supportFragmentManager?.beginTransaction()
-                    if (transaction != null) {
+                    if (transaction != null && NfcAdapter.ACTION_NDEF_DISCOVERED == "true") {
                         transaction.replace(R.id.fragment_container, OpenKeySuccess())
                         transaction.disallowAddToBackStack()
                         transaction.commit()
                     }
+                    else {
+                        if (transaction != null) {
+                            transaction.replace(R.id.fragment_container, OpenKeyFail())
+                            transaction.disallowAddToBackStack()
+                            transaction.commit()
+                        }
+                    }
                     alert.dismiss()
                 }
             }, 3000)
-
-            // TODO: Verify the NFC code
         }
 
         return view
     }
-
 }

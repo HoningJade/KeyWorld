@@ -15,11 +15,13 @@ class CardEmulator: HostApduService() {
         val SELECT_INS = "A4"
         val DEFAULT_CLA = "00"
         val MIN_APDU_LENGTH = 12
+        private const val SELECT_APDU_HEADER = "00A40400"
     }
     override fun onDeactivated(reason: Int) {
         Log.d(TAG, "Deactivated: " + reason)
     }
 
+    // function to process Apdu, which is a string of a 24-bit hex
     override fun processCommandApdu(commandApdu: ByteArray?,
                                     extras: Bundle?): ByteArray {
         if (commandApdu == null) {
@@ -44,5 +46,12 @@ class CardEmulator: HostApduService() {
         } else {
             return Utils.hexStringToByteArray(STATUS_FAILED)
         }
+    }
+
+    fun BuildSelectApdu(aid: String): ByteArray? {
+        // Format: [CLASS | INSTRUCTION | PARAMETER 1 | PARAMETER 2 | LENGTH | DATA]
+        return Utils.hexStringToByteArray(SELECT_APDU_HEADER.toString() + String.format(
+                "%02X", aid.length / 2) + aid
+        )
     }
 }

@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
 
     private var nfcAdapter: NfcAdapter? = null
+    private  var stored_key = Utils.hexStringToByteArray("00A4040007A0000002471001")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
@@ -34,9 +35,14 @@ class MainActivity : AppCompatActivity(), NfcAdapter.ReaderCallback {
     override fun onTagDiscovered(tag: Tag?) {
         val isoDep = IsoDep.get(tag)
         isoDep.connect()
-        val response = isoDep.transceive(Utils.hexStringToByteArray(
-            "00A4040007A0000002471001"))
-        runOnUiThread { textView.append("\nDoor Unlocked!") }
-        isoDep.close()
+        val response = isoDep.transceive(
+            Utils.hexStringToByteArray(
+                "00A4040007A0000002471001"
+            )
+        )
+        if (stored_key == response) {
+            runOnUiThread { textView.append("\nDoor Unlocked!") }
+            isoDep.close()
+        }
     }
 }
